@@ -1,0 +1,16 @@
+---
+title: This is a heading
+pages:
+    - page: {path: ./signIn.hbs, name: Sign In}
+    - page: {path: ./signUp.hbs, name: Sign Up}
+---
+{{!< mainLayout}}
+
+<main>
+    <h1>Welcome from index.hbs. Available pages:</h1>
+    <ul>
+        {{#each pages}}
+        <li><a href="{{page.path}}">{{page.name}}</a></li>
+        {{/each}}
+    </ul>
+</main>
