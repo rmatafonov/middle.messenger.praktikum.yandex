@@ -1,0 +1,95 @@
+hr {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #b4c5f0;
+}
+
+.messenger-page {
+  height: 90vh;
+  margin: 20px;
+}
+
+.messenger-container {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.messenger-container__nav {
+  display: inline-flex;
+  flex-direction: column;
+  background-color: #e9eefb;
+  height: 100%;
+  width: 20%;
+}
+
+.nav__header {
+  top: 0px;
+  height: fit-content;
+}
+
+.chats-container__profie-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.chats-container__profie-photo {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-top: 10px;
+  background-color: #438ea5;
+  position: relative;
+  overflow: hidden;
+  img {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+  }
+}
+
+.chats-container__profie-name {
+  margin: auto;
+  padding: 15px;
+}
+
+.chats-container__search-box {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.messenger-nav__chats-list-container {
+  flex-grow: 1;
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.messenger-nav__chats-list {
+  position: absolute;
+  overflow-y: auto;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.messenger-nav__chats-list::-webkit-scrollbar {
+  width: 0;
+}
+
+.messenger-container__messages-container {
+  > p {
+    width: fit-content;
+    margin: auto;
+  }
+  flex-grow: 1;
+  margin: auto;
+}

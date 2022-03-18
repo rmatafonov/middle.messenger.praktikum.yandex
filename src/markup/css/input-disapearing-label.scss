@@ -1,0 +1,42 @@
+@use "global";
+
+@mixin input-active {
+  display: none;
+}
+
+.input-box {
+  position: relative;
+  height: 3em;
+  background: white;
+  border: 3px solid #a0aaad;
+  box-sizing: border-box;
+  border-radius: 5px;
+  @include global.form-idents;
+  > input {
+    position: absolute;
+    z-index: 1;
+    outline: none;
+    border: none;
+    margin-left: 1em;
+    width: 90%;
+    height: 80%;
+  }
+  > label {
+    position: absolute;
+    z-index: 2;
+    top: 25%;
+    bottom: 0;
+    left: 1em;
+    width: fit-content;
+    height: fit-content;
+    transition: 0.2s;
+  }
+
+  input:focus + label {
+    @include input-active;
+  }
+
+  input:valid + label {
+    @include input-active;
+  }
+}
