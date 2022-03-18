@@ -1,5 +1,40 @@
-{{!< mainLayout}} 
+---
+stylesheets:
+- signin-signup.scss
+- checkbox.scss
+- input.scss
+- button.scss
+errorText: Error Text
+---
 
-<main>
-    <p>Sign Up</p>
-</main>
+{{!< mainLayout}} <main>
+    <div class="signin-page">
+        <div class="signin-page__container">
+            <div class="signin-container__logo"></div>
+
+            <h2>Sign Up</h2>
+            <div id="status" class="signin-container__error-default">{{errorText}}</div>
+
+            <form>
+                {{> input type="text" id="first-name" class="form-container__input-box" label="First Name *" }}
+                {{> input type="text" id="last-name" class="form-container__input-box" label="Last Name *" }}
+                {{> input type="text" id="login" class="form-container__input-box" label="Login *" }}
+                {{> input type="password" id="password" class="form-container__input-box" label="Password *" }}
+                {{> input type="password" id="confirm-password" class="form-container__input-box" label="Confirm Password *" }}
+                {{> input type="text" id="email-address" class="form-container__input-box" label="Email Address *" }}
+                {{> input type="text" id="phone" class="form-container__input-box" label="Phone *" }}
+
+
+                {{> button id="submit" class="form-container__button-box" text="Sign In"}}
+            </form>
+
+            <div class="signin-container__links-box">
+                <span class="links-box__center"><a href="./signIn.hbs">Sign In</a></span>
+            </div>
+
+            <div class="signin-container__links-box form-container__double-ident">
+                <span class="links-box__center">Copyright © <a href="#">Your Website</a> 2022.</span>
+            </div>
+        </div>
+    </div>
+    </main>
