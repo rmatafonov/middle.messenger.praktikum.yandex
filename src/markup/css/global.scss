@@ -1,0 +1,23 @@
+@mixin form-idents {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  padding: 4px;
+}
+
+* {
+  color: #6c97a5;
+  font-family: "Arial";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+}
+
+h2 {
+  display: block;
+  font-size: 48px;
+  line-height: 56px;
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
