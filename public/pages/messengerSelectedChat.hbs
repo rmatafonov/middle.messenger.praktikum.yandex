@@ -2,40 +2,6 @@
 stylesheets:
 - inputDisapearingLabel.scss
 - messenger.scss
-account: {name: Vasily, surname: Ivanov}
-chats:
-- chat: {lastMessageHeader: Лев Толстой, lastMessageText: "Прикинь... Пост запилил на 4 тома :)"}
-- chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: friday beer!, lastMessageSender: Петр, lastMessageText:
-"Вась, ты где!?"}
-- chat: {lastMessageHeader: Казимир Малевич, lastMessageText: Image}
-- chat: {isSelected: true, lastMessageHeader: Федор Достоевский, lastMessageSender: Вы, lastMessageText: "пора бы уже
-его наказать js, наконец js..."}
-- chat: {lastMessageHeader: Эдвард Радзинский, lastMessageText: Typing...}
-- chat: {lastMessageHeader: Сергей Шнуров, lastMessageText: Voice message}
-- chat: {lastMessageHeader: Robert Martin, lastMessageText: Just drop your fu**** PR! And make it clean...}
-- chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: family, lastMessageSender: Dad, lastMessageText: Image}
-- chat: {lastMessageHeaderPrefix: Channel, lastMessageHeader: JS news, lastMessageText: "It is a long established fact
-that a reader will..."}
-messages:
-- message: {
-id: 123,
-user_id: 231,
-isMy: true,
-chat_id: 312,
-time: "2020-01-02T14:25:22.000Z",
-type: "message",
-text: "Пора бы его наказать уже..."
-}
-- message: {
-id: 123,
-user_id: 231,
-chat_id: 312,
-time: "2020-01-02T14:22:22.000Z",
-type: "message",
-text: "Совершенное молчание воцарилось в комнате. Даже плакавшие дети затихли. Соня стояла мертво-бледная, смотрела на
-Лужина и ничего не могла отвечать. Она как будто еще и не понимала. Прошло несколько секунд. — Ну-с, так как же-с? —
-спросил Лужин, пристально смотря на нее. — Я не знаю... Я ничего не знаю... — слабым голосом проговорила наконец Соня."
-}
 ---
 
 {{!< mainLayout}} <main>
@@ -58,8 +24,8 @@ text: "Совершенное молчание воцарилось в комн�
                 </div>
                 <div class="messenger-nav__chats-list-container">
                     <div class="messenger-nav__chats-list">
-                        {{#each chats}}
-                        {{> chats-list-item chat}}
+                        {{#each chatsWithSelected}}
+                        {{> chats-list-item this}}
                         {{/each}}
                     </div>
                 </div>
@@ -68,7 +34,7 @@ text: "Совершенное молчание воцарилось в комн�
             <div class="messenger-container__chat-container">
                 <div class="chat-container__messages-container">
                     {{#each messages}}
-                    {{> message-box message}}
+                    {{> message-box this}}
                     {{/each}}
                 </div>
                 <div class="chat-container__controls-container">
