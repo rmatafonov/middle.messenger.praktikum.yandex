@@ -16,7 +16,6 @@
 
 .signin-container__error-default {
   color: #fd2f2f;
-  font-size: 14px;
   margin: 0 auto;
   display: none;
 }
@@ -34,9 +33,6 @@
   position: relative;
   display: block;
   @include global.form-idents;
-  * {
-    font-size: 14px;
-  }
 
   > * {
     width: fit-content;

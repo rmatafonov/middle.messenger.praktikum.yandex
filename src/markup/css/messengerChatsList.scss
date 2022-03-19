@@ -1,0 +1,47 @@
+.messenger-nav__chats-list-container {
+  flex-grow: 1;
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.messenger-nav__chats-list {
+  position: absolute;
+  overflow-y: auto;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.messenger-nav__chats-list::-webkit-scrollbar {
+  width: 0;
+}
+
+.chats-list__item-container {
+  display: inline-flex;
+  margin: 5px;
+  padding: 5px;
+  width: 95%;
+}
+
+.chats-list-container__sender-photo {
+  height: 50px;
+  width: 50px;
+  min-height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  background-color: #438ea5;
+  overflow: hidden;
+  img {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+  }
+}
+
+.chats-list-container__last-message-container {
+    display: inline-flex;
+    flex-direction: column;
+    margin-left: 15px;
+}

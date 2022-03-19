@@ -1,0 +1,19 @@
+<hr>
+<div class="chats-list__item-container">
+    <div class="chats-list-container__sender-photo">
+        <img src="../img/camera_200.png" alt="Ph">
+    </div>
+    <div class="chats-list-container__last-message-container">
+        <span>
+            {{#if lastMessageHeaderPrefix}}
+            <span style="font-weight:bold">{{lastMessageHeaderPrefix}}:</span>
+            {{/if}} {{lastMessageHeader}}
+        </span>
+        <span class="mini-text">
+            {{#if lastMessageSender}}
+            <span style="font-weight:bold">{{lastMessageSender}}:</span>
+            {{/if}} {{lastMessageText}}
+            {{!-- TODO: add Handlebars helper for truncating a text to X symbols (here is 140) --}}
+        </span>
+    </div>
+</div>

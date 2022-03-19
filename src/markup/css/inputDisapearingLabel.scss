@@ -1,0 +1,17 @@
+@use "input";
+
+@mixin input-active-label-css {
+  display: none;
+}
+
+.input-box {
+  @include input.input-box;
+
+  input:focus + label {
+    @include input-active-label-css;
+  }
+
+  input:valid + label {
+    @include input-active-label-css;
+  }
+}

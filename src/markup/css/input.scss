@@ -1,14 +1,6 @@
 @use "global";
 
-@mixin input-active {
-  top: -10px;
-  background-color: white;
-  font-size: 14px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-.form-container__input-box {
+@mixin input-box {
   position: relative;
   height: 3em;
   background: white;
@@ -16,7 +8,7 @@
   box-sizing: border-box;
   border-radius: 5px;
   @include global.form-idents;
-  > input {
+  input {
     position: absolute;
     z-index: 1;
     outline: none;
@@ -25,7 +17,17 @@
     width: 90%;
     height: 80%;
   }
-  > label {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px white inset !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }
+  input:-webkit-autofill {
+    -webkit-text-fill-color: #6c97a5 !important;
+  }
+  label {
     position: absolute;
     z-index: 2;
     top: 25%;
@@ -34,13 +36,5 @@
     width: fit-content;
     height: fit-content;
     transition: 0.2s;
-  }
-
-  input:focus + label {
-    @include input-active;
-  }
-
-  input:valid + label {
-    @include input-active;
   }
 }

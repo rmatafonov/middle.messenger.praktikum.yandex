@@ -2,7 +2,7 @@
 stylesheets:
 - signin-signup.scss
 - checkbox.scss
-- input-moving-label.scss
+- inputMovingLabel.scss
 - button.scss
 ---
 
@@ -12,7 +12,7 @@ stylesheets:
             <div class="signin-container__logo"></div>
 
             <h2>Forgot Password</h2>
-            <div id="status" class="signin-container__error-default">Email not found</div>
+            <div id="status" class="mini-text signin-container__error-default">Email not found</div>
 
             <form>
                 {{> input type="text" id="email" class="form-container__input-box" label="Email *" }}
@@ -20,11 +20,11 @@ stylesheets:
                 {{> button id="submit" class="form-container__button-box" text="Send"}}
             </form>
 
-            <div class="signin-container__links-box">
+            <div class="mini-text signin-container__links-box">
                 <span class="links-box__center"><a href="./signIn.hbs">Sign In</a></span>
             </div>
 
-            <div class="signin-container__links-box form-container__double-ident">
+            <div class="mini-text signin-container__links-box form-container__double-ident">
                 <span class="links-box__center">Copyright © <a href="#">Your Website</a> 2022.</span>
             </div>
         </div>
