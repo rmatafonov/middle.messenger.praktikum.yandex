@@ -15,20 +15,20 @@ stylesheets:
             <div id="status" class="mini-text signin-container__error-default">Invalid login/password</div>
 
             <form>
-                {{> input type="text" id="login" class="form-container__input-box" label="Login *" }}
-                {{> input type="password" id="password" class="form-container__input-box" label="Password *" }}
+                {{> input type="text" id="login" class="form-container__input-box form-idents" label="Login *" }}
+                {{> input type="password" id="password" class="form-container__input-box form-idents" label="Password *" }}
 
-                {{> checkbox id="remember-me" name="password" class="form-container__checkbox" label="Remember Me" }}
+                {{> checkbox id="remember-me" name="password" class="form-container__checkbox form-idents" label="Remember Me" }}
 
-                {{> button id="submit" class="form-container__button-box" text="Sign In"}}
+                {{> button id="submit" class="form-container__button-box form-idents" text="Sign In"}}
             </form>
 
-            <div class="mini-text signin-container__links-box">
+            <div class="mini-text signin-container__links-box form-half-idents">
                 <span class="links-box__left"><a href="./forgot.hbs">Forgot Password?</a></span>
                 <span class="links-box__right"><a href="./signUp.hbs">Sign Up</a></span>
             </div>
 
-            <div class="mini-text signin-container__links-box form-container__double-ident">
+            <div class="mini-text signin-container__links-box form-double-idents">
                 <span class="links-box__center">Copyright © <a href="#">Your Website</a> 2022.</span>
             </div>
         </div>

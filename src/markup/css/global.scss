@@ -1,7 +1,16 @@
-@mixin form-idents {
+$primary-color: #A0AAAD;
+
+.form-idents {
   margin-top: 24px;
-  margin-bottom: 24px;
   padding: 4px;
+}
+
+.form-half-idents {
+  margin-top: 15px;
+}
+
+.form-double-idents {
+  margin-top: 50px;
 }
 
 * {

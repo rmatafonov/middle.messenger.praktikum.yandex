@@ -13,6 +13,7 @@ hr {
 .messenger-page {
   height: 90vh;
   margin: 20px;
+  min-height: 500px;
 }
 
 .messenger-container {
@@ -34,12 +35,43 @@ hr {
 
 // --- Messenger
 
-.messenger-container__messages-container {
+.messenger-container__chat-container {
   > p {
     width: fit-content;
     margin: auto;
   }
   flex-grow: 1;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 600px;
+  width: 100%;
+  height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.chat-container__messages-container {
+  width: 100%;
+  height: 90%;
+}
+
+.chat-container__controls-container {
+  flex-grow: 1;
+  width: 100%;
+  display: inline-flex;
+}
+
+.controls-container__icon-container {
+  height: 40px;
+  width: 40px;
   margin: auto;
-  min-width: 400px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.controls-container__input-box {
+  flex-grow: 1;
+  padding-left: 10px;
+  padding-right: 10px;
 }

@@ -8,14 +8,22 @@ chats:
 - chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: friday beer!, lastMessageSender: Петр, lastMessageText:
 "Вась, ты где!?"}
 - chat: {lastMessageHeader: Казимир Малевич, lastMessageText: Image}
-- chat: {lastMessageHeader: Федор Достоевский, lastMessageSender: Вы, lastMessageText: "пора бы уже
+- chat: {isSelected: true, lastMessageHeader: Федор Достоевский, lastMessageSender: Вы, lastMessageText: "пора бы уже
 его наказать js, наконец js..."}
 - chat: {lastMessageHeader: Эдвард Радзинский, lastMessageText: Typing...}
 - chat: {lastMessageHeader: Сергей Шнуров, lastMessageText: Voice message}
 - chat: {lastMessageHeader: Robert Martin, lastMessageText: Just drop your fu**** PR! And make it clean...}
 - chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: family, lastMessageSender: Dad, lastMessageText: Image}
-- chat: {lastMessageHeaderPrefix: Channel, lastMessageHeader: "JS news", lastMessageText: "It is a long established fact
+- chat: {lastMessageHeaderPrefix: Channel, lastMessageHeader: JS news, lastMessageText: "It is a long established fact
 that a reader will..."}
+message: { id: 123, user_id: 231, chat_id: 312, time: "2020-01-02T14:22:22.000Z", type: "message", content: "Совершенное
+молчание воцарилось в комнате. Даже плакавшие дети
+затихли. Соня стояла мертво-бледная, смотрела на Лужина и ничего
+не могла отвечать. Она как будто еще и не понимала. Прошло
+несколько секунд.
+— Ну-с, так как же-с? — спросил Лужин, пристально смотря на нее.
+— Я не знаю... Я ничего не знаю... — слабым голосом проговорила
+наконец Соня." }
 ---
 
 {{!< mainLayout}} <main>
@@ -46,7 +54,23 @@ that a reader will..."}
             </nav>
 
             <div class="messenger-container__chat-container">
-                <p>Select a Chat</p>
+                <div class="chat-container__messages-container">
+                    <div class="messages-container__message messages-container__message-other">
+                        
+                    </div>
+                </div>
+                <div class="chat-container__controls-container">
+                    <div class="controls-container__icon-container">
+                        {{> attachment-icon}}
+                    </div>
+                    <div class="controls-container__input-box">
+                        {{> input type="text" id="message" class="input-box" label="Message" autocomplete="off"
+                        required="false" }}
+                    </div>
+                    <div class="controls-container__icon-container">
+                        {{> arrow-up-circle}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

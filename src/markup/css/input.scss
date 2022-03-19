@@ -4,10 +4,9 @@
   position: relative;
   height: 3em;
   background: white;
-  border: 3px solid #a0aaad;
+  border: 3px solid global.$primary-color;
   box-sizing: border-box;
   border-radius: 5px;
-  @include global.form-idents;
   input {
     position: absolute;
     z-index: 1;

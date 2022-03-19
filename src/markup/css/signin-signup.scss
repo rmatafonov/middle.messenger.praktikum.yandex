@@ -32,7 +32,6 @@
 .signin-container__links-box {
   position: relative;
   display: block;
-  @include global.form-idents;
 
   > * {
     width: fit-content;
@@ -54,8 +53,4 @@
     display: table;
     margin: 0 auto;
   }
-}
-
-.form-container__double-ident {
-  margin-top: 50px;
 }

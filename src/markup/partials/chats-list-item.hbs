@@ -1,5 +1,4 @@
-<hr>
-<div class="chats-list__item-container">
+<div class="chats-list__item-container {{#if isSelected}}chats-list__item-container-selected{{/if}}">
     <div class="chats-list-container__sender-photo">
         <img src="../img/camera_200.png" alt="Ph">
     </div>
@@ -13,7 +12,9 @@
             {{#if lastMessageSender}}
             <span style="font-weight:bold">{{lastMessageSender}}:</span>
             {{/if}} {{lastMessageText}}
-            {{!-- TODO: add Handlebars helper for truncating a text to X symbols (here is 140) --}}
+            {{!-- TODO: add Handlebars helper for truncating a text to X symbols (here is
+            140) --}}
         </span>
     </div>
 </div>
+<hr>

@@ -1,7 +1,6 @@
 @use "global";
 
 .form-container__button-box {
-  @include global.form-idents;
   > button {
     background: #438ea5;
     border: 3px solid #438ea5;
