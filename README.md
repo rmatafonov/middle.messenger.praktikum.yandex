@@ -13,3 +13,6 @@
 
 ## About
 Yet another one Messenger
+
+## Design
+https://www.figma.com/file/CUA4AnaXxTb8ChLdUvyaDw/Yandex.Practicum.-Module-1.-Messenger?node-id=10%3A1019
