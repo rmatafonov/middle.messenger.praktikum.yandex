@@ -23,13 +23,13 @@
   },
   "homepage": "https://github.com/rmatafonov/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
-    "@parcel/transformer-sass": "^2.3.2",
-    "handlebars": "^4.7.7",
-    "parcel": "^2.3.2",
-    "sass": "^1.49.9"
+    "@anikin/parcel-transformer-handlebars": "1.0.9",
+    "@parcel/transformer-sass": "2.3.2",
+    "handlebars": "4.7.7",
+    "parcel": "2.3.2",
+    "sass": "1.49.9"
   },
   "devDependencies": {
-    "express": "^4.17.3"
+    "express": "4.17.3"
   }
 }

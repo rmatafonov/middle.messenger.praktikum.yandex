@@ -1,3 +1,7 @@
+$my-message-color: #e9eefb;
+$my-message-color: #e9eefb;
+$other-message-color: #c4c4c4;
+
 .chat-container__messages-container {
   width: 100%;
   height: 90%;
@@ -17,12 +21,12 @@
 }
 
 .messages-container__message-other {
-  background-color: #c4c4c4;
+  background-color: $other-message-color;
   margin-right: auto;
 }
 
 .messages-container__message-my {
-  background-color: #e9eefb;
+  background-color: $my-message-color;
   margin-left: auto;
 }
 

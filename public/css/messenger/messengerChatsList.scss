@@ -1,3 +1,5 @@
+@use "../variables";
+
 .messenger-nav__chats-list-container {
   flex-grow: 1;
   position: relative;
@@ -36,7 +38,7 @@
   min-height: 50px;
   min-width: 50px;
   border-radius: 50%;
-  background-color: #438ea5;
+  background-color: variables.$photo-box-background-color;
   overflow: hidden;
   img {
     display: inline;

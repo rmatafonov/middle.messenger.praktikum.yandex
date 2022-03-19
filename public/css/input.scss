@@ -1,10 +1,10 @@
-@use "global";
+@use "variables";
 
 @mixin input-box {
   position: relative;
   height: 3em;
   background: white;
-  border: 3px solid global.$primary-color;
+  border: 3px solid variables.$primary-color;
   box-sizing: border-box;
   border-radius: 5px;
   input {
@@ -20,11 +20,11 @@
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
-    box-shadow: 0 0 0 30px white inset !important;
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px variables.$background-color inset !important;
+    -webkit-box-shadow: 0 0 0 30px variables.$background-color inset !important;
   }
   input:-webkit-autofill {
-    -webkit-text-fill-color: #6c97a5 !important;
+    -webkit-text-fill-color: variables.$text-color !important;
   }
   label {
     position: absolute;
