@@ -16,3 +16,6 @@ Yet another one Messenger
 
 ## Design
 https://www.figma.com/file/CUA4AnaXxTb8ChLdUvyaDw/Yandex.Practicum.-Module-1.-Messenger?node-id=10%3A1019
+
+## CI: Netlify
+https://app.netlify.com/sites/wonderful-leavitt-ee9ac7/overview
