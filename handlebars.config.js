@@ -1,4 +1,4 @@
 module.exports = {
-  layouts: "src/markup/layouts",
-  partials: "src/markup/partials",
+  layouts: "public/layouts",
+  partials: "public/partials",
 };
