@@ -1,0 +1,89 @@
+---
+stylesheets:
+- inputDisapearingLabel.scss
+- messenger.scss
+account: {name: Vasily, surname: Ivanov}
+chats:
+- chat: {lastMessageHeader: Лев Толстой, lastMessageText: "Прикинь... Пост запилил на 4 тома :)"}
+- chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: friday beer!, lastMessageSender: Петр, lastMessageText:
+"Вась, ты где!?"}
+- chat: {lastMessageHeader: Казимир Малевич, lastMessageText: Image}
+- chat: {isSelected: true, lastMessageHeader: Федор Достоевский, lastMessageSender: Вы, lastMessageText: "пора бы уже
+его наказать js, наконец js..."}
+- chat: {lastMessageHeader: Эдвард Радзинский, lastMessageText: Typing...}
+- chat: {lastMessageHeader: Сергей Шнуров, lastMessageText: Voice message}
+- chat: {lastMessageHeader: Robert Martin, lastMessageText: Just drop your fu**** PR! And make it clean...}
+- chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: family, lastMessageSender: Dad, lastMessageText: Image}
+- chat: {lastMessageHeaderPrefix: Channel, lastMessageHeader: JS news, lastMessageText: "It is a long established fact
+that a reader will..."}
+messages:
+- message: {
+id: 123,
+user_id: 231,
+isMy: true,
+chat_id: 312,
+time: "2020-01-02T14:25:22.000Z",
+type: "message",
+text: "Пора бы его наказать уже..."
+}
+- message: {
+id: 123,
+user_id: 231,
+chat_id: 312,
+time: "2020-01-02T14:22:22.000Z",
+type: "message",
+text: "Совершенное молчание воцарилось в комнате. Даже плакавшие дети затихли. Соня стояла мертво-бледная, смотрела на
+Лужина и ничего не могла отвечать. Она как будто еще и не понимала. Прошло несколько секунд. — Ну-с, так как же-с? —
+спросил Лужин, пристально смотря на нее. — Я не знаю... Я ничего не знаю... — слабым голосом проговорила наконец Соня."
+}
+---
+
+{{!< mainLayout}} <main>
+    <div class="messenger-page">
+        <div class="messenger-container">
+            <nav class="messenger-container__nav">
+                <div class="nav__header">
+                    <div class="chats-container__profie-container">
+                        <div class="chats-container__profie-photo">
+                            <img src="../img/camera_200.png" alt="Ph">
+                        </div>
+                        <div class="chats-container__profie-name">{{account.name}} {{account.surname}} (me)</div>
+                    </div>
+                    <hr>
+                    <div class="chats-container__search-box">
+                        {{> input type="text" id="search" class="input-box search-input-box" label="Search" autocomplete="off"
+                        required="false" }}
+                    </div>
+                    <hr>
+                </div>
+                <div class="messenger-nav__chats-list-container">
+                    <div class="messenger-nav__chats-list">
+                        {{#each chats}}
+                        {{> chats-list-item chat}}
+                        {{/each}}
+                    </div>
+                </div>
+            </nav>
+
+            <div class="messenger-container__chat-container">
+                <div class="chat-container__messages-container">
+                    {{#each messages}}
+                    {{> message-box message}}
+                    {{/each}}
+                </div>
+                <div class="chat-container__controls-container">
+                    <div class="controls-container__icon-container">
+                        {{> attachment-icon}}
+                    </div>
+                    <div class="controls-container__input-box">
+                        {{> input type="text" id="message" class="input-box" label="Message" autocomplete="off"
+                        required="false" }}
+                    </div>
+                    <div class="controls-container__icon-container">
+                        {{> arrow-up-circle}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>

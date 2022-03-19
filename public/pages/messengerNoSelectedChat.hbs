@@ -1,0 +1,53 @@
+---
+stylesheets:
+- inputDisapearingLabel.scss
+- messenger.scss
+account: {name: Vasily, surname: Ivanov}
+chats:
+- chat: {lastMessageHeader: Лев Толстой, lastMessageText: "Прикинь... Пост запилил на 4 тома :)"}
+- chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: friday beer!, lastMessageSender: Петр, lastMessageText:
+"Вась, ты где!?"}
+- chat: {lastMessageHeader: Казимир Малевич, lastMessageText: Image}
+- chat: {lastMessageHeader: Федор Достоевский, lastMessageSender: Вы, lastMessageText: "пора бы уже
+его наказать js, наконец js..."}
+- chat: {lastMessageHeader: Эдвард Радзинский, lastMessageText: Typing...}
+- chat: {lastMessageHeader: Сергей Шнуров, lastMessageText: Voice message}
+- chat: {lastMessageHeader: Robert Martin, lastMessageText: Just drop your fu**** PR! And make it clean...}
+- chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: family, lastMessageSender: Dad, lastMessageText: Image}
+- chat: {lastMessageHeaderPrefix: Channel, lastMessageHeader: "JS news", lastMessageText: "It is a long established fact
+that a reader will..."}
+---
+
+{{!< mainLayout}} <main>
+    <div class="messenger-page">
+        <div class="messenger-container">
+            <nav class="messenger-container__nav">
+                <div class="nav__header">
+                    <div class="chats-container__profie-container">
+                        <div class="chats-container__profie-photo">
+                            <img src="../img/camera_200.png" alt="Ph">
+                        </div>
+                        <div class="chats-container__profie-name">{{account.name}} {{account.surname}} (me)</div>
+                    </div>
+                    <hr>
+                    <div class="chats-container__search-box">
+                        {{> input type="text" id="search" class="input-box search-input-box" label="Search" autocomplete="off"
+                        required="false" }}
+                    </div>
+                    <hr>
+                </div>
+                <div class="messenger-nav__chats-list-container">
+                    <div class="messenger-nav__chats-list">
+                        {{#each chats}}
+                        {{> chats-list-item chat}}
+                        {{/each}}
+                    </div>
+                </div>
+            </nav>
+
+            <div class="messenger-container__chat-container">
+                <p>Select a Chat</p>
+            </div>
+        </div>
+    </div>
+    </main>

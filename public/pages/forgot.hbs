@@ -1,0 +1,32 @@
+---
+stylesheets:
+- signin-signup.scss
+- checkbox.scss
+- inputMovingLabel.scss
+- button.scss
+---
+
+{{!< mainLayout}} <main>
+    <div class="signin-page">
+        <div class="signin-page__container">
+            <div class="signin-container__logo"></div>
+
+            <h2>Forgot Password</h2>
+            <div id="status" class="mini-text signin-container__error-default">Email not found</div>
+
+            <form>
+                {{> input type="text" id="email" class="form-container__input-box" label="Email *" }}
+
+                {{> button id="submit" class="form-container__button-box form-idents" text="Send"}}
+            </form>
+
+            <div class="mini-text signin-container__links-box form-half-idents">
+                <span class="links-box__center"><a href="./signIn.hbs">Sign In</a></span>
+            </div>
+
+            <div class="mini-text signin-container__links-box form-double-idents">
+                <span class="links-box__center">Copyright © <a href="#">Your Website</a> 2022.</span>
+            </div>
+        </div>
+    </div>
+    </main>

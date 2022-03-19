@@ -1,0 +1,39 @@
+@use "global";
+
+@mixin input-box {
+  position: relative;
+  height: 3em;
+  background: white;
+  border: 3px solid global.$primary-color;
+  box-sizing: border-box;
+  border-radius: 5px;
+  input {
+    position: absolute;
+    z-index: 1;
+    outline: none;
+    border: none;
+    margin-left: 1em;
+    width: 90%;
+    height: 80%;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px white inset !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }
+  input:-webkit-autofill {
+    -webkit-text-fill-color: #6c97a5 !important;
+  }
+  label {
+    position: absolute;
+    z-index: 2;
+    top: 25%;
+    bottom: 0;
+    left: 1em;
+    width: fit-content;
+    height: fit-content;
+    transition: 0.2s;
+  }
+}
