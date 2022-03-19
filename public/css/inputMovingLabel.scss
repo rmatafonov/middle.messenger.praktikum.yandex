@@ -12,11 +12,11 @@
 .form-container__input-box {
   @include input.input-box;
 
-  input:focus + label {
+  input:focus + .label-for-control {
     @include input-active;
   }
 
-  input:valid + label {
+  input:valid + .label-for-control {
     @include input-active;
   }
 }

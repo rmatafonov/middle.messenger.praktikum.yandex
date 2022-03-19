@@ -7,7 +7,7 @@
   border: 3px solid variables.$primary-color;
   box-sizing: border-box;
   border-radius: 5px;
-  input {
+  .control {
     position: absolute;
     z-index: 1;
     outline: none;
@@ -16,17 +16,17 @@
     width: 90%;
     height: 80%;
   }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
+  .control:-webkit-autofill,
+  .control:-webkit-autofill:hover,
+  .control:-webkit-autofill:focus,
+  .control:-webkit-autofill:active {
     box-shadow: 0 0 0 30px variables.$background-color inset !important;
     -webkit-box-shadow: 0 0 0 30px variables.$background-color inset !important;
   }
-  input:-webkit-autofill {
+  .control:-webkit-autofill {
     -webkit-text-fill-color: variables.$text-color !important;
   }
-  label {
+  .label-for-control {
     position: absolute;
     z-index: 2;
     top: 25%;

@@ -3,11 +3,11 @@
 
 .form-container__checkbox {
   padding: 4px;
-  > input {
+  > .control {
     position: absolute;
     z-index: -1;
     opacity: 0;
-    + label {
+    + .label-for-control {
       display: inline-flex;
       align-items: center;
       user-select: none;
@@ -15,7 +15,7 @@
       line-height: 21px;
     }
 
-    + label::before {
+    + .label-for-control::before {
       content: "";
       display: inline-block;
       width: 1em;
@@ -31,7 +31,7 @@
     }
   }
 
-  > input:checked + label::before {
+  > .control:checked + .label-for-control::before {
     border-color: variables.$primary-color;
     background-color: variables.$primary-color;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
