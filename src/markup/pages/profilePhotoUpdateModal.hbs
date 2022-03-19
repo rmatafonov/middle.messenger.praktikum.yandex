@@ -1,0 +1,26 @@
+---
+stylesheets:
+- signin-signup.scss
+- inputMovingLabel.scss
+- button.scss
+- modalWindow.scss
+errorText: Error Text
+---
+
+{{!< mainLayout}} <main>
+    <div class="signin-page">
+        <div class="signin-page__container">
+            <div class="modal-window__header-container">
+                <div class="header-container__text"><p>Profile Image Update</p></div>
+                <div class="header-container__icon-container">{{> close-icon}}</div>
+            </div>
+            <hr>
+            <p>Select an image formatted as JPG, PNG or GIF</p>
+            <div id="status" class="mini-text signin-container__error-default">{{errorText}}</div>
+
+            <form>
+                {{> button id="submit" class="form-container__button-box form-idents" text="Select Image"}}
+            </form>
+        </div>
+    </div>
+    </main>

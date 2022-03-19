@@ -1,0 +1,40 @@
+---
+stylesheets:
+- signin-signup.scss
+- inputMovingLabel.scss
+- button.scss
+- modalWindow.scss
+errorText: Error Text
+---
+
+{{!< mainLayout}} <main>
+    <div class="signin-page">
+        <div class="signin-page__container">
+            <div class="modal-window__header-container">
+                <div class="header-container__text"><p>Profile</p></div>
+                <div class="header-container__icon-container">{{> close-icon}}</div>
+            </div>
+            <hr>
+            <div id="status" class="mini-text signin-container__error-default">{{errorText}}</div>
+
+            <form>
+                {{> input type="text" id="first-name" class="form-container__input-box form-idents" label="First Name *" }}
+                {{> input type="text" id="last-name" class="form-container__input-box form-idents" label="Last Name *" }}
+                {{> input type="text" id="login" class="form-container__input-box form-idents" label="Login *" }}
+                {{> input type="text" id="email-address" class="form-container__input-box form-idents" label="Email Address *" }}
+                {{> input type="text" id="phone" class="form-container__input-box form-idents" label="Phone *" }}
+
+
+                {{> button id="submit" class="form-container__button-box form-idents" text="Save"}}
+            </form>
+
+            <div class="mini-text signin-container__links-box form-double-idents">
+                <span class="links-box__center"><a href="./signIn.hbs">Change Password</a></span>
+            </div>
+
+            <div class="mini-text signin-container__links-box form-half-idents">
+                <span class="links-box__center"><a href="#" style="color: tomato;">Sign Out</a></span>
+            </div>
+        </div>
+    </div>
+    </main>

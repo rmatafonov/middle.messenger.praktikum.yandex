@@ -1,0 +1,21 @@
+.modal-window__header-container {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-container__text {
+  flex-grow: 1;
+  p {
+      margin: 0px;
+  }
+}
+
+.header-container__icon-container {
+  width: 30px;
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  align-self: flex-end;
+  cursor: pointer;
+}
