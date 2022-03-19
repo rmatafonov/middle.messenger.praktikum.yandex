@@ -1,7 +1,6 @@
-@use "messengerNavHeader";
-@use "messengerChatsList";
-
-// --- Side Bar
+@use "messenger/messengerNavHeader";
+@use "messenger/messengerChatsList";
+@use "messenger/messengerChat";
 
 hr {
   width: 95%;
@@ -14,6 +13,9 @@ hr {
   height: 90vh;
   margin: 20px;
   min-height: 500px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 5px #c4c4c4;
+  overflow: hidden;
 }
 
 .messenger-container {
@@ -33,8 +35,6 @@ hr {
   min-width: 400px;
 }
 
-// --- Messenger
-
 .messenger-container__chat-container {
   > p {
     width: fit-content;
@@ -48,30 +48,4 @@ hr {
   height: 100%;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.chat-container__messages-container {
-  width: 100%;
-  height: 90%;
-}
-
-.chat-container__controls-container {
-  flex-grow: 1;
-  width: 100%;
-  display: inline-flex;
-}
-
-.controls-container__icon-container {
-  height: 40px;
-  width: 40px;
-  margin: auto;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.controls-container__input-box {
-  flex-grow: 1;
-  padding-left: 10px;
-  padding-right: 10px;
 }

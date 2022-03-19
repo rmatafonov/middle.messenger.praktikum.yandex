@@ -4,8 +4,8 @@
   "description": "---",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel --no-cache src/markup/pages/index.hbs",
-    "build": "parcel build --no-cache src/index.handlebars",
+    "dev": "parcel src/markup/pages/index.hbs --no-cache",
+    "build": "parcel build src/index.handlebars --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,12 +20,13 @@
   },
   "homepage": "https://github.com/rmatafonov/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
+    "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "handlebars": "^4.7.7",
-    "handlebars-layouts": "^3.1.4",
     "parcel": "^2.3.2",
-    "parcel-plugin-handlebars": "^0.4.4"
+    "sass": "^1.49.9"
   },
   "devDependencies": {
-    "sass": "^1.49.9"
+    "@anikin/parcel-transformer-handlebars-precompile": "^1.0.1",
+    "@parcel/transformer-sass": "^2.3.2"
   }
 }
