@@ -1,12 +1,14 @@
-@use "global";
+@use "variables";
+
+$button-color: #438ea5;
 
 .form-container__button-box {
   > button {
-    background: #438ea5;
-    border: 3px solid #438ea5;
+    background: $button-color;
+    border: 3px solid $button-color;
     box-sizing: border-box;
     border-radius: 20px;
-    color: white;
+    color: variables.$background-color;
     width: 100%;
     text-transform: uppercase;
     padding-top: 10px;

@@ -1,4 +1,4 @@
-$primary-color: #A0AAAD;
+@use "variables";
 
 .form-idents {
   margin-top: 24px;
@@ -14,7 +14,7 @@ $primary-color: #A0AAAD;
 }
 
 * {
-  color: #6c97a5;
+  color: variables.$text-color;
   font-family: "Arial";
   font-style: normal;
   font-weight: normal;
@@ -36,4 +36,8 @@ h2 {
   * {
     font-size: 14px;
   }
+}
+
+.bold-text {
+  font-weight: bold;
 }

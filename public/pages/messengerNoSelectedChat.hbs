@@ -2,20 +2,6 @@
 stylesheets:
 - inputDisapearingLabel.scss
 - messenger.scss
-account: {name: Vasily, surname: Ivanov}
-chats:
-- chat: {lastMessageHeader: Лев Толстой, lastMessageText: "Прикинь... Пост запилил на 4 тома :)"}
-- chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: friday beer!, lastMessageSender: Петр, lastMessageText:
-"Вась, ты где!?"}
-- chat: {lastMessageHeader: Казимир Малевич, lastMessageText: Image}
-- chat: {lastMessageHeader: Федор Достоевский, lastMessageSender: Вы, lastMessageText: "пора бы уже
-его наказать js, наконец js..."}
-- chat: {lastMessageHeader: Эдвард Радзинский, lastMessageText: Typing...}
-- chat: {lastMessageHeader: Сергей Шнуров, lastMessageText: Voice message}
-- chat: {lastMessageHeader: Robert Martin, lastMessageText: Just drop your fu**** PR! And make it clean...}
-- chat: {lastMessageHeaderPrefix: Room, lastMessageHeader: family, lastMessageSender: Dad, lastMessageText: Image}
-- chat: {lastMessageHeaderPrefix: Channel, lastMessageHeader: "JS news", lastMessageText: "It is a long established fact
-that a reader will..."}
 ---
 
 {{!< mainLayout}} <main>
@@ -38,8 +24,8 @@ that a reader will..."}
                 </div>
                 <div class="messenger-nav__chats-list-container">
                     <div class="messenger-nav__chats-list">
-                        {{#each chats}}
-                        {{> chats-list-item chat}}
+                        {{#each chatsNoSelected}}
+                        {{> chats-list-item this}}
                         {{/each}}
                     </div>
                 </div>
