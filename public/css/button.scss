@@ -1,0 +1,18 @@
+@use "variables";
+
+$button-color: #438ea5;
+
+.form-container__button-box {
+  > button {
+    background: $button-color;
+    border: 3px solid $button-color;
+    box-sizing: border-box;
+    border-radius: 20px;
+    color: variables.$background-color;
+    width: 100%;
+    text-transform: uppercase;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+  }
+}

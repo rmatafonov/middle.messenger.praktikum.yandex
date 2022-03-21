@@ -1,0 +1,22 @@
+@use "variables";
+@use "input";
+
+@mixin input-active {
+  top: -10px;
+  background-color: variables.$background-color;
+  font-size: 14px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.form-container__input-box {
+  @include input.input-box;
+
+  input:focus + .label-for-control {
+    @include input-active;
+  }
+
+  input:valid + .label-for-control {
+    @include input-active;
+  }
+}

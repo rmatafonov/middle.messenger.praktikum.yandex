@@ -1,0 +1,57 @@
+@use "global";
+@use "variables";
+
+.signin-page {
+  margin: auto;
+  width: 400px;
+  height: fit-content;
+}
+
+.signin-container__logo {
+  height: 80px;
+  width: 80px;
+  margin: auto;
+  background-color: variables.$photo-box-background-color;
+  border-radius: 50%;
+}
+
+.signin-container__error-default {
+  color: variables.$attention-text-color;
+  margin: 0 auto;
+  display: none;
+}
+
+.signin-container__error-shown {
+  display: table;
+}
+
+.signin-container__form-container {
+  margin: auto;
+  width: 90%;
+}
+
+.signin-container__links-box {
+  position: relative;
+  display: block;
+
+  > * {
+    width: fit-content;
+  }
+
+  .links-box__left {
+    position: absolute;
+    left: 0px;
+    margin-left: 5px;
+  }
+
+  .links-box__right {
+    position: absolute;
+    right: 0px;
+    margin-right: 5px;
+  }
+
+  .links-box__center {
+    display: table;
+    margin: 0 auto;
+  }
+}

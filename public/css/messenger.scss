@@ -1,0 +1,55 @@
+@use "messenger/messengerNavHeader";
+@use "messenger/messengerChatsList";
+@use "messenger/messengerChat";
+
+$shadow-color: #9f9ff3;
+$horisontal-line-color: #b4c5f0;
+$nav-color: #e9eefb;
+
+hr {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid $horisontal-line-color;
+}
+
+.messenger-page {
+  height: 90vh;
+  margin: 20px;
+  min-height: 500px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 5px $shadow-color;
+  overflow: hidden;
+}
+
+.messenger-container {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.messenger-container__nav {
+  display: inline-flex;
+  flex-direction: column;
+  background-color: $nav-color;
+  height: 100%;
+  width: 20%;
+  min-width: 400px;
+}
+
+.messenger-container__chat-container {
+  > p {
+    width: fit-content;
+    margin: auto;
+  }
+  flex-grow: 1;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 600px;
+  width: 100%;
+  height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}

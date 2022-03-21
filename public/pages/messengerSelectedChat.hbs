@@ -1,0 +1,55 @@
+---
+stylesheets:
+- inputDisapearingLabel.scss
+- messenger.scss
+---
+
+{{!< mainLayout}} <main>
+    <div class="messenger-page">
+        <div class="messenger-container">
+            <nav class="messenger-container__nav">
+                <div class="nav__header">
+                    <div class="chats-container__profie-container">
+                        <div class="chats-container__profie-photo">
+                            <img src="../img/camera_200.png" alt="Ph">
+                        </div>
+                        <div class="chats-container__profie-name">{{account.name}} {{account.surname}} (me)</div>
+                    </div>
+                    <hr>
+                    <div class="chats-container__search-box">
+                        {{> input type="text" id="search" class="input-box search-input-box" label="Search" autocomplete="off"
+                        required="false" }}
+                    </div>
+                    <hr>
+                </div>
+                <div class="messenger-nav__chats-list-container">
+                    <div class="messenger-nav__chats-list">
+                        {{#each chatsWithSelected}}
+                        {{> chats-list-item this}}
+                        {{/each}}
+                    </div>
+                </div>
+            </nav>
+
+            <div class="messenger-container__chat-container">
+                <div class="chat-container__messages-container">
+                    {{#each messages}}
+                    {{> message-box this}}
+                    {{/each}}
+                </div>
+                <div class="chat-container__controls-container">
+                    <div class="controls-container__icon-container">
+                        {{> attachment-icon}}
+                    </div>
+                    <div class="controls-container__input-box">
+                        {{> input type="text" id="message" class="input-box" label="Message" autocomplete="off"
+                        required="false" }}
+                    </div>
+                    <div class="controls-container__icon-container">
+                        {{> arrow-up-circle}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>

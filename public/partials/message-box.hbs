@@ -1,0 +1,11 @@
+{{!-- TODO: probably isMy should be calculated with Handlebars helper fun --}}
+<div class="messages-container__message messages-container__message-{{#if isMy}}my{{else}}other{{/if}}">
+    <div>
+        {{text}}
+    </div>
+    <div class="message-container__time mini-text">
+        {{!-- TODO: add helper for formatting like: --}}
+        {{!-- if Today: HH:MM --}}
+        {{time}}
+    </div>
+</div>

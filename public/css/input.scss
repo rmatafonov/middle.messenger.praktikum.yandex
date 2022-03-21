@@ -1,0 +1,39 @@
+@use "variables";
+
+@mixin input-box {
+  position: relative;
+  height: 3em;
+  background: white;
+  border: 3px solid variables.$primary-color;
+  box-sizing: border-box;
+  border-radius: 5px;
+  .control {
+    position: absolute;
+    z-index: 1;
+    outline: none;
+    border: none;
+    margin-left: 1em;
+    width: 90%;
+    height: 80%;
+  }
+  .control:-webkit-autofill,
+  .control:-webkit-autofill:hover,
+  .control:-webkit-autofill:focus,
+  .control:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px variables.$background-color inset !important;
+    -webkit-box-shadow: 0 0 0 30px variables.$background-color inset !important;
+  }
+  .control:-webkit-autofill {
+    -webkit-text-fill-color: variables.$text-color !important;
+  }
+  .label-for-control {
+    position: absolute;
+    z-index: 2;
+    top: 25%;
+    bottom: 0;
+    left: 1em;
+    width: fit-content;
+    height: fit-content;
+    transition: 0.2s;
+  }
+}
