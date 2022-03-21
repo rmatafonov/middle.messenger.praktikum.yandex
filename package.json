@@ -2,8 +2,8 @@
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
   "description": "---",
-  "engines" : { 
-    "node" : ">=12.0.0"
+  "engines": {
+    "node": ">=12.0.0"
   },
   "scripts": {
     "dev": "parcel public/pages/index.hbs --no-cache",
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/rmatafonov/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
     "@anikin/parcel-transformer-handlebars": "1.0.9",
+    "@parcel/config-default": "2.3.2",
     "@parcel/transformer-sass": "2.3.2",
     "handlebars": "4.7.7",
     "parcel": "2.3.2",
