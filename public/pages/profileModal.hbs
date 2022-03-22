@@ -11,19 +11,33 @@ errorText: Error Text
     <div class="signin-page">
         <div class="signin-page__container">
             <div class="modal-window__header-container">
-                <div class="header-container__text"><p>Profile</p></div>
+                <div class="header-container__text">
+                    <p>Profile</p>
+                </div>
                 <div class="header-container__icon-container">{{> close-icon}}</div>
             </div>
             <hr>
             <div id="status" class="mini-text signin-container__error-default">{{errorText}}</div>
 
             <form>
-                {{> input type="text" id="first_name" class="form-container__input-box form-idents" label="First Name *" }}
-                {{> input type="text" id="second_name" class="form-container__input-box form-idents" label="Last Name *" }}
-                {{> input type="text" id="display_name" class="form-container__input-box form-idents" label="Display Name *" }}
-                {{> input type="text" id="login" class="form-container__input-box form-idents" label="Login *" }}
-                {{> input type="text" id="email" class="form-container__input-box form-idents" label="Email Address *" }}
-                {{> input type="text" id="phone" class="form-container__input-box form-idents" label="Phone *" }}
+                <div class="form-idents">
+                    {{> input type="text" id="first_name" class="form-container__input-box" label="First Name *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="second_name" class="form-container__input-box" label="Last Name *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="display_name" class="form-container__input-box" label="Display Name *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="login" class="form-container__input-box" label="Login *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="email" class="form-container__input-box" label="Email Address *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="phone" class="form-container__input-box" label="Phone *" }}
+                </div>
 
 
                 {{> button id="submit" class="form-container__button-box form-idents" text="Save"}}

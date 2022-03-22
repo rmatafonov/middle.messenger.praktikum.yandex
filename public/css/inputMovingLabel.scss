@@ -2,7 +2,8 @@
 @use "input";
 
 @mixin input-active {
-  top: -10px;
+  top: -5px;
+  left: 15px;
   background-color: variables.$background-color;
   font-size: 14px;
   padding-left: 3px;

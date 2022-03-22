@@ -16,13 +16,27 @@ errorText: Error Text
             <div id="status" class="mini-text signin-container__error-default">{{errorText}}</div>
 
             <form>
-                {{> input type="text" id="first_name" class="form-container__input-box form-idents" label="First Name *" }}
-                {{> input type="text" id="last_name" class="form-container__input-box form-idents" label="Last Name *" }}
-                {{> input type="text" id="login" class="form-container__input-box form-idents" label="Login *" }}
-                {{> input type="password" id="password" class="form-container__input-box form-idents" label="Password *" }}
-                {{> input type="password" id="confirm_password" class="form-container__input-box form-idents" label="Confirm Password *" }}
-                {{> input type="text" id="email" class="form-container__input-box form-idents" label="Email Address *" }}
-                {{> input type="text" id="phone" class="form-container__input-box form-idents" label="Phone *" }}
+                <div class="form-idents">
+                    {{> input type="text" id="first_name" class="form-container__input-box" label="First Name *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="last_name" class="form-container__input-box" label="Last Name *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="login" class="form-container__input-box" label="Login *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="password" id="password" class="form-container__input-box" label="Password *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="password" id="confirm_password" class="form-container__input-box" label="Confirm Password *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="email" class="form-container__input-box" label="Email Address *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="text" id="phone" class="form-container__input-box" label="Phone *" }}
+                </div>
 
 
                 {{> button id="submit" class="form-container__button-box form-idents" text="Sign Up"}}

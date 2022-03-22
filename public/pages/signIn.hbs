@@ -15,10 +15,15 @@ stylesheets:
             <div id="status" class="mini-text signin-container__error-default">Invalid login/password</div>
 
             <form>
-                {{> input type="text" id="login" class="form-container__input-box form-idents" label="Login *" }}
-                {{> input type="password" id="password" class="form-container__input-box form-idents" label="Password *" }}
+                <div class="form-idents">
+                    {{> input type="text" id="login" class="form-container__input-box" label="Login *" }}
+                </div>
+                <div class="form-idents">
+                    {{> input type="password" id="password" class="form-container__input-box" label="Password *" }}
+                </div>
 
-                {{> checkbox id="remember-me" name="password" class="form-container__checkbox form-idents" label="Remember Me" }}
+                {{> checkbox id="remember-me" name="password" class="form-container__checkbox form-idents"
+                label="Remember Me" }}
 
                 {{> button id="submit" class="form-container__button-box form-idents" text="Sign In"}}
             </form>
