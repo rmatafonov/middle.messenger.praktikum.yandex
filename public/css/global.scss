@@ -15,7 +15,7 @@
 
 * {
   color: variables.$text-color;
-  font-family: "Arial";
+  font-family: Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -33,6 +33,7 @@ h2 {
 
 .mini-text {
   font-size: 14px;
+
   * {
     font-size: 14px;
   }
