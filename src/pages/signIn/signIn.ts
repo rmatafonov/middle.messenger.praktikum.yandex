@@ -30,6 +30,29 @@ export class SignInPage extends Block {
                     return null;
                 }
             },
+            validateValue: (e: InputEvent) => {
+                let control = (e.target! as HTMLInputElement);
+                let controlName = control.name
+
+                const signInData = {
+                    login: (this.refs.login.querySelector("input") as HTMLInputElement).value,
+                    password: (this.refs.password.querySelector("input") as HTMLInputElement).value,
+                    rememberMe: (this.refs.rememberMe.querySelector("input") as HTMLInputElement).checked
+                };
+
+                const nextState = {
+                    errors: {
+                        login: 'Some error',
+                        password: '',
+                    },
+                    values: { ...signInData },
+                };
+
+                this.setState(nextState);
+                
+                // const [childId, child] = Object.entries(this.children).filter(([_, child]) => child.props.id === controlName)[0]
+                // child.props.error = 'Some error'
+            },
             onSubmit: () => {
                 const signInData = {
                     login: (this.refs.login.querySelector("input") as HTMLInputElement).value,
@@ -90,6 +113,8 @@ export class SignInPage extends Block {
                                     id="login"
                                     className="input-box__moving-label"
                                     label="Login *"
+                                    onFocus=validateValue
+                                    onBlur=validateValue
                             }}}
                         </div>
                         <div class="form-idents">
@@ -101,6 +126,8 @@ export class SignInPage extends Block {
                                     id="password" 
                                     className="input-box__moving-label" 
                                     label="Password *" 
+                                    onFocus=validateValue
+                                    onBlur=validateValue
                             }}}
                         </div>
 
