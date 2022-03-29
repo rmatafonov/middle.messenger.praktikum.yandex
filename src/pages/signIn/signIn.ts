@@ -107,7 +107,6 @@ export class SignInPage extends Block {
                         <div class="form-idents">
                             {{{ Input
                                     value="${values.login}"
-                                    error="${errors.login}"
                                     ref="login"
                                     type="text"
                                     id="login"
@@ -115,6 +114,12 @@ export class SignInPage extends Block {
                                     label="Login *"
                                     onFocus=validateValue
                                     onBlur=validateValue
+                            }}}
+                            {{{
+                                Label
+                                    id=loginErrorLabel
+                                    text="${errors.login}"
+                                    className="mini-text label__error"
                             }}}
                         </div>
                         <div class="form-idents">
