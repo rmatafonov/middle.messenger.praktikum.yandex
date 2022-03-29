@@ -92,6 +92,7 @@ export default class Block<P = any> {
     }
 
     Object.assign(this.props, nextProps);
+    console.log(this.props)
   };
 
   setState = (nextState: any) => {
