@@ -1,4 +1,4 @@
-import Block from '../../core/Block';
+import Component from '../../core/Component';
 
 import './input.scss';
 
@@ -15,7 +15,7 @@ interface InputProps {
   onBlur?: () => void;
 }
 
-export class Input extends Block {
+export class Input extends Component {
   constructor({ id, type, className, autocomplete, required, label, value, onChange = () => { }, onFocus = () => { }, onBlur = () => { } }: InputProps) {
     super({ id, type, className, autocomplete, required, label, value, events: { input: onChange, focusin: onFocus, focusout: onBlur } });
   }

@@ -1,7 +1,7 @@
-import Block from './Block';
+import Component from './Component';
 
-export default function renderDOM(BlockPage: typeof Block) {
-  const block = new BlockPage();
+export default function renderDOM(ComponentPage: typeof Component) {
+  const block = new ComponentPage();
 
   const root = document.querySelector('#app');
   

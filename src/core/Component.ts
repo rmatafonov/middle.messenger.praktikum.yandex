@@ -6,9 +6,9 @@ interface BlockMeta<P = any> {
   props: P;
 }
 
-type Events = Values<typeof Block.EVENTS>;
+type Events = Values<typeof Component.EVENTS>;
 
-export default abstract class Block<P = any> {
+export default abstract class Component<P = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -21,7 +21,7 @@ export default abstract class Block<P = any> {
 
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
-  protected children: {[id: string]: Block} = {};
+  protected children: {[id: string]: Component} = {};
 
   eventBus: () => EventBus<Events>;
 
@@ -44,14 +44,14 @@ export default abstract class Block<P = any> {
 
     this._registerEvents(eventBus);
 
-    eventBus.emit(Block.EVENTS.INIT, this.props);
+    eventBus.emit(Component.EVENTS.INIT, this.props);
   }
 
   _registerEvents(eventBus: EventBus<Events>) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
   _createResources() {
@@ -64,7 +64,7 @@ export default abstract class Block<P = any> {
 
   init() {
     this._createResources();
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props);
+    this.eventBus().emit(Component.EVENTS.FLOW_RENDER, this.props);
   }
 
   _componentDidMount(props: P) {
@@ -141,7 +141,7 @@ export default abstract class Block<P = any> {
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       setTimeout(() => {
         if (this.element?.parentNode?.nodeType !==  Node.DOCUMENT_FRAGMENT_NODE ) {
-          this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+          this.eventBus().emit(Component.EVENTS.FLOW_CDM);
         }
       }, 100)
     }
@@ -164,7 +164,7 @@ export default abstract class Block<P = any> {
 
         // Запускаем обновление компоненты
         // Плохой cloneDeep, в след итерации нужно заставлять добавлять cloneDeep им самим
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+        self.eventBus().emit(Component.EVENTS.FLOW_CDU, {...target}, target);
         return true;
       },
       deleteProperty() {

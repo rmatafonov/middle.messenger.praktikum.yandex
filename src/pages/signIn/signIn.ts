@@ -1,9 +1,19 @@
-import { Block } from '../../core';
-import { validationRules } from '../../utils/validationRules'
+import { Component } from '../../core';
+import { validate } from '../../service/validation'
 
 import "./signin-signup.scss"
 
-export class SignInPage extends Block {
+export class SignInPage extends Component {
+    private validateControl = (e: InputEvent) => {
+        const control = (e.target! as HTMLInputElement);
+        const controlName = control.name
+
+        const validationResult = validate(controlName, control.value)
+
+        const errorLabelRefName = `${controlName}Error`
+        this.setChildProps(errorLabelRefName, { text: validationResult })
+    }
+
     protected getStateFromProps() {
         this.state = {
             values: {
@@ -15,15 +25,7 @@ export class SignInPage extends Block {
                 login: '',
                 password: '',
             },
-            validateValue: (e: InputEvent) => {
-                const control = (e.target! as HTMLInputElement);
-                const controlName = control.name
-
-                const validationResult = validationRules[controlName](control.value)
-
-                const errorLabelRefName = `${controlName}Error`
-                this.setChildProps(errorLabelRefName, { text: validationResult })
-            },
+            onFocusOrBlur: (e: InputEvent) => this.validateControl(e),
             onSubmit: () => {
                 const signInData = {
                     login: (this.refs.login.querySelector("input") as HTMLInputElement).value,
@@ -39,8 +41,8 @@ export class SignInPage extends Block {
                     values: { ...signInData },
                 };
 
-                nextState.errors.login = this.state.validate.login(signInData.login);
-                nextState.errors.password = this.state.validate.password(signInData.password);
+                nextState.errors.login = validate("login", signInData.login);
+                nextState.errors.password = validate("password", signInData.password);
 
                 this.setState(nextState);
 
@@ -71,8 +73,8 @@ export class SignInPage extends Block {
                                     id="login"
                                     className="input-box__moving-label"
                                     label="Login *"
-                                    onFocus=validateValue
-                                    onBlur=validateValue
+                                    onFocus=onFocusOrBlur
+                                    onBlur=onFocusOrBlur
                             }}}
                             {{{
                                 Label
@@ -90,8 +92,8 @@ export class SignInPage extends Block {
                                     id="password" 
                                     className="input-box__moving-label" 
                                     label="Password *" 
-                                    onFocus=validateValue
-                                    onBlur=validateValue
+                                    onFocus=onFocusOrBlur
+                                    onBlur=onFocusOrBlur
                             }}}
                             {{{
                                 Label

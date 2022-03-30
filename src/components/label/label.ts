@@ -1,4 +1,4 @@
-import Block from '../../core/Block';
+import Component from '../../core/Component';
 
 import './label.scss';
 
@@ -8,7 +8,7 @@ interface LabelProps {
   text?: string;
 }
 
-export class Label extends Block {
+export class Label extends Component {
   constructor({ id, className, text }: LabelProps) {
     super({ id, className, text });
   }
