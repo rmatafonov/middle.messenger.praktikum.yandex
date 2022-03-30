@@ -21,14 +21,31 @@ export class SignInPage extends Block {
                     } else if (login.length < 4) {
                         return 'Login should contain more than 3 chars';
                     }
-                    return null;
+                    return '';
                 },
                 password: (password: string) => {
                     if (!password) {
                         return 'Password is required';
                     }
-                    return null;
+                    return '';
                 }
+            },
+            validateValue: (e: InputEvent) => {
+                const control = (e.target! as HTMLInputElement);
+                const controlName = control.name
+
+                const errorLabelRefName = `${controlName}Error`
+                const errorRef = this.refs[errorLabelRefName]
+
+                const errorLabels = Object.values(this.children).filter(c => c.getContent() === errorRef)
+                if (errorLabels.length !== 1) {
+                    console.warn(`1 Ref with Name ${controlName}Error is expected but was: ${errorLabels}`)
+                }
+                const errorLabel = errorLabels[0]
+
+                errorLabel.setProps({ text: this.state.validate[controlName](control.value) })
+                this.children[errorLabel.id] = errorLabel
+                this.refs[errorLabelRefName] = errorLabel.getContent()
             },
             onSubmit: () => {
                 const signInData = {
@@ -45,24 +62,12 @@ export class SignInPage extends Block {
                     values: { ...signInData },
                 };
 
-                let isError = false;
-
-                if (!signInData.login) {
-                    nextState.errors.login = 'Login is required';
-                    isError = true;
-                } else if (signInData.login.length < 4) {
-                    nextState.errors.login = 'Login should contain more than 3 chars';
-                    isError = true;
-                }
-
-                if (!signInData.password) {
-                    nextState.errors.password = 'Password is required';
-                    isError = true;
-                }
+                nextState.errors.login = this.state.validate.login(signInData.login);
+                nextState.errors.password = this.state.validate.password(signInData.password);
 
                 this.setState(nextState);
 
-                if (!isError) {
+                if (!nextState.errors.login && !nextState.errors.password) {
                     console.log('action/login', signInData);
                 }
             }
@@ -84,28 +89,44 @@ export class SignInPage extends Block {
                         <div class="form-idents">
                             {{{ Input
                                     value="${values.login}"
-                                    error="${errors.login}"
                                     ref="login"
                                     type="text"
                                     id="login"
                                     className="input-box__moving-label"
                                     label="Login *"
+                                    onFocus=validateValue
+                                    onBlur=validateValue
+                            }}}
+                            {{{
+                                Label
+                                    id="loginErrorLabel"
+                                    ref="loginError"
+                                    text="${errors.login}"
+                                    className="mini-text label__error"
                             }}}
                         </div>
                         <div class="form-idents">
                             {{{ Input
                                     value="${values.password}"
-                                    error="${errors.password}"
                                     ref="password"
                                     type="password" 
                                     id="password" 
                                     className="input-box__moving-label" 
                                     label="Password *" 
+                                    onFocus=validateValue
+                                    onBlur=validateValue
+                            }}}
+                            {{{
+                                Label
+                                    id="passwordErrorLabel"
+                                    ref="passwordError"
+                                    text="${errors.password}"
+                                    className="mini-text label__error"
                             }}}
                         </div>
 
-                        {{{ Checkbox 
-                                id="remember-me" 
+                        {{{ Checkbox
+                                id="remember-me"
                                 checked=${values.rememberMe}
                                 ref="rememberMe"
                                 className="form-container__checkbox form-idents" 
