@@ -1,4 +1,5 @@
 import { Block } from '../../core';
+import { validationRules } from '../../utils/validationRules'
 
 import "./signin-signup.scss"
 
@@ -14,38 +15,14 @@ export class SignInPage extends Block {
                 login: '',
                 password: '',
             },
-            validate: {
-                login: (login: string) => {
-                    if (!login) {
-                        return 'Login is required';
-                    } else if (login.length < 4) {
-                        return 'Login should contain more than 3 chars';
-                    }
-                    return '';
-                },
-                password: (password: string) => {
-                    if (!password) {
-                        return 'Password is required';
-                    }
-                    return '';
-                }
-            },
             validateValue: (e: InputEvent) => {
                 const control = (e.target! as HTMLInputElement);
                 const controlName = control.name
 
+                const validationResult = validationRules[controlName](control.value)
+
                 const errorLabelRefName = `${controlName}Error`
-                const errorRef = this.refs[errorLabelRefName]
-
-                const errorLabels = Object.values(this.children).filter(c => c.getContent() === errorRef)
-                if (errorLabels.length !== 1) {
-                    console.warn(`1 Ref with Name ${controlName}Error is expected but was: ${errorLabels}`)
-                }
-                const errorLabel = errorLabels[0]
-
-                errorLabel.setProps({ text: this.state.validate[controlName](control.value) })
-                this.children[errorLabel.id] = errorLabel
-                this.refs[errorLabelRefName] = errorLabel.getContent()
+                this.setChildProps(errorLabelRefName, { text: validationResult })
             },
             onSubmit: () => {
                 const signInData = {
@@ -86,7 +63,7 @@ export class SignInPage extends Block {
                     <div id="status" class="mini-text signin-container__error-default">Invalid login/password</div>
 
                     <form>
-                        <div class="form-idents">
+                        <div class="form-indents">
                             {{{ Input
                                     value="${values.login}"
                                     ref="login"
@@ -105,7 +82,7 @@ export class SignInPage extends Block {
                                     className="mini-text label__error"
                             }}}
                         </div>
-                        <div class="form-idents">
+                        <div class="form-indents">
                             {{{ Input
                                     value="${values.password}"
                                     ref="password"
@@ -129,23 +106,23 @@ export class SignInPage extends Block {
                                 id="remember-me"
                                 checked=${values.rememberMe}
                                 ref="rememberMe"
-                                className="form-container__checkbox form-idents" 
+                                className="form-container__checkbox form-indents" 
                                 label="Remember Me" 
                         }}}
 
                         {{{ Button 
-                                className="form-container__button-box form-idents" 
+                                className="form-container__button-box form-indents" 
                                 text="Sign In"
                                 onClick=onSubmit
                         }}}
                     </form>
 
-                    <div class="mini-text signin-container__links-box form-half-idents">
+                    <div class="mini-text signin-container__links-box form-half-indents">
                         <span class="links-box__left"><a href="./forgot.hbs">Forgot Password?</a></span>
                         <span class="links-box__right"><a href="./signUp.hbs">Sign Up</a></span>
                     </div>
 
-                    <div class="mini-text signin-container__links-box form-double-idents">
+                    <div class="mini-text signin-container__links-box form-double-indents">
                         <span class="links-box__center">Copyright © <a href="#">Your Website</a> 2022.</span>
                     </div>
                 </div>

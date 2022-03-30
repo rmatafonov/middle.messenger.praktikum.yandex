@@ -8,7 +8,7 @@ interface BlockMeta<P = any> {
 
 type Events = Values<typeof Block.EVENTS>;
 
-export default class Block<P = any> {
+export default abstract class Block<P = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -92,8 +92,23 @@ export default class Block<P = any> {
     }
 
     Object.assign(this.props, nextProps);
-    console.log(this.props)
   };
+
+  setChildProps = (childRefName: string, nextProps: P) => {
+    if (!nextProps || !childRefName) {
+      return;
+    }
+    
+    const childBlocks = Object.values(this.children).filter(c => c.getContent() === this.refs[childRefName])
+    if (childBlocks.length !== 1) {
+      console.warn(`1 Ref with Name ${childRefName} is expected but was: ${childBlocks}`)
+    }
+    const childBlock = childBlocks[0]
+
+    childBlock.setProps(nextProps)
+    
+    this.refs[childRefName] = childBlock.getContent()
+  }
 
   setState = (nextState: any) => {
     if (!nextState) {
@@ -119,9 +134,7 @@ export default class Block<P = any> {
     this._addEvents();
   }
 
-  protected render(): string {
-    return '';
-  };
+  protected abstract render(): string
 
   getContent(): HTMLElement {
     // Хак, чтобы вызвать CDM только после добавления в DOM
