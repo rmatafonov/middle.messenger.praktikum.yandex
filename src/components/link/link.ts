@@ -1,4 +1,4 @@
-import Block from '../../core/Block';
+import Component from '../../core/Component';
 
 import './link.css';
 
@@ -7,7 +7,7 @@ interface LinkProps {
   to: string;
 }
 
-export class Link extends Block {
+export class Link extends Component {
   constructor(props: LinkProps) {
     const onClick = (e: MouseEvent) => {
       // const router = new Router();

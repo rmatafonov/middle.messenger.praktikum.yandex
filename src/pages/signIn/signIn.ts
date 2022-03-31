@@ -1,8 +1,19 @@
-import { Block } from '../../core';
+import { Component } from '../../core';
+import { validate } from '../../service/validation'
 
-import "./signin-signup.scss"
+import "../css/signin-signup.scss"
 
-export class SignInPage extends Block {
+export class SignInPage extends Component {
+    private validateControl = (e: InputEvent) => {
+        const control = (e.target! as HTMLInputElement);
+        const controlName = control.name
+
+        const validationResult = validate(controlName, control.value)
+
+        const errorLabelRefName = `${controlName}Error`
+        this.setChildProps(errorLabelRefName, { text: validationResult })
+    }
+
     protected getStateFromProps() {
         this.state = {
             values: {
@@ -14,39 +25,7 @@ export class SignInPage extends Block {
                 login: '',
                 password: '',
             },
-            validate: {
-                login: (login: string) => {
-                    if (!login) {
-                        return 'Login is required';
-                    } else if (login.length < 4) {
-                        return 'Login should contain more than 3 chars';
-                    }
-                    return '';
-                },
-                password: (password: string) => {
-                    if (!password) {
-                        return 'Password is required';
-                    }
-                    return '';
-                }
-            },
-            validateValue: (e: InputEvent) => {
-                const control = (e.target! as HTMLInputElement);
-                const controlName = control.name
-
-                const errorLabelRefName = `${controlName}Error`
-                const errorRef = this.refs[errorLabelRefName]
-
-                const errorLabels = Object.values(this.children).filter(c => c.getContent() === errorRef)
-                if (errorLabels.length !== 1) {
-                    console.warn(`1 Ref with Name ${controlName}Error is expected but was: ${errorLabels}`)
-                }
-                const errorLabel = errorLabels[0]
-
-                errorLabel.setProps({ text: this.state.validate[controlName](control.value) })
-                this.children[errorLabel.id] = errorLabel
-                this.refs[errorLabelRefName] = errorLabel.getContent()
-            },
+            onFocusOrBlur: (e: InputEvent) => this.validateControl(e),
             onSubmit: () => {
                 const signInData = {
                     login: (this.refs.login.querySelector("input") as HTMLInputElement).value,
@@ -62,13 +41,13 @@ export class SignInPage extends Block {
                     values: { ...signInData },
                 };
 
-                nextState.errors.login = this.state.validate.login(signInData.login);
-                nextState.errors.password = this.state.validate.password(signInData.password);
+                nextState.errors.login = validate("login", signInData.login);
+                nextState.errors.password = validate("password", signInData.password);
 
                 this.setState(nextState);
 
                 if (!nextState.errors.login && !nextState.errors.password) {
-                    console.log('action/login', signInData);
+                    console.log('action/signIn', signInData);
                 }
             }
         }
@@ -86,7 +65,7 @@ export class SignInPage extends Block {
                     <div id="status" class="mini-text signin-container__error-default">Invalid login/password</div>
 
                     <form>
-                        <div class="form-idents">
+                        <div class="form-indents">
                             {{{ Input
                                     value="${values.login}"
                                     ref="login"
@@ -94,8 +73,8 @@ export class SignInPage extends Block {
                                     id="login"
                                     className="input-box__moving-label"
                                     label="Login *"
-                                    onFocus=validateValue
-                                    onBlur=validateValue
+                                    onFocus=onFocusOrBlur
+                                    onBlur=onFocusOrBlur
                             }}}
                             {{{
                                 Label
@@ -105,7 +84,7 @@ export class SignInPage extends Block {
                                     className="mini-text label__error"
                             }}}
                         </div>
-                        <div class="form-idents">
+                        <div class="form-indents">
                             {{{ Input
                                     value="${values.password}"
                                     ref="password"
@@ -113,8 +92,8 @@ export class SignInPage extends Block {
                                     id="password" 
                                     className="input-box__moving-label" 
                                     label="Password *" 
-                                    onFocus=validateValue
-                                    onBlur=validateValue
+                                    onFocus=onFocusOrBlur
+                                    onBlur=onFocusOrBlur
                             }}}
                             {{{
                                 Label
@@ -129,23 +108,23 @@ export class SignInPage extends Block {
                                 id="remember-me"
                                 checked=${values.rememberMe}
                                 ref="rememberMe"
-                                className="form-container__checkbox form-idents" 
+                                className="form-container__checkbox form-indents" 
                                 label="Remember Me" 
                         }}}
 
                         {{{ Button 
-                                className="form-container__button-box form-idents" 
+                                className="form-container__button-box form-indents" 
                                 text="Sign In"
                                 onClick=onSubmit
                         }}}
                     </form>
 
-                    <div class="mini-text signin-container__links-box form-half-idents">
+                    <div class="mini-text signin-container__links-box form-half-indents">
                         <span class="links-box__left"><a href="./forgot.hbs">Forgot Password?</a></span>
                         <span class="links-box__right"><a href="./signUp.hbs">Sign Up</a></span>
                     </div>
 
-                    <div class="mini-text signin-container__links-box form-double-idents">
+                    <div class="mini-text signin-container__links-box form-double-indents">
                         <span class="links-box__center">Copyright © <a href="#">Your Website</a> 2022.</span>
                     </div>
                 </div>

@@ -1,10 +1,10 @@
-import Block from './Block';
+import Component from './Component';
 
-export default function renderDOM(BlockPage: typeof Block) {
-  const block = new BlockPage();
+export default function renderDOM(ComponentPage: typeof Component) {
+  const page = new ComponentPage();
 
   const root = document.querySelector('#app');
   
   root!.innerHTML = '';
-  root!.appendChild(block.getContent());
+  root!.appendChild(page.getContent());
 }

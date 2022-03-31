@@ -1,4 +1,4 @@
-import Block from '../../core/Block';
+import Component from '../../core/Component';
 
 import './checkbox.scss';
 
@@ -9,7 +9,7 @@ interface CheckboxProps {
   checked: string;
 }
 
-export class Checkbox extends Block {
+export class Checkbox extends Component {
   constructor({ id, label, className, checked }: CheckboxProps) {
     super({ id, label, className, checked });
   }

@@ -7,6 +7,12 @@
   height: fit-content;
 }
 
+.signin-page__container {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .signin-container__logo {
   height: 80px;
   width: 80px;
@@ -31,27 +37,21 @@
 }
 
 .signin-container__links-box {
-  position: relative;
-  display: block;
-
-  > * {
-    width: fit-content;
-  }
+  display: inline-flex;
 
   .links-box__left {
-    position: absolute;
-    left: 0;
+    flex-grow: 1;
+    text-align: left;
     margin-left: 5px;
   }
 
   .links-box__right {
-    position: absolute;
-    right: 0;
+    flex-grow: 1;
+    text-align: right;
     margin-right: 5px;
   }
 
   .links-box__center {
-    display: table;
     margin: 0 auto;
   }
 }
