@@ -2,7 +2,7 @@ interface ValidationRules {
     [key: string]: (v: string) => string
 }
 
-type ValidationChain = Array < { check: (v: string) => boolean, message: string } >
+type ValidationChain = Array<{ check: (v: string) => boolean, message: string }>
 
 const checks: { [key: string]: (v: string) => boolean } = {
     isNull: (v) => !v,
@@ -11,9 +11,21 @@ const checks: { [key: string]: (v: string) => boolean } = {
     isMoreThan20Chars: (v) => v.length > 20,
     isMoreThan40Chars: (v) => v.length > 40,
     isDigitsOnly: (v) => v.search(/^\d+$/) !== -1,
-    isAllowedSymbolsOnly: (v) => v.search(/^[a-zA-Z0-9\-\_]*$/) !== 0,
+    isProhibitedLoginSymbols: (v) => v.search(/^[a-z0-9\-\_]+$/ig) !== 0,
+    isProhibitedNameSymbols: (v) => v.search(/^[A-Z\u0410-\u042f][\u0430-\u044fa-z0-9\-]+$/ig) !== 0,
+    isInvalidEmail: (v) => v.search(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) !== 0,
+    isInvalidPhone: (v) => v.search(/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g) !== 0,
+    isFirstCapital: (v) => v.search(/^[A-Z\u0410-\u042f]/) !== 0,
     isAtLeastOneCapitalLetter: (v) => v.search(/[A-Z]/) === -1,
     isAtLeastOneDigit: (v) => v.search(/\d/) === -1,
+}
+
+function nameValidationChain(whichName: string): ValidationChain {
+    return [
+        { check: checks.isNull, message: `${whichName} is required` },
+        { check: checks.isProhibitedNameSymbols, message: `Allowed ${whichName} symbols: Latin/Cyrillic letters and dash (-)` },
+        { check: checks.isFirstCapital, message: `First letter should be Capital` },
+    ]
 }
 
 const validationRules: ValidationRules = {
@@ -23,7 +35,7 @@ const validationRules: ValidationRules = {
             { check: checks.isLessThan4Chars, message: 'Login length should be between 3 and 20 chars' },
             { check: checks.isMoreThan20Chars, message: 'Login length should be between 3 and 20 chars' },
             { check: checks.isDigitsOnly, message: 'Login should not consist of digits only' },
-            { check: checks.isAllowedSymbolsOnly, message: 'Allowed Login symbols: Latin letters, dash (-) or underline (_)' },
+            { check: checks.isProhibitedLoginSymbols, message: 'Allowed Login symbols: Latin letters, dash (-) and underline (_)' },
         ]
 
         return validationChain.find(link => link.check(login))?.message || ''
@@ -38,7 +50,29 @@ const validationRules: ValidationRules = {
         ]
 
         return validationChain.find(link => link.check(password))?.message || ''
-    }
+    },
+    first_name: (firstName: string) => {
+        return nameValidationChain("First Name").find(link => link.check(firstName))?.message || ''
+    },
+    second_name: (secondName: string) => {
+        return nameValidationChain("Second Name").find(link => link.check(secondName))?.message || ''
+    },
+    email: (email: string) => {
+        const validationChain: ValidationChain = [
+            { check: checks.isNull, message: 'Email is required' },
+            { check: checks.isInvalidEmail, message: 'Invalid Email' },
+        ]
+
+        return validationChain.find(link => link.check(email))?.message || ''
+    },
+    phone: (email: string) => {
+        const validationChain: ValidationChain = [
+            { check: checks.isNull, message: 'Phone is required' },
+            { check: checks.isInvalidPhone, message: 'Invalid Phone' },
+        ]
+
+        return validationChain.find(link => link.check(email))?.message || ''
+    },
 }
 
 export function validate(key: string, value: string) {

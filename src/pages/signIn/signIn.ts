@@ -1,7 +1,7 @@
 import { Component } from '../../core';
 import { validate } from '../../service/validation'
 
-import "./signin-signup.scss"
+import "../css/signin-signup.scss"
 
 export class SignInPage extends Component {
     private validateControl = (e: InputEvent) => {
@@ -47,7 +47,7 @@ export class SignInPage extends Component {
                 this.setState(nextState);
 
                 if (!nextState.errors.login && !nextState.errors.password) {
-                    console.log('action/login', signInData);
+                    console.log('action/signIn', signInData);
                 }
             }
         }
