@@ -3,10 +3,12 @@
 
 .form-container__checkbox {
   padding: 4px;
+
   > .control {
     position: absolute;
     z-index: -1;
     opacity: 0;
+
     + .label-for-control {
       display: inline-flex;
       align-items: center;
