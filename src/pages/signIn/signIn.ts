@@ -120,8 +120,8 @@ export class SignInPage extends Component {
                     </form>
 
                     <div class="mini-text signin-container__links-box form-half-indents">
-                        <span class="links-box__left"><a href="./forgot.hbs">Forgot Password?</a></span>
-                        <span class="links-box__right"><a href="./signUp.hbs">Sign Up</a></span>
+                        <span class="links-box__left"><a href="./forgot.html">Forgot Password?</a></span>
+                        <span class="links-box__right"><a href="./signUp.html">Sign Up</a></span>
                     </div>
 
                     <div class="mini-text signin-container__links-box form-double-indents">

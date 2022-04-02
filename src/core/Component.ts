@@ -1,6 +1,6 @@
-import EventBus from './EventBus';
-import {nanoid} from 'nanoid';
-import Handlebars from 'handlebars';
+import EventBus from './EventBus'
+import { nanoid } from 'nanoid'
+import Handlebars from 'handlebars'
 
 interface BlockMeta<P = any> {
   props: P;
@@ -21,12 +21,12 @@ export default abstract class Component<P = any> {
 
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
-  protected children: {[id: string]: Component} = {};
+  protected children: { [id: string]: Component } = {};
 
   eventBus: () => EventBus<Events>;
 
   protected state: any = {};
-  protected refs: {[key: string]: HTMLElement} = {};
+  protected refs: { [key: string]: HTMLElement } = {};
 
   public constructor(props?: P) {
     const eventBus = new EventBus<Events>();
@@ -98,16 +98,18 @@ export default abstract class Component<P = any> {
     if (!nextProps || !childRefName) {
       return;
     }
-    
-    const childBlocks = Object.values(this.children).filter(c => c.getContent() === this.refs[childRefName])
-    if (childBlocks.length !== 1) {
-      console.warn(`1 Ref with Name ${childRefName} is expected but was: ${childBlocks}`)
-    }
-    const childBlock = childBlocks[0]
 
-    childBlock.setProps(nextProps)
-    
-    this.refs[childRefName] = childBlock.getContent()
+    const childComponent = this.retrieveChildByRef(childRefName)
+    childComponent.setProps(nextProps)
+    this.refs[childRefName] = childComponent.getContent()
+  }
+
+  retrieveChildByRef = (ref: string) => {
+    const childBlocks = Object.values(this.children).filter(c => c.element === this.refs[ref])
+    if (childBlocks.length !== 1) {
+      console.warn(`1 Ref with Name ${ref} is expected but was: ${childBlocks}`)
+    }
+    return childBlocks[0]
   }
 
   setState = (nextState: any) => {
@@ -140,7 +142,7 @@ export default abstract class Component<P = any> {
     // Хак, чтобы вызвать CDM только после добавления в DOM
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       setTimeout(() => {
-        if (this.element?.parentNode?.nodeType !==  Node.DOCUMENT_FRAGMENT_NODE ) {
+        if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
           this.eventBus().emit(Component.EVENTS.FLOW_CDM);
         }
       }, 100)
@@ -164,7 +166,7 @@ export default abstract class Component<P = any> {
 
         // Запускаем обновление компоненты
         // Плохой cloneDeep, в след итерации нужно заставлять добавлять cloneDeep им самим
-        self.eventBus().emit(Component.EVENTS.FLOW_CDU, {...target}, target);
+        self.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
       deleteProperty() {
