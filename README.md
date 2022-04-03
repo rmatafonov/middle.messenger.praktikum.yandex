@@ -18,4 +18,4 @@ Yet another one Messenger
 https://www.figma.com/file/CUA4AnaXxTb8ChLdUvyaDw/Yandex.Practicum.-Module-1.-Messenger?node-id=10%3A1019
 
 ## CI: Netlify
-https://wonderful-leavitt-ee9ac7.netlify.app/
+https://yandex-practicum-messenger-rmatafonov.netlify.app/

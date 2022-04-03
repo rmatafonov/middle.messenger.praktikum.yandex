@@ -18,14 +18,14 @@
   }
 
   .control:-webkit-autofill {
-    -webkit-text-fill-color: #6c97a5 !important;
+    -webkit-text-fill-color: #6c97a5;
   }
 
   .control:-webkit-autofill,
   .control:-webkit-autofill:hover,
   .control:-webkit-autofill:focus,
   .control:-webkit-autofill:active {
-    box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset;
   }
 
   .label-for-control {

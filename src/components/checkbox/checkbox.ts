@@ -2,17 +2,19 @@ import Component from '../../core/Component';
 
 import './checkbox.scss';
 
-interface CheckboxProps {
-  id: string;
-  label: string;
-  className: string;
-  checked: string;
+type CheckboxProps = {
+  id?: string;
+  label?: string;
+  className?: string;
+  checked?: string;
 }
 
-export class Checkbox extends Component {
+export class Checkbox extends Component<CheckboxProps> {
   constructor({ id, label, className, checked }: CheckboxProps) {
     super({ id, label, className, checked });
   }
+
+  getBooleanValue = () => (this.element!.querySelector('input') as HTMLInputElement).checked
 
   protected render(): string {
     // language=hbs

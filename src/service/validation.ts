@@ -4,7 +4,7 @@ interface ValidationRules {
 
 type ValidationChain = Array<{ check: (v: string) => boolean, message: string }>
 
-const checks: { [key: string]: (v: string) => boolean } = {
+const CHECKS: { [key: string]: (v: string) => boolean } = {
     isNull: (v) => !v,
     isLessThan4Chars: (v) => v.length < 4,
     isLessThan8Chars: (v) => v.length < 8,
@@ -22,31 +22,31 @@ const checks: { [key: string]: (v: string) => boolean } = {
 
 function nameValidationChain(whichName: string): ValidationChain {
     return [
-        { check: checks.isNull, message: `${whichName} is required` },
-        { check: checks.isProhibitedNameSymbols, message: `Allowed ${whichName} symbols: Latin/Cyrillic letters and dash (-)` },
-        { check: checks.isFirstCapital, message: `First letter should be Capital` },
+        { check: CHECKS.isNull, message: `${whichName} is required` },
+        { check: CHECKS.isProhibitedNameSymbols, message: `Allowed ${whichName} symbols: Latin/Cyrillic letters and dash (-)` },
+        { check: CHECKS.isFirstCapital, message: `First letter should be Capital` },
     ]
 }
 
 const validationRules: ValidationRules = {
     login: (login: string) => {
         const validationChain: ValidationChain = [
-            { check: checks.isNull, message: 'Login is required' },
-            { check: checks.isLessThan4Chars, message: 'Login length should be between 3 and 20 chars' },
-            { check: checks.isMoreThan20Chars, message: 'Login length should be between 3 and 20 chars' },
-            { check: checks.isDigitsOnly, message: 'Login should not consist of digits only' },
-            { check: checks.isProhibitedLoginSymbols, message: 'Allowed Login symbols: Latin letters, dash (-) and underline (_)' },
+            { check: CHECKS.isNull, message: 'Login is required' },
+            { check: CHECKS.isLessThan4Chars, message: 'Login length should be between 3 and 20 chars' },
+            { check: CHECKS.isMoreThan20Chars, message: 'Login length should be between 3 and 20 chars' },
+            { check: CHECKS.isDigitsOnly, message: 'Login should not consist of digits only' },
+            { check: CHECKS.isProhibitedLoginSymbols, message: 'Allowed Login symbols: Latin letters, dash (-) and underline (_)' },
         ]
 
         return validationChain.find(link => link.check(login))?.message || ''
     },
     password: (password: string) => {
         const validationChain: ValidationChain = [
-            { check: checks.isNull, message: 'Password is required' },
-            { check: checks.isLessThan8Chars, message: 'Password length should be between 8 and 40 chars' },
-            { check: checks.isMoreThan40Chars, message: 'Password length should be between 8 and 40 chars' },
-            { check: checks.isAtLeastOneCapitalLetter, message: 'Password should contain at least one capital letter' },
-            { check: checks.isAtLeastOneDigit, message: 'Password should contain at least one digit' },
+            { check: CHECKS.isNull, message: 'Password is required' },
+            { check: CHECKS.isLessThan8Chars, message: 'Password length should be between 8 and 40 chars' },
+            { check: CHECKS.isMoreThan40Chars, message: 'Password length should be between 8 and 40 chars' },
+            { check: CHECKS.isAtLeastOneCapitalLetter, message: 'Password should contain at least one capital letter' },
+            { check: CHECKS.isAtLeastOneDigit, message: 'Password should contain at least one digit' },
         ]
 
         return validationChain.find(link => link.check(password))?.message || ''
@@ -59,16 +59,16 @@ const validationRules: ValidationRules = {
     },
     email: (email: string) => {
         const validationChain: ValidationChain = [
-            { check: checks.isNull, message: 'Email is required' },
-            { check: checks.isInvalidEmail, message: 'Invalid Email' },
+            { check: CHECKS.isNull, message: 'Email is required' },
+            { check: CHECKS.isInvalidEmail, message: 'Invalid Email' },
         ]
 
         return validationChain.find(link => link.check(email))?.message || ''
     },
     phone: (email: string) => {
         const validationChain: ValidationChain = [
-            { check: checks.isNull, message: 'Phone is required' },
-            { check: checks.isInvalidPhone, message: 'Invalid Phone' },
+            { check: CHECKS.isNull, message: 'Phone is required' },
+            { check: CHECKS.isInvalidPhone, message: 'Invalid Phone' },
         ]
 
         return validationChain.find(link => link.check(email))?.message || ''

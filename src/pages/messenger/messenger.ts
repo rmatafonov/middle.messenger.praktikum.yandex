@@ -5,12 +5,12 @@ import './messenger.scss'
 import chatsList from './chatsNoSelected.json'
 import defaultAvatar from '../../img/camera_200.png'
 
-(chatsList as Array<ChatsListItemProps>).forEach((c: ChatsListItemProps, i: number) => {
-    c.ref = `chat-${i}`
-    c.isSelected = false
+(chatsList as Array<ChatsListItemProps>).forEach((chatListItem: ChatsListItemProps, i: number) => {
+    chatListItem.ref = `chat-${i}`
+    chatListItem.isSelected = false
 })
 
-export class MessengerNoSelectedChatPage extends Component {
+export class MessengerPage extends Component {
     protected getStateFromProps() {
         this.state = {
             values: {
@@ -44,27 +44,6 @@ export class MessengerNoSelectedChatPage extends Component {
                 }
                 this.setState(nextState)
             },
-            // onFocusOrBlur: (e: InputEvent) => this.validateControl(e),
-            // onSubmit: () => {
-            //     const signInData = {
-            //         email: (this.refs.email.querySelector("input") as HTMLInputElement).value,
-            //     };
-
-            //     const nextState = {
-            //         errors: {
-            //             email: '',
-            //         },
-            //         values: { ...signInData },
-            //     };
-
-            //     nextState.errors.email = validate("email", signInData.email)
-
-            //     this.setState(nextState);
-
-            //     if (!nextState.errors.email) {
-            //         console.log('action/forgot', signInData);
-            //     }
-            // }
         }
     }
 

@@ -2,7 +2,7 @@ import Component from '../../core/Component';
 
 import './input.scss';
 
-interface InputProps {
+type InputProps = {
   id?: string;
   type?: 'text' | 'password' | 'email';
   className?: string;
@@ -15,10 +15,25 @@ interface InputProps {
   onBlur?: () => void;
 }
 
-export class Input extends Component {
-  constructor({ id, type, className, autocomplete, required, label, value, onChange = () => { }, onFocus = () => { }, onBlur = () => { } }: InputProps) {
-    super({ id, type, className, autocomplete, required, label, value, events: { input: onChange, focusin: onFocus, focusout: onBlur } });
+export class Input extends Component<InputProps> {
+  constructor(props: InputProps) {
+    super(props);
   }
+
+  init() {
+    this.events = {}
+    if (this.props.onChange) {
+      this.events.click = this.props.onChange
+    }
+    if (this.props.onFocus) {
+      this.events.focusin = this.props.onFocus
+    }
+    if (this.props.onBlur) {
+      this.events.focusout = this.props.onBlur
+    }
+  }
+
+  getStringValue = () => (this.element!.querySelector('input') as HTMLInputElement).value
 
   protected render(): string {
     // language=hbs

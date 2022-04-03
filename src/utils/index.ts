@@ -1,1 +1,2 @@
-export { capitalizeFirstLetter as default } from './stringUtils'
+export { capitalizeFirstLetter } from './stringUtils'
+export { queryStringify } from './stringUtils'

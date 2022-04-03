@@ -3,7 +3,7 @@ import Component from '../../core/Component'
 import './chatsListItem.scss'
 import defaultAvatar from '../../img/camera_200.png'
 
-export interface ChatsListItemProps {
+type ChatsListItemProps = {
   ref: string
   isSelected: boolean
   lastMessageHeaderPrefix: string
@@ -13,9 +13,15 @@ export interface ChatsListItemProps {
   onClick: (e: Event) => void
 }
 
-export class ChatsListItem extends Component {
-  constructor({ isSelected, lastMessageHeaderPrefix, lastMessageHeader, lastMessageSender, lastMessageText, onClick }: ChatsListItemProps) {
-    super({ isSelected, lastMessageHeaderPrefix, lastMessageHeader, lastMessageSender, lastMessageText, events: { click: onClick } })
+export class ChatsListItem extends Component<ChatsListItemProps> {
+  constructor(props: ChatsListItemProps) {
+    super(props)
+  }
+
+  init(): void {
+    this.events = { 
+      click: this.props.onClick 
+    }
   }
 
   protected render(): string {

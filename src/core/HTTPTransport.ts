@@ -1,4 +1,6 @@
-const METHODS = {
+import { queryStringify } from '../utils';
+
+const Methods = {
     GET: 'GET',
     POST: 'POST',
     PUT: 'PUT',
@@ -12,28 +14,21 @@ type Options = {
     data?: Record<string, unknown>
 }
 
-function queryStringify(data: Record<string, unknown>) {
-    const keys = Object.keys(data);
-    return keys.reduce((result, key, index) => {
-        return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
-    }, '?');
-}
-
 class HTTPTransport {
     get = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+        return this.request(url, { ...options, method: Methods.GET }, options.timeout);
     };
 
     post = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+        return this.request(url, { ...options, method: Methods.POST }, options.timeout);
     };
 
     put = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+        return this.request(url, { ...options, method: Methods.PUT }, options.timeout);
     };
 
     delete = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+        return this.request(url, { ...options, method: Methods.DELETE }, options.timeout);
     };
 
     request = (url: string, options: Options = {}, timeout = 5000) => {
@@ -46,7 +41,7 @@ class HTTPTransport {
             }
 
             const xhr = new XMLHttpRequest();
-            const isGet = method === METHODS.GET;
+            const isGet = method === Methods.GET;
 
             xhr.open(
                 method,
