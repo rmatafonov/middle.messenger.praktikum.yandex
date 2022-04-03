@@ -116,6 +116,10 @@ export default abstract class Component<P extends {} = {}> {
     return childBlocks[0]
   }
 
+  getStringValue = () => ''
+
+  getBooleanValue = () => false
+
   setState = (nextState: any) => {
     if (!nextState) {
       return;
@@ -155,25 +159,19 @@ export default abstract class Component<P extends {} = {}> {
     return this.element!;
   }
 
-  private _makePropsProxy(props: any): any {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
-    const self = this;
-
+  private _makePropsProxy = (props: any): any => {
     return new Proxy(props as unknown as object, {
-      get(target: Record<string, unknown>, prop: string) {
+      get: (target: Record<string, unknown>, prop: string) => {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target: Record<string, unknown>, prop: string, value: unknown) {
+      set: (target: Record<string, unknown>, prop: string, value: unknown) => {
         target[prop] = value;
-
-        // Запускаем обновление компоненты
-        // Плохой cloneDeep, в след итерации нужно заставлять добавлять cloneDeep им самим
-        self.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...target }, target);
+        // TODO: cloneDeep
+        this.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
-      deleteProperty() {
+      deleteProperty: () => {
         throw new Error('Нет доступа');
       },
     }) as unknown as P;

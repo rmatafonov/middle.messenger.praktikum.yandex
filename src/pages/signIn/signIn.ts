@@ -28,9 +28,9 @@ export class SignInPage extends Component {
             onFocusOrBlur: (e: InputEvent) => this.validateControl(e),
             onSubmit: () => {
                 const signInData = {
-                    login: (this.refs.login.querySelector("input") as HTMLInputElement).value,
-                    password: (this.refs.password.querySelector("input") as HTMLInputElement).value,
-                    rememberMe: (this.refs.rememberMe.querySelector("input") as HTMLInputElement).checked
+                    login: this.retrieveChildByRef("login").getStringValue(),
+                    password: this.retrieveChildByRef("password").getStringValue(),
+                    rememberMe: this.retrieveChildByRef("rememberMe").getBooleanValue()
                 };
 
                 const nextState = {

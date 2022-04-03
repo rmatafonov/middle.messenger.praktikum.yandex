@@ -25,7 +25,7 @@ export class ForgotPage extends Component {
             onFocusOrBlur: (e: InputEvent) => this.validateControl(e),
             onSubmit: () => {
                 const signInData = {
-                    email: (this.refs.email.querySelector("input") as HTMLInputElement).value,
+                    email: this.retrieveChildByRef("email").getStringValue(),
                 };
 
                 const nextState = {

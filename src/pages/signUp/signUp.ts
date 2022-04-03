@@ -45,14 +45,14 @@ export class SignUpPage extends Component {
                 }
             },
             onSubmit: () => {
-                const signInData = {
-                    login: (this.refs.login.querySelector("input") as HTMLInputElement).value,
-                    password: (this.refs.password.querySelector("input") as HTMLInputElement).value,
-                    confirmPassword: (this.refs.confirmPassword.querySelector("input") as HTMLInputElement).value,
-                    firstName: (this.refs.firstName.querySelector("input") as HTMLInputElement).value,
-                    secondName: (this.refs.secondName.querySelector("input") as HTMLInputElement).value,
-                    email: (this.refs.email.querySelector("input") as HTMLInputElement).value,
-                    phone: (this.refs.phone.querySelector("input") as HTMLInputElement).value,
+                const signUpData = {
+                    login: this.retrieveChildByRef("login").getStringValue(),
+                    password: this.retrieveChildByRef("password").getStringValue(),
+                    confirmPassword: this.retrieveChildByRef("confirmPassword").getStringValue(),
+                    firstName: this.retrieveChildByRef("firstName").getStringValue(),
+                    secondName: this.retrieveChildByRef("secondName").getStringValue(),
+                    email: this.retrieveChildByRef("email").getStringValue(),
+                    phone: this.retrieveChildByRef("phone").getStringValue(),
                 };
 
                 const nextState = {
@@ -65,21 +65,21 @@ export class SignUpPage extends Component {
                         email: '',
                         phone: '',
                     },
-                    values: { ...signInData },
+                    values: { ...signUpData },
                 };
 
-                nextState.errors.login = validate("login", signInData.login)
-                nextState.errors.password = validate("password", signInData.password)
-                nextState.errors.confirmPassword = signInData.password === signInData.confirmPassword ? '' : 'Passwords does not match'
-                nextState.errors.firstName = validate("first_name", signInData.firstName)
-                nextState.errors.secondName = validate("second_name", signInData.secondName)
-                nextState.errors.email = validate("email", signInData.email)
-                nextState.errors.phone = validate("phone", signInData.phone)
+                nextState.errors.login = validate("login", signUpData.login)
+                nextState.errors.password = validate("password", signUpData.password)
+                nextState.errors.confirmPassword = signUpData.password === signUpData.confirmPassword ? '' : 'Passwords does not match'
+                nextState.errors.firstName = validate("first_name", signUpData.firstName)
+                nextState.errors.secondName = validate("second_name", signUpData.secondName)
+                nextState.errors.email = validate("email", signUpData.email)
+                nextState.errors.phone = validate("phone", signUpData.phone)
 
                 this.setState(nextState);
 
                 if (Object.values(nextState.errors).every((e) => !e)) {
-                    console.log('action/signUp', signInData);
+                    console.log('action/signUp', signUpData);
                 }
             }
         }

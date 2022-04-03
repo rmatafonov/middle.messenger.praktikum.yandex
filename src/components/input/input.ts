@@ -33,6 +33,8 @@ export class Input extends Component<InputProps> {
     }
   }
 
+  getStringValue = () => (this.element!.querySelector('input') as HTMLInputElement).value
+
   protected render(): string {
     // language=hbs
     return /*html*/`
