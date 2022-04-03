@@ -1,6 +1,6 @@
 import { Component, renderDOM, registerComponent } from './core';
 import { capitalizeFirstLetter } from './utils/stringUtils'
-import { MessengerNoSelectedChatPage } from './pages/messengerNoSelectedChat/messengerNoSelectedChat';
+import { MessengerPage } from './pages/messenger/messenger';
 import * as components from './components/*/index.ts'
 
 import './app.scss';
@@ -10,5 +10,5 @@ Object.entries(components as { [key: string]: { default: typeof Component } }).f
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    renderDOM(MessengerNoSelectedChatPage)
+    renderDOM(MessengerPage)
 });

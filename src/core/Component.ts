@@ -8,7 +8,7 @@ interface BlockMeta<P = any> {
 
 type Events = Values<typeof Component.EVENTS>;
 
-export default abstract class Component<P = any> {
+export default abstract class Component<P extends {} = {}> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -21,7 +21,8 @@ export default abstract class Component<P = any> {
 
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
-  protected children: { [id: string]: Component } = {};
+  protected events?: Record<string, (...arg: any[]) => void>;
+  protected children: { [id: string]: Component<P> } = {};
 
   eventBus: () => EventBus<Events>;
 
@@ -47,14 +48,14 @@ export default abstract class Component<P = any> {
     eventBus.emit(Component.EVENTS.INIT, this.props);
   }
 
-  _registerEvents(eventBus: EventBus<Events>) {
-    eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
+  private _registerEvents(eventBus: EventBus<Events>) {
+    eventBus.on(Component.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
+  private _createResources() {
     this._element = this._createDocumentElement('div');
   }
 
@@ -62,19 +63,22 @@ export default abstract class Component<P = any> {
     this.state = {};
   }
 
-  init() {
-    this._createResources();
-    this.eventBus().emit(Component.EVENTS.FLOW_RENDER, this.props);
+  private _init() {
+    this.init()
+    this._createResources()
+    this.eventBus().emit(Component.EVENTS.FLOW_RENDER, this.props)
   }
 
-  _componentDidMount(props: P) {
+  init() { }
+
+  private _componentDidMount(props: P) {
     this.componentDidMount(props);
   }
 
   componentDidMount(props: P) {
   }
 
-  _componentDidUpdate(oldProps: P, newProps: P) {
+  private _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -124,7 +128,7 @@ export default abstract class Component<P = any> {
     return this._element;
   }
 
-  _render() {
+  private _render() {
     const fragment = this._compile();
 
     this._removeEvents();
@@ -151,7 +155,7 @@ export default abstract class Component<P = any> {
     return this.element!;
   }
 
-  _makePropsProxy(props: any): any {
+  private _makePropsProxy(props: any): any {
     // Можно и так передать this
     // Такой способ больше не применяется с приходом ES6+
     const self = this;
@@ -175,31 +179,27 @@ export default abstract class Component<P = any> {
     }) as unknown as P;
   }
 
-  _createDocumentElement(tagName: string) {
+  private _createDocumentElement(tagName: string) {
     return document.createElement(tagName);
   }
 
-  _removeEvents() {
-    const events: Record<string, () => void> = (this.props as any).events;
-
-    if (!events || !this._element) {
+  private _removeEvents() {
+    if (!this.events || !this._element) {
       return;
     }
 
 
-    Object.entries(events).forEach(([event, listener]) => {
+    Object.entries(this.events).forEach(([event, listener]) => {
       this._element!.removeEventListener(event, listener);
     });
   }
 
-  _addEvents() {
-    const events: Record<string, () => void> = (this.props as any).events;
-
-    if (!events) {
+  private _addEvents() {
+    if (!this.events) {
       return;
     }
 
-    Object.entries(events).forEach(([event, listener]) => {
+    Object.entries(this.events).forEach(([event, listener]) => {
       this._element!.addEventListener(event, listener);
     });
   }
@@ -207,35 +207,20 @@ export default abstract class Component<P = any> {
   _compile(): DocumentFragment {
     const fragment = document.createElement('template');
 
-    /**
-     * Рендерим шаблон
-     */
     const template = Handlebars.compile(this.render());
     fragment.innerHTML = template({ ...this.state, ...this.props, children: this.children, refs: this.refs });
 
-    /**
-     * Заменяем заглушки на компоненты
-     */
     Object.entries(this.children).forEach(([id, component]) => {
-      /**
-       * Ищем заглушку по id
-       */
       const stub = fragment.content.querySelector(`[data-id="${id}"]`);
 
       if (!stub) {
         return;
       }
 
-      /**
-       * Заменяем заглушку на component._element
-       */
       stub.replaceWith(component.getContent());
     });
 
 
-    /**
-     * Возвращаем фрагмент
-     */
     return fragment.content;
   }
 

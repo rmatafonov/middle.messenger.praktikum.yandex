@@ -46,7 +46,7 @@ export class SignInPage extends Component {
 
                 this.setState(nextState);
 
-                if (!nextState.errors.login && !nextState.errors.password) {
+                if (Object.values(nextState.errors).every((e) => !e)) {
                     console.log('action/signIn', signInData);
                 }
             }

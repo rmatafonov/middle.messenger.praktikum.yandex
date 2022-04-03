@@ -78,14 +78,7 @@ export class SignUpPage extends Component {
 
                 this.setState(nextState);
 
-                if (!nextState.errors.login
-                    && !nextState.errors.password
-                    && !nextState.errors.confirmPassword
-                    && !nextState.errors.firstName
-                    && !nextState.errors.secondName
-                    && !nextState.errors.email
-                    && !nextState.errors.phone
-                ) {
+                if (Object.values(nextState.errors).every((e) => !e)) {
                     console.log('action/signUp', signInData);
                 }
             }

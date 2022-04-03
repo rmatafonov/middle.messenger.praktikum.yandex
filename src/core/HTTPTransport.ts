@@ -1,3 +1,5 @@
+import { queryStringify } from '../utils';
+
 const METHODS = {
     GET: 'GET',
     POST: 'POST',
@@ -10,13 +12,6 @@ type Options = {
     method?: string,
     timeout?: number,
     data?: Record<string, unknown>
-}
-
-function queryStringify(data: Record<string, unknown>) {
-    const keys = Object.keys(data);
-    return keys.reduce((result, key, index) => {
-        return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
-    }, '?');
 }
 
 class HTTPTransport {

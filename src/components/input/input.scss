@@ -19,14 +19,14 @@
     }
 
     .control:-webkit-autofill {
-      -webkit-text-fill-color: variables.$text-color !important;
+      -webkit-text-fill-color: variables.$text-color;
     }
 
     .control:-webkit-autofill,
     .control:-webkit-autofill:hover,
     .control:-webkit-autofill:focus,
     .control:-webkit-autofill:active {
-      box-shadow: 0 0 0 30px variables.$background-color inset !important;
+      box-shadow: 0 0 0 30px variables.$background-color inset;
     }
 
     .label-for-control {

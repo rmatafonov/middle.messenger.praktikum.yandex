@@ -2,15 +2,22 @@ import Component from '../../core/Component';
 
 import './button.scss';
 
-interface ButtonProps {
-  text: string;
-  className: string;
-  onClick: () => void;
+type ButtonProps = {
+  text?: string;
+  className?: string;
+  onClick?: () => void;
 }
 
-export class Button extends Component {
-  constructor({text, className, onClick}: ButtonProps) {
-    super({text, className, events: {click: onClick}});
+export class Button extends Component<ButtonProps> {
+  constructor(props: ButtonProps) {
+    super(props);
+  }
+
+  init() {
+    this.events = {}
+    if (this.props.onClick) {
+      this.events.click = this.props.onClick
+    }
   }
 
   protected render(): string {
