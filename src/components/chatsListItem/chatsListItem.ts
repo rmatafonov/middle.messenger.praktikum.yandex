@@ -3,7 +3,7 @@ import Component from '../../core/Component'
 import './chatsListItem.scss'
 import defaultAvatar from '../../img/camera_200.png'
 
-type ChatsListItemProps = {
+export type ChatsListItemProps = {
   ref: string
   isSelected: boolean
   lastMessageHeaderPrefix: string
