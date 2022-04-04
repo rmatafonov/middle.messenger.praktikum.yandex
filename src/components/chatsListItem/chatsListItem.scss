@@ -1,0 +1,38 @@
+@use "../../variables";
+
+.chats-list__item-container {
+  display: inline-flex;
+  margin: 5px;
+  padding: 5px;
+  width: 95%;
+  cursor: pointer;
+}
+
+.chats-list__item-container-selected {
+  background: #c4c4c4;
+  border-radius: 3px;
+}
+
+.chats-list-container__sender-photo {
+  height: 50px;
+  width: 50px;
+  min-height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  background-color: variables.$photo-box-background-color;
+  overflow: hidden;
+  border: none;
+
+  .photo-image {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+  }
+}
+
+.chats-list-container__last-message-container {
+  display: inline-flex;
+  flex-direction: column;
+  margin-left: 15px;
+}

@@ -1,0 +1,89 @@
+@use '../../variables';
+
+@mixin input-box {
+  .input-container {
+    position: relative;
+    height: 3em;
+
+    .control {
+      position: absolute;
+      z-index: 1;
+      border: 3px solid variables.$primary-color;
+      box-sizing: border-box;
+      border-radius: 5px;
+      width: 100%;
+      height: 100%;
+      padding-left: 1em;
+      padding-right: 1em;
+      outline-color: variables.$shadow-color;
+    }
+
+    .control:-webkit-autofill {
+      -webkit-text-fill-color: variables.$text-color;
+    }
+
+    .control:-webkit-autofill,
+    .control:-webkit-autofill:hover,
+    .control:-webkit-autofill:focus,
+    .control:-webkit-autofill:active {
+      box-shadow: 0 0 0 30px variables.$background-color inset;
+    }
+
+    .label-for-control {
+      position: absolute;
+      z-index: 2;
+      top: 1rem;
+      margin-top: auto;
+      margin-bottom: auto;
+      left: 1em;
+      width: fit-content;
+      height: fit-content;
+      transition: 0.2s;
+    }
+  }
+}
+
+@mixin input-active-disappearing-label-css {
+  display: none;
+}
+
+@mixin input-active-moving-label {
+  top: -5px;
+  left: 15px;
+  background-color: variables.$background-color;
+  font-size: 14px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.input-box__disappearing-label {
+  @include input-box;
+
+  .input-container {
+    input:focus + .label-for-control {
+      @include input-active-disappearing-label-css;
+    }
+
+    input:valid + .label-for-control {
+      @include input-active-disappearing-label-css;
+    }
+  }
+}
+
+.input-box__moving-label {
+  @include input-box;
+
+  .input-container {
+    input:focus + .label-for-control {
+      @include input-active-moving-label;
+    }
+
+    input:valid + .label-for-control {
+      @include input-active-moving-label;
+    }
+  }
+}
+
+.input__error {
+  color: variables.$attention-text-color;
+}

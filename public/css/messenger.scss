@@ -1,8 +1,8 @@
+@use "variables";
 @use "messenger/messengerNavHeader";
 @use "messenger/messengerChatsList";
 @use "messenger/messengerChat";
 
-$shadow-color: #9f9ff3;
 $horisontal-line-color: #b4c5f0;
 $nav-color: #e9eefb;
 
@@ -18,7 +18,7 @@ hr {
   margin: 20px;
   min-height: 500px;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px 5px $shadow-color;
+  box-shadow: 5px 5px 5px 5px variables.$shadow-color;
   overflow: hidden;
 }
 
@@ -44,6 +44,7 @@ hr {
     width: fit-content;
     margin: auto;
   }
+
   flex-grow: 1;
   display: inline-flex;
   flex-direction: column;

@@ -1,0 +1,56 @@
+@use "../../variables";
+
+.signin-page {
+  margin: auto;
+  width: 400px;
+  height: fit-content;
+}
+
+.signin-page__container {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.signin-container__logo {
+  height: 80px;
+  width: 80px;
+  margin: auto;
+  background-color: variables.$photo-box-background-color;
+  border-radius: 50%;
+}
+
+.signin-container__error-default {
+  color: variables.$attention-text-color;
+  margin: 0 auto;
+  display: none;
+}
+
+.signin-container__error-shown {
+  display: table;
+}
+
+.signin-container__form-container {
+  margin: auto;
+  width: 90%;
+}
+
+.signin-container__links-box {
+  display: inline-flex;
+
+  .links-box__left {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 5px;
+  }
+
+  .links-box__right {
+    flex-grow: 1;
+    text-align: right;
+    margin-right: 5px;
+  }
+
+  .links-box__center {
+    margin: 0 auto;
+  }
+}

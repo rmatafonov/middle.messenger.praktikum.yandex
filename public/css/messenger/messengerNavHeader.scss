@@ -1,9 +1,9 @@
 @use "../variables";
 
-$search-input-background-color: #D9DEEB;
+$search-input-background-color: #d9deeb;
 
 .nav__header {
-  top: 0px;
+  top: 0;
   height: fit-content;
 }
 
@@ -21,6 +21,7 @@ $search-input-background-color: #D9DEEB;
   background-color: variables.$photo-box-background-color;
   position: relative;
   overflow: hidden;
+
   img {
     display: inline;
     margin: 0 auto;
@@ -35,15 +36,13 @@ $search-input-background-color: #D9DEEB;
 }
 
 .chats-container__search-box {
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto;
   width: 90%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .search-input-box {
   background-color: $search-input-background-color;
+
   input {
     background-color: $search-input-background-color;
   }
