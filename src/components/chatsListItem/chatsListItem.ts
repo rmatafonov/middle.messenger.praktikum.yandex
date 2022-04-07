@@ -4,7 +4,7 @@ import './chatsListItem.scss'
 import defaultAvatar from '../../img/camera_200.png'
 
 export type ChatsListItemProps = {
-  ref: string
+  ref?: string
   isSelected: boolean
   lastMessageHeaderPrefix: string
   lastMessageHeader: string

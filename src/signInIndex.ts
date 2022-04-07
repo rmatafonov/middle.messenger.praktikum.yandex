@@ -1,6 +1,6 @@
 import { Component, renderDOM, registerComponent } from './core';
 import { capitalizeFirstLetter } from './utils/stringUtils'
-import { SignInPage } from './pages/signIn/signIn';
+import { SignInPage } from './pages/signIn/signInPage';
 import * as components from './components/*/index.ts'
 
 import './app.scss';

@@ -1,6 +1,6 @@
 import { Component, renderDOM, registerComponent } from './core';
 import { capitalizeFirstLetter } from './utils/stringUtils'
-import { MessengerPage } from './pages/messenger/messenger';
+import { MessengerPage } from './pages/messenger/messengerPage';
 import * as components from './components/*/index.ts'
 
 import './app.scss';

@@ -4,14 +4,21 @@ import { validate } from '../../service/validation'
 import "../css/signin-signup.scss"
 
 export class SignInPage extends Component {
-    private validateControl = (e: InputEvent) => {
-        const control = (e.target! as HTMLInputElement);
+    private validateInputAndSetError(event: InputEvent, component: Component) {
+        const control = (event.target! as HTMLInputElement);
         const controlName = control.name
 
         const validationResult = validate(controlName, control.value)
 
         const errorLabelRefName = `${controlName}Error`
-        this.setChildProps(errorLabelRefName, { text: validationResult })
+        component.setChildProps(errorLabelRefName, { text: validationResult })
+    }
+
+    private clearError(event: InputEvent, component: Component) {
+        const control = (event.target! as HTMLInputElement);
+        const controlName = control.name
+        const errorLabelRefName = `${controlName}Error`
+        component.setChildProps(errorLabelRefName, { text: '' })
     }
 
     protected getStateFromProps() {
@@ -25,7 +32,8 @@ export class SignInPage extends Component {
                 login: '',
                 password: '',
             },
-            onFocusOrBlur: (e: InputEvent) => this.validateControl(e),
+            onFocus: (e: InputEvent) => this.clearError(e, this),
+            onBlur: (e: InputEvent) => this.validateInputAndSetError(e, this),
             onSubmit: () => {
                 const signInData = {
                     login: this.retrieveChildByRef("login").getStringValue(),
@@ -73,8 +81,8 @@ export class SignInPage extends Component {
                                     id="login"
                                     className="input-box__moving-label"
                                     label="Login *"
-                                    onFocus=onFocusOrBlur
-                                    onBlur=onFocusOrBlur
+                                    onFocus=onFocus
+                                    onBlur=onBlur
                             }}}
                             {{{
                                 Label
@@ -92,8 +100,8 @@ export class SignInPage extends Component {
                                     id="password" 
                                     className="input-box__moving-label" 
                                     label="Password *" 
-                                    onFocus=onFocusOrBlur
-                                    onBlur=onFocusOrBlur
+                                    onFocus=onFocus
+                                    onBlur=onBlur
                             }}}
                             {{{
                                 Label

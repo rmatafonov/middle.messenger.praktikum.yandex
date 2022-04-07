@@ -3,15 +3,15 @@ import Component from '../../core/Component'
 import './messageBox.scss'
 
 export interface MessageBoxProps {
-    ref: string
-    isMy: string
+    ref?: string
+    isMy: boolean
     text: string
     time: string
 }
 
 export class MessageBox extends Component {
-    constructor({ isMy, text, time }: MessageBoxProps) {
-        super({ isMy, text, time })
+    constructor(props: MessageBoxProps) {
+        super(props)
     }
 
     protected render(): string {
