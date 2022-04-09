@@ -12,7 +12,25 @@ export class Chat extends Component<MessengerProps> {
   protected getStateFromProps(props: MessengerProps) {
     this.state = {
       message: '',
-      messages: props.messages
+      messages: props.messages,
+      sendIcon: arrowUpCircle,
+      attachmentIcon: attachmentIcon,
+      onSubmit: () => {
+        const inputMessage = this.retrieveChildByRef("message").getStringValue()
+
+        const nextState = {
+          message: ''
+        };
+
+        this.setState(nextState);
+
+        if (inputMessage) {
+          console.log('action/sendMessage', inputMessage);
+        }
+      },
+      onAttach: () => {
+        console.log('action/attach');
+      }
     }
   }
 
@@ -55,24 +73,28 @@ export class Chat extends Component<MessengerProps> {
       <div class="messenger-container__chat-container">
         ${messagesRender}
         <div class="chat-container__controls-container">
-            <div class="controls-container__icon-container">
-                <img src=${attachmentIcon} alt="attach"/>
-            </div>
+            {{{ Button
+                  className="controls-container__icon-container" 
+                  image=attachmentIcon
+                  onClick=onAttach
+            }}}
             <div class="controls-container__input-box">
                 {{{ Input
-                        value="${message}"
-                        ref="message"
-                        type="text"
-                        id="message"
-                        className="input-box__disappearing-label"
-                        label="Message"
-                        autocomplete="off"
-                        required="false"
+                      value="${message}"
+                      ref="message"
+                      type="text"
+                      id="message"
+                      className="input-box__disappearing-label"
+                      label="Message"
+                      autocomplete="off"
+                      required="false"
                 }}}
             </div>
-            <div class="controls-container__icon-container">
-                <img src=${arrowUpCircle} alt="send"/>
-            </div>
+            {{{ Button
+                  className="controls-container__icon-container" 
+                  image=sendIcon
+                  onClick=onSubmit
+            }}}
         </div>
       </div>
     `
