@@ -1,8 +1,6 @@
 import { Component } from '../../core';
-import { ChatsListItemProps } from '../../components/chatsListItem'
-import { MessageBoxProps } from '../../components/messageBox'
 
-import './messenger.scss'
+import './css/messenger.scss'
 import chatsList from './chatsNoSelected.json'
 import messagesList from './messages.json'
 import defaultAvatar from '../../img/camera_200.png'
@@ -20,19 +18,20 @@ export class MessengerPage extends Component {
                 search: '',
                 message: '',
                 isAnyChatSelected: false,
-                chats: (chatsList as Array<ChatsListItemProps>).map((chatListItem: ChatsListItemProps, i: number) => {
+                chatsListScrollTop: 0,
+                chats: (chatsList as ChatsList).map((chatListItem: ChatsListItemProps, i: number) => {
                     chatListItem.ref = `chat-${i}`
                     chatListItem.isSelected = false
                     return chatListItem
                 }),
-                messages: (messagesList as Array<MessageBoxProps>).map((message: MessageBoxProps, i: number) => {
+                messages: (messagesList as MessagesList).map((message: MessageBoxProps, i: number) => {
                     message.ref = `message-${i}`
                     return message
                 })
             },
             selectChat: (e: Event) => {
-                const control = e.currentTarget
-                const chatRefName = Object.keys(this.refs).find(k => this.refs[k] === control)
+                const chatsListItem = e.currentTarget
+                const chatRefName = Object.keys(this.refs).find(k => this.refs[k] === chatsListItem)
                 if (!chatRefName) {
                     return
                 }
@@ -44,14 +43,25 @@ export class MessengerPage extends Component {
                         c.isSelected = false
                     }
                 });
+
+                let chatsList = (chatsListItem as HTMLElement).parentElement!
+
                 const nextState = {
                     values: {
                         ...this.state.values,
                         isAnyChatSelected: true,
+                        chatsListScrollTop: chatsList.scrollTop
                     }
                 }
                 this.setState(nextState)
             },
+        }
+    }
+
+    componentRendered() {
+        let chatsList = document.querySelector('.messenger-nav__chats-list')
+        if (chatsList) {
+            chatsList.scrollTop = this.state.values.chatsListScrollTop
         }
     }
 

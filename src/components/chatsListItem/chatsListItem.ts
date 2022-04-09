@@ -3,16 +3,6 @@ import Component from '../../core/Component'
 import './chatsListItem.scss'
 import defaultAvatar from '../../img/camera_200.png'
 
-export type ChatsListItemProps = {
-  ref?: string
-  isSelected: boolean
-  lastMessageHeaderPrefix: string
-  lastMessageHeader: string
-  lastMessageSender: string
-  lastMessageText: string
-  onClick: (e: Event) => void
-}
-
 export class ChatsListItem extends Component<ChatsListItemProps> {
   constructor(props: ChatsListItemProps) {
     super(props)

@@ -14,6 +14,7 @@ export default abstract class Component<P extends {} = {}> {
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
+    FLOW_RENDERED: 'flow:rendered',
   } as const;
 
   public id = nanoid(6);
@@ -53,6 +54,7 @@ export default abstract class Component<P extends {} = {}> {
     eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_RENDERED, this.componentRendered.bind(this));
   }
 
   private _createResources() {
@@ -142,9 +144,13 @@ export default abstract class Component<P extends {} = {}> {
 
     this._element = newElement as HTMLElement;
     this._addEvents();
+
+    this.eventBus().emit(Component.EVENTS.FLOW_RENDERED);
   }
 
   protected abstract render(): string
+
+  protected componentRendered(): void { }
 
   getContent(): HTMLElement {
     // Хак, чтобы вызвать CDM только после добавления в DOM

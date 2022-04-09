@@ -2,13 +2,6 @@ import Component from '../../core/Component'
 
 import './messageBox.scss'
 
-export interface MessageBoxProps {
-    ref?: string
-    isMy: boolean
-    text: string
-    time: string
-}
-
 export class MessageBox extends Component {
     constructor(props: MessageBoxProps) {
         super(props)
