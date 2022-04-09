@@ -7,7 +7,7 @@ export class ChatsList extends Component<ChatsListProps> {
     super(props)
   }
 
-  protected getStateFromProps(props: any) {
+  protected getStateFromProps(props: ChatsListProps) {
     this.state = {
       chats: props.chats,
       selectChat: (e: Event) => {

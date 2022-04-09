@@ -29,6 +29,10 @@ declare global {
         chats: ChatsList
         onChatSelected: () => void
     }
+
+    export type MessengerProps = {
+        messages: MessagesList
+    }
 }
 
 export { }

@@ -4,8 +4,6 @@ import './css/messenger.scss'
 import chatsList from './chatsNoSelected.json'
 import messagesList from './messages.json'
 import defaultAvatar from '../../img/camera_200.png'
-import arrowUpCircle from '../../img/arrowUpCircle.svg'
-import attachmentIcon from '../../img/attachmentIcon.svg'
 
 export class MessengerPage extends Component {
     protected getStateFromProps() {
@@ -16,7 +14,6 @@ export class MessengerPage extends Component {
                     secondName: 'Ivanov',
                 },
                 search: '',
-                message: '',
                 isAnyChatSelected: false,
                 chatsListScrollTop: 0,
                 chats: (chatsList as ChatsList).map((chatListItem: ChatsListItemProps, i: number) => {
@@ -89,42 +86,13 @@ export class MessengerPage extends Component {
                         </div>
                     </nav>
 
+                    {{#if values.isAnyChatSelected}}
+                    {{{ Chat messages=values.messages }}}
+                    {{else}}
                     <div class="messenger-container__chat-container">
-                        {{#if values.isAnyChatSelected}}
-                        <div class="chat-container__messages-container">
-                            {{#each values.messages}}
-                            {{{ MessageBox 
-                                    ref=this.ref
-                                    isMy=this.isMy
-                                    text=this.text
-                                    time=this.time
-                            }}}
-                            {{/each}}
-                        </div>
-                        <div class="chat-container__controls-container">
-                            <div class="controls-container__icon-container">
-                                <img src=${attachmentIcon} alt="attach"/>
-                            </div>
-                            <div class="controls-container__input-box">
-                                {{{ Input
-                                        value="${values.message}"
-                                        ref="message"
-                                        type="text"
-                                        id="message"
-                                        className="input-box__disappearing-label"
-                                        label="Message"
-                                        autocomplete="off"
-                                        required="false"
-                                }}}
-                            </div>
-                            <div class="controls-container__icon-container">
-                                <img src=${arrowUpCircle} alt="send"/>
-                            </div>
-                        </div>
-                        {{else}}
                         <p>Select a Chat</p>
-                        {{/if}}
                     </div>
+                    {{/if}}
                 </div>
             </div>
         `
