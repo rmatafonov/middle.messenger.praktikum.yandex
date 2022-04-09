@@ -29,22 +29,8 @@ export class MessengerPage extends Component {
                     return message
                 })
             },
-            selectChat: (e: Event) => {
-                const chatsListItem = e.currentTarget
-                const chatRefName = Object.keys(this.refs).find(k => this.refs[k] === chatsListItem)
-                if (!chatRefName) {
-                    return
-                }
-
-                this.state.values.chats.forEach((c: ChatsListItemProps) => {
-                    if (c.ref === chatRefName) {
-                        c.isSelected = true
-                    } else {
-                        c.isSelected = false
-                    }
-                });
-
-                let chatsList = (chatsListItem as HTMLElement).parentElement!
+            selectChat: () => {
+                let chatsList = this.refs["chatsList"]
 
                 const nextState = {
                     values: {
@@ -59,7 +45,7 @@ export class MessengerPage extends Component {
     }
 
     componentRendered() {
-        let chatsList = document.querySelector('.messenger-nav__chats-list')
+        let chatsList = this.refs["chatsList"]
         if (chatsList) {
             chatsList.scrollTop = this.state.values.chatsListScrollTop
         }
@@ -95,19 +81,11 @@ export class MessengerPage extends Component {
                             <hr>
                         </div>
                         <div class="messenger-nav__chats-list-container">
-                            <div class="messenger-nav__chats-list">
-                                {{#each values.chats}}
-                                {{{ ChatsListItem 
-                                        ref=this.ref
-                                        isSelected=this.isSelected
-                                        lastMessageHeaderPrefix=this.lastMessageHeaderPrefix
-                                        lastMessageHeader=this.lastMessageHeader
-                                        lastMessageSender=this.lastMessageSender
-                                        lastMessageText=this.lastMessageText
-                                        onClick=@root.selectChat
-                                }}}
-                                {{/each}}
-                            </div>
+                            {{{ ChatsList
+                                    ref="chatsList"
+                                    chats=values.chats
+                                    onChatSelected=selectChat
+                            }}}
                         </div>
                     </nav>
 

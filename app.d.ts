@@ -24,6 +24,11 @@ declare global {
     }
 
     export type ChatsList = Array<ChatsListItemProps>
+
+    export type ChatsListProps = {
+        chats: ChatsList
+        onChatSelected: () => void
+    }
 }
 
 export { }
