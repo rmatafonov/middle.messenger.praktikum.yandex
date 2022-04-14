@@ -54,7 +54,7 @@ export class SignInPage extends Component {
 
                 this.setState(nextState);
 
-                if (Object.values(nextState.errors).every((e) => !e)) {
+                if (Object.values(nextState.errors).every(e => !e)) {
                     console.log('action/signIn', signInData);
                     Router.getInstance().go("/messenger")
                 }
