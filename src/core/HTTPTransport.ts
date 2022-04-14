@@ -14,7 +14,7 @@ type Options = {
     data?: Record<string, unknown>
 }
 
-class HTTPTransport {
+export default class HTTPTransport {
     get = (url: string, options: Options = {}) => {
         return this.request(url, { ...options, method: Methods.GET }, options.timeout);
     };

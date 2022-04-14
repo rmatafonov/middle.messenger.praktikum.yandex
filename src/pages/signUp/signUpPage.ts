@@ -236,7 +236,7 @@ export class SignUpPage extends Component {
                     </form>
 
                     <div class="mini-text signin-container__links-box form-half-indents">
-                        <span class="links-box__center"><a href="./signIn.html">Sign In</a></span>
+                        <span class="links-box__center">{{{Link href="/" text="Sign In"}}}</span>
                     </div>
 
                     <div class="mini-text signin-container__links-box form-double-indents">

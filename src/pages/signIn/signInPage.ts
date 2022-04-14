@@ -1,4 +1,4 @@
-import { Component } from '../../core';
+import { Component, Router } from '../../core';
 import { validate } from '../../service/validation'
 
 import "../css/signin-signup.scss"
@@ -56,6 +56,7 @@ export class SignInPage extends Component {
 
                 if (Object.values(nextState.errors).every((e) => !e)) {
                     console.log('action/signIn', signInData);
+                    Router.getInstance().go("/messenger")
                 }
             }
         }
@@ -128,12 +129,12 @@ export class SignInPage extends Component {
                     </form>
 
                     <div class="mini-text signin-container__links-box form-half-indents">
-                        <span class="links-box__left"><a href="./forgot.html">Forgot Password?</a></span>
-                        <span class="links-box__right"><a href="./signUp.html">Sign Up</a></span>
+                        <span class="links-box__left">{{{Link href="/forgot" text="Forgot Password?"}}}</span>
+                        <span class="links-box__right">{{{Link href="/sign-up" text="Sign Up"}}}</span>
                     </div>
 
                     <div class="mini-text signin-container__links-box form-double-indents">
-                        <span class="links-box__center">Copyright © <a href="#">Your Website</a> 2022.</span>
+                        <span class="links-box__center">Copyright © <a>Your Website</a> 2022.</span>
                     </div>
                 </div>
             </div>

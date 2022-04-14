@@ -1,10 +1,6 @@
 import Component from './Component';
 
-export default function renderDOM(ComponentPage: typeof Component) {
-  const page = new ComponentPage();
-
+export default function renderDOM(componentPage: Component) {
   const root = document.querySelector('#app');
-  
-  root!.innerHTML = '';
-  root!.appendChild(page.getContent());
+  root!.appendChild(componentPage.getContent());
 }
