@@ -1,5 +1,5 @@
-import { Router } from '../../core';
 import Component from '../../core/Component';
+import { Router } from '../../service/front';
 
 import './link.scss';
 

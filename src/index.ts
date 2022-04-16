@@ -1,4 +1,4 @@
-import { Component, registerComponent, Router } from './core';
+import { registerComponent } from './core';
 import { capitalizeFirstLetter } from './utils/stringUtils'
 import * as components from './components/*/index.ts'
 
@@ -7,6 +7,7 @@ import SignInPage from './pages/signIn';
 import SignUpPage from './pages/signUp';
 import MessengerPage from './pages/messenger';
 import ForgotPage from './pages/forgot';
+import { Router } from './service/front';
 
 Object.entries(components as { [key: string]: { default: ComponentConstructable } }).forEach(([name, component]) => {
     registerComponent(capitalizeFirstLetter(name), component.default)

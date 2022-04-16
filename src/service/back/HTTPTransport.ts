@@ -1,4 +1,4 @@
-import { queryStringify } from '../utils';
+import { queryStringify } from '../../utils';
 
 const Methods = {
     GET: 'GET',

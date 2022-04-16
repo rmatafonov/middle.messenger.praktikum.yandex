@@ -1,5 +1,5 @@
-import Component from '../Component'
-import renderDOM from '../renderDOM'
+import Component from '../../../core/Component'
+import renderDOM from '../../../core/renderDOM'
 
 export default class Route<P extends {}> {
     private pathname: string

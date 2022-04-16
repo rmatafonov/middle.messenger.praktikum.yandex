@@ -1,5 +1,5 @@
 import { Component } from '../../core';
-import { validate } from '../../service/validation'
+import { validate } from '../../service/front/validation'
 
 import "../css/signin-signup.scss"
 
