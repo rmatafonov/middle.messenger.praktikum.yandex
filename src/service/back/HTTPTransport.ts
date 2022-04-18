@@ -8,6 +8,7 @@ const Methods = {
 };
 
 type Options = {
+    includeCredentials?: boolean,
     headers?: Record<string, string>,
     method?: string,
     timeout?: number,
@@ -15,24 +16,40 @@ type Options = {
 }
 
 export default class HTTPTransport {
-    get = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: Methods.GET }, options.timeout);
+    private static instance: HTTPTransport
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new HTTPTransport('https://ya-praktikum.tech/api/v2/')
+        }
+        return this.instance
+    }
+
+    private baseURL: string
+
+    private constructor(baseURL: string) {
+        this.baseURL = baseURL
+    }
+
+    get = (path: string, options: Options = {}) => {
+        return this.request(path, { ...options, method: Methods.GET }, options.timeout);
     };
 
-    post = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: Methods.POST }, options.timeout);
+    post = (path: string, options: Options = {}) => {
+        return this.request(path, { ...options, method: Methods.POST }, options.timeout);
     };
 
-    put = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: Methods.PUT }, options.timeout);
+    put = (path: string, options: Options = {}) => {
+        return this.request(path, { ...options, method: Methods.PUT }, options.timeout);
     };
 
-    delete = (url: string, options: Options = {}) => {
-        return this.request(url, { ...options, method: Methods.DELETE }, options.timeout);
+    delete = (path: string, options: Options = {}) => {
+        return this.request(path, { ...options, method: Methods.DELETE }, options.timeout);
     };
 
-    request = (url: string, options: Options = {}, timeout = 5000) => {
-        const { headers = {}, method, data } = options;
+    request = (path: string, options: Options = {}, timeout = 5000): Promise<XMLHttpRequest> => {
+        const { headers = {}, includeCredentials = true, method, data } = options;
+        const url = this.baseURL + path
 
         return new Promise(function (resolve, reject) {
             if (!method) {
@@ -49,6 +66,7 @@ export default class HTTPTransport {
                     ? `${url}${queryStringify(data)}`
                     : url,
             );
+            xhr.withCredentials = includeCredentials
 
             Object.keys(headers).forEach(key => {
                 xhr.setRequestHeader(key, headers[key]);

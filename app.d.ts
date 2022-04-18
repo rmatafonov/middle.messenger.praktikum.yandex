@@ -50,6 +50,11 @@ declare global {
     export type MessengerProps = {
         messages: MessagesList
     }
+
+    export type AuthUserData = {
+        login: string,
+        password: string
+    }
 }
 
 export { }

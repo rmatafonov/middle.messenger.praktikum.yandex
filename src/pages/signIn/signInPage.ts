@@ -1,4 +1,5 @@
 import { Component } from '../../core';
+import { authAPI } from '../../service/back';
 import { Router } from '../../service/front';
 import { validate } from '../../service/front/validation'
 
@@ -24,6 +25,7 @@ export class SignInPage extends Component {
 
     protected getStateFromProps() {
         this.state = {
+            apiStatus: '',
             values: {
                 login: '',
                 password: '',
@@ -43,6 +45,7 @@ export class SignInPage extends Component {
                 };
 
                 const nextState = {
+                    apiStatus: '',
                     errors: {
                         login: '',
                         password: '',
@@ -57,14 +60,30 @@ export class SignInPage extends Component {
 
                 if (Object.values(nextState.errors).every(e => !e)) {
                     console.log('action/signIn', signInData);
-                    Router.getInstance().go("/messenger")
+                    authAPI.singIn(signInData)
+                        .then(res => {
+                            if (!res) {
+                                throw Error('The web app error - something wrong with auth')
+                            }
+                            authAPI.getUser()
+                                .then(res => {
+                                    console.log(res)
+                                    Router.getInstance().go("/messenger")
+                                })
+                        })
+                        .catch(err => {
+                            const nextState = {
+                                apiStatus: err
+                            }
+                            this.setState(nextState)
+                        })
                 }
             }
         }
     }
 
     protected render(): string {
-        const { errors, values } = this.state;
+        const { errors, values, apiStatus } = this.state;
 
         return /*html*/`
             <div class="signin-page">
@@ -72,7 +91,13 @@ export class SignInPage extends Component {
                     <div class="signin-container__logo"></div>
 
                     <h2>Sign In</h2>
-                    <div id="status" class="mini-text signin-container__error-default">Invalid login/password</div>
+                    {{{
+                        Label
+                            id="status"
+                            ref="status"
+                            text="${apiStatus}"
+                            className="mini-text label__error label__center-aligned"
+                    }}}
 
                     <form>
                         <div class="form-indents">
