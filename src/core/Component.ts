@@ -10,7 +10,7 @@ type Events = Values<typeof Component.EVENTS>;
 
 export default abstract class Component<P extends {} = {}> {
   static EVENTS = {
-    INIT: 'init',
+    FLOW_INIT: 'flow:init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
@@ -46,11 +46,11 @@ export default abstract class Component<P extends {} = {}> {
 
     this._registerEvents(eventBus);
 
-    eventBus.emit(Component.EVENTS.INIT, this.props);
+    eventBus.emit(Component.EVENTS.FLOW_INIT, this.props);
   }
 
   private _registerEvents(eventBus: EventBus<Events>) {
-    eventBus.on(Component.EVENTS.INIT, this._init.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_INIT, this._init.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));

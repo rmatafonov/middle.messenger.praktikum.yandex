@@ -2,9 +2,9 @@ import { UserDto } from '../../../dto';
 import HTTPTransport from '../HTTPTransport';
 
 export const authAPI = {
-    singIn: async (user: AuthUserData): Promise<boolean> => {
+    signIn: async (user: AuthUserData): Promise<boolean> => {
         const res = await HTTPTransport.getInstance().post(
-            'auth/signin',
+            '/auth/signin',
             {
                 includeCredentials: true,
                 headers: {
@@ -19,9 +19,26 @@ export const authAPI = {
         return true;
     },
 
+    signUp: async (user: UserDto): Promise<boolean> => {
+        const res = await HTTPTransport.getInstance().post(
+            '/auth/signup',
+            {
+                includeCredentials: true,
+                headers: {
+                    'content-type': 'application/json',
+                },
+                data: user.toJson(),
+            }
+        );
+        if (res.status !== 200) {
+            throw Error(JSON.parse(res.responseText).reason);
+        }
+        return true;
+    },
+
     getUser: async () => {
         const res = await HTTPTransport.getInstance().get(
-            'auth/user',
+            '/auth/user',
             {
                 includeCredentials: true,
                 headers: {
@@ -29,6 +46,9 @@ export const authAPI = {
                 }
             }
         );
-        return UserDto.fromJSON(JSON.parse(res.responseText)).toUser()
+        if (res.status !== 200) {
+            throw Error(JSON.parse(res.responseText).reason);
+        }
+        return UserDto.fromJson(JSON.parse(res.responseText))
     }
 }

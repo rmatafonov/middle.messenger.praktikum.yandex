@@ -1,30 +1,24 @@
 import { Component } from '../../core';
 
 import './css/messenger.scss'
-import chatsList from './chatsNoSelected.json'
-import messagesList from './messages.json'
 import defaultAvatar from '../../img/camera_200.png'
+import GlobalStorage from '../../service/front/GlobalStorage';
+import { Router } from '../../service/front';
+import { chatsAPI } from '../../service/back/api/chatsAPI';
 
 export class MessengerPage extends Component {
     protected getStateFromProps() {
         this.state = {
             values: {
                 account: {
-                    firstName: 'Vasily',
-                    secondName: 'Ivanov',
+                    firstName: '',
+                    secondName: '',
                 },
                 search: '',
                 isAnyChatSelected: false,
                 chatsListScrollTop: 0,
-                chats: (chatsList as ChatsList).map((chatListItem: ChatsListItemProps, i: number) => {
-                    chatListItem.ref = `chat-${i}`
-                    chatListItem.isSelected = false
-                    return chatListItem
-                }),
-                messages: (messagesList as MessagesList).map((message: MessageBoxProps, i: number) => {
-                    message.ref = `message-${i}`
-                    return message
-                })
+                chats: [],
+                messages: undefined,
             },
             selectChat: () => {
                 let chatsList = this.refs["chatsList"]
@@ -38,7 +32,26 @@ export class MessengerPage extends Component {
                 }
                 this.setState(nextState)
             },
+            search: (e: InputEvent) => {
+                const value = (e.target as HTMLInputElement).value
+            }
         }
+    }
+
+    componentDidMount() {
+        chatsAPI.getChats()
+            .then(chatsDto => {
+                chatsDto.chats.forEach(chatDto => {
+                    chatDto.ref = `ref-${chatDto.id}`
+                })
+                const nextState = {
+                    values: {
+                        ...this.state.values,
+                        chats: chatsDto.chats
+                    }
+                }
+                this.setState(nextState)
+            })
     }
 
     componentRendered() {
@@ -50,6 +63,11 @@ export class MessengerPage extends Component {
 
     protected render(): string {
         const { values } = this.state;
+        const user = GlobalStorage.getInstance().storage.user
+        if (!user) {
+            Router.getInstance().go('/')
+            return '<div></div>'
+        }
 
         return /*html*/`
             <div class="messenger-page">
@@ -60,7 +78,7 @@ export class MessengerPage extends Component {
                                 <div class="chats-container__profie-photo">
                                     <img src="${defaultAvatar}" alt="Ph">
                                 </div>
-                                <div class="chats-container__profie-name">${values.account.firstName} ${values.account.secondName} (me)</div>
+                                <div class="chats-container__profie-name">${user!.firstName} ${user!.secondName} (me)</div>
                             </div>
                             <hr>
                             <div class="chats-container__search-box">
@@ -73,6 +91,7 @@ export class MessengerPage extends Component {
                                         label="Search" 
                                         autocomplete="off"
                                         required="false"
+                                        onChange=search
                                 }}}
                             </div>
                             <hr>
@@ -86,7 +105,7 @@ export class MessengerPage extends Component {
                         </div>
                     </nav>
 
-                    {{#if values.isAnyChatSelected}}
+                    {{#if values.messages}}
                     {{{ Chat messages=values.messages }}}
                     {{else}}
                     <div class="messenger-container__chat-container">

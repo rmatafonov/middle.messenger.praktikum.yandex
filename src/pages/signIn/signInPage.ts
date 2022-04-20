@@ -1,6 +1,7 @@
 import { Component } from '../../core';
 import { authAPI } from '../../service/back';
 import { Router } from '../../service/front';
+import GlobalStorage from '../../service/front/GlobalStorage';
 import { validate } from '../../service/front/validation'
 
 import "../css/signin-signup.scss"
@@ -60,16 +61,12 @@ export class SignInPage extends Component {
 
                 if (Object.values(nextState.errors).every(e => !e)) {
                     console.log('action/signIn', signInData);
-                    authAPI.singIn(signInData)
+                    authAPI.signIn(signInData)
                         .then(res => {
                             if (!res) {
                                 throw Error('The web app error - something wrong with auth')
                             }
-                            authAPI.getUser()
-                                .then(res => {
-                                    console.log(res)
-                                    Router.getInstance().go("/messenger")
-                                })
+                            this.initUser()
                         })
                         .catch(err => {
                             const nextState = {
@@ -80,6 +77,18 @@ export class SignInPage extends Component {
                 }
             }
         }
+    }
+
+    private initUser() {
+        authAPI.getUser()
+            .then(user => {
+                GlobalStorage.getInstance().setUser(user)
+                Router.getInstance().go("/messenger")
+            })
+    }
+
+    init() {
+        this.initUser()
     }
 
     protected render(): string {

@@ -1,4 +1,5 @@
 import Component from '../../core/Component'
+import { ChatsListItemDto } from '../../dto'
 
 import './chatsList.scss'
 
@@ -17,7 +18,7 @@ export class ChatsList extends Component<ChatsListProps> {
           return
         }
 
-        this.state.chats.forEach((c: ChatsListItemProps) => {
+        this.state.chats.forEach((c: ChatsListItemDto) => {
           if (c.ref === chatRefName) {
             c.isSelected = true
           } else {
@@ -31,12 +32,11 @@ export class ChatsList extends Component<ChatsListProps> {
   }
 
   protected render(): string {
-    const { chats } = this.state;
-
     // language=hbs
     return /*html*/`
       <div class="messenger-nav__chats-list">
           {{#each chats}}
+          {{#if this.lastMessage}}
           {{{ ChatsListItem 
                   ref=this.ref
                   isSelected=this.isSelected
@@ -46,6 +46,7 @@ export class ChatsList extends Component<ChatsListProps> {
                   lastMessageText=this.lastMessageText
                   onClick=@root.selectChat
           }}}
+          {{/if}}
           {{/each}}
       </div>
     `

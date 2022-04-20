@@ -1,3 +1,5 @@
+import { UserDto } from './src/dto';
+
 declare global {
     export type Nullable<T> = T | null
 
@@ -30,18 +32,6 @@ declare global {
 
     export type MessagesList = Array<MessageBoxProps>
 
-    export type ChatsListItemProps = {
-        ref?: string
-        isSelected: boolean
-        lastMessageHeaderPrefix: string
-        lastMessageHeader: string
-        lastMessageSender: string
-        lastMessageText: string
-        onClick: (e: Event) => void
-    }
-
-    export type ChatsList = Array<ChatsListItemProps>
-
     export type ChatsListProps = {
         chats: ChatsList
         onChatSelected: () => void
@@ -54,6 +44,19 @@ declare global {
     export type AuthUserData = {
         login: string,
         password: string
+    }
+
+    export type SignUpUserData = {
+        login: string,
+        password: string,
+        firstName: string,
+        secondName: string,
+        email: string,
+        phone: string,
+    };
+
+    export type GlobalStorageData = {
+        user?: UserDto
     }
 }
 

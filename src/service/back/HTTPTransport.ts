@@ -20,7 +20,7 @@ export default class HTTPTransport {
 
     static getInstance() {
         if (!this.instance) {
-            this.instance = new HTTPTransport('https://ya-praktikum.tech/api/v2/')
+            this.instance = new HTTPTransport('https://ya-praktikum.tech/api/v2')
         }
         return this.instance
     }

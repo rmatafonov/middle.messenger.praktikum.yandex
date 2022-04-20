@@ -1,49 +1,54 @@
-import { User } from '../domain'
-
-type UserDtoType = {
-    id: number
-    first_name: string
-    second_name: string
-    display_name?: string
-    login: string
-    avatar?: string
-    email: string
-    phone: string
-}
+import { UserDtoJsonFields } from './json/UserDtoJsonFields'
 
 export default class UserDto {
-    id: number
-    first_name: string
-    second_name: string
-    display_name?: string
+    id?: number
+    firstName: string
+    secondName: string
+    displayName?: string
     login: string
+    password?: string
     avatar?: string
     email: string
     phone: string
 
-    constructor(id: number, firstName: string, secondName: string, login: string, email: string, phone: string, displayName?: string, avatar?: string) {
+    constructor(
+        firstName: string,
+        secondName: string,
+        login: string,
+        email: string,
+        phone: string,
+        id?: number,
+        password?: string,
+        displayName?: string,
+        avatar?: string
+    ) {
         this.id = id
-        this.first_name = firstName
-        this.second_name = secondName
+        this.firstName = firstName
+        this.secondName = secondName
         this.login = login
+        this.password = password
         this.email = email
         this.phone = phone
-        this.display_name = displayName,
-            this.avatar = avatar
+        this.displayName = displayName
+        this.avatar = avatar
     }
 
-    static fromJSON(json: UserDtoType): UserDto {
-        return new UserDto(json.id, json.first_name, json.second_name, json.login, json.email, json.phone, json.display_name, json.avatar)
+    static fromSignUpUserData(user: SignUpUserData) {
+        return new UserDto(user.firstName, user.secondName, user.login, user.email, user.phone, undefined, user.password)
     }
 
-    toUser = (): User => new User(
-        this.id,
-        this.first_name,
-        this.second_name,
-        this.login,
-        this.email,
-        this.phone,
-        this.display_name,
-        this.avatar
-    )
+    static fromJson(json: UserDtoJsonFields): UserDto {
+        return new UserDto(json.first_name, json.second_name, json.login, json.email, json.phone, json.id, json.display_name, json.avatar)
+    }
+
+    toJson(): UserDtoJsonFields {
+        return {
+            first_name: this.firstName,
+            second_name: this.secondName,
+            login: this.login,
+            email: this.email,
+            phone: this.phone,
+            password: this.password
+        }
+    }
 }

@@ -1,21 +1,33 @@
 import { Component } from '../../core';
+import { UserDto } from '../../dto';
+import { authAPI } from '../../service/back';
+import { Router } from '../../service/front';
+import GlobalStorage from '../../service/front/GlobalStorage';
 import { validate } from '../../service/front/validation'
 
 import "../css/signin-signup.scss"
 
 export class SignUpPage extends Component {
-    private validateControl = (e: InputEvent) => {
-        const control = (e.target! as HTMLInputElement);
+    private validateInputAndSetError(event: InputEvent, component: Component) {
+        const control = (event.target! as HTMLInputElement);
         const controlName = control.name
 
         const validationResult = validate(controlName, control.value)
 
         const errorLabelRefName = `${controlName}Error`
-        this.setChildProps(errorLabelRefName, { text: validationResult })
+        component.setChildProps(errorLabelRefName, { text: validationResult })
+    }
+
+    private clearError(event: InputEvent, component: Component) {
+        const control = (event.target! as HTMLInputElement);
+        const controlName = control.name
+        const errorLabelRefName = `${controlName}Error`
+        component.setChildProps(errorLabelRefName, { text: '' })
     }
 
     protected getStateFromProps() {
         this.state = {
+            apiStatus: '',
             values: {
                 login: '',
                 password: '',
@@ -34,7 +46,8 @@ export class SignUpPage extends Component {
                 email: '',
                 phone: '',
             },
-            onFocusOrBlur: (e: InputEvent) => this.validateControl(e),
+            onFocus: (e: InputEvent) => this.clearError(e, this),
+            onBlur: (e: InputEvent) => this.validateInputAndSetError(e, this),
             onFocusOrBlurConfirmPassword: (e: InputEvent) => {
                 const password = (this.refs.password.querySelector("input") as HTMLInputElement).value
                 const confirmPassword = (e.target! as HTMLInputElement).value
@@ -80,13 +93,41 @@ export class SignUpPage extends Component {
 
                 if (Object.values(nextState.errors).every((e) => !e)) {
                     console.log('action/signUp', signUpData);
+                    authAPI.signUp(UserDto.fromSignUpUserData(signUpData))
+                        .then(res => {
+                            if (!res) {
+                                throw Error('The web app error - something wrong with auth')
+                            }
+                            this.initUser()
+                        })
+                        .catch(err => {
+                            const nextState = {
+                                apiStatus: err
+                            }
+                            this.setState(nextState)
+                        })
                 }
             }
         }
     }
 
+    private initUser() {
+        authAPI.getUser()
+            .then(user => {
+                GlobalStorage.getInstance().setUser(user)
+                Router.getInstance().go("/messenger")
+            })
+            .catch(_err => {
+                // Nothing to do... User is just not authorized
+            })
+    }
+
+    init() {
+        this.initUser()
+    }
+
     protected render(): string {
-        const { errors, values } = this.state;
+        const { errors, values, apiStatus } = this.state;
 
         return /*html*/`
             <div class="signin-page">
@@ -94,7 +135,13 @@ export class SignUpPage extends Component {
                     <div class="signin-container__logo"></div>
 
                     <h2>Sign Up</h2>
-                    <div id="status" class="mini-text signin-container__error-default">{{errorText}}</div>
+                    {{{
+                        Label
+                            id="status"
+                            ref="status"
+                            text="${apiStatus}"
+                            className="mini-text label__error label__center-aligned"
+                    }}}
 
                     <form>
                         <div class="form-indents">
