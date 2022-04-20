@@ -33,7 +33,9 @@ declare global {
     export type MessagesList = Array<MessageBoxProps>
 
     export type ChatsListProps = {
-        chats: ChatsList
+        chats: [],
+        foundChats: [],
+        foundUsers: [],
         onChatSelected: () => void
     }
 

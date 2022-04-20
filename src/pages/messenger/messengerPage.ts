@@ -5,6 +5,23 @@ import defaultAvatar from '../../img/camera_200.png'
 import GlobalStorage from '../../service/front/GlobalStorage';
 import { Router } from '../../service/front';
 import { chatsAPI } from '../../service/back/api/chatsAPI';
+import { userAPI } from '../../service/back';
+
+function searchUsers(login: string): Promise<{}> {
+    return userAPI.userSearch(login)
+        .then(foundUsersDto => {
+            return {
+                foundUsers: foundUsersDto.users.map(u => ({
+                    ref: u.id,
+                    isSelected: false,
+                    lastMessageHeaderPrefix: '',
+                    lastMessageHeader: `${u.firstName} ${u.secondName}`,
+                    lastMessageSender: '',
+                    lastMessageText: '',
+                }))
+            }
+        })
+}
 
 export class MessengerPage extends Component {
     protected getStateFromProps() {
@@ -15,7 +32,6 @@ export class MessengerPage extends Component {
                     secondName: '',
                 },
                 search: '',
-                isAnyChatSelected: false,
                 chatsListScrollTop: 0,
                 chats: [],
                 messages: undefined,
@@ -26,14 +42,19 @@ export class MessengerPage extends Component {
                 const nextState = {
                     values: {
                         ...this.state.values,
-                        isAnyChatSelected: true,
                         chatsListScrollTop: chatsList.scrollTop
                     }
                 }
                 this.setState(nextState)
             },
             search: (e: InputEvent) => {
-                const value = (e.target as HTMLInputElement).value
+                const login = (e.target as HTMLInputElement).value
+                if (login.length < 4) {
+                    // TODO: search by existing chats only
+                    this.setChildProps('chatsList', { foundUsers: [] })
+                    return
+                }
+                searchUsers(login).then(chatsListNextProps => this.setChildProps('chatsList', chatsListNextProps))
             }
         }
     }

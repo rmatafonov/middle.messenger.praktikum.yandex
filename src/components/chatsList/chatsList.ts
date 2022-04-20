@@ -10,7 +10,6 @@ export class ChatsList extends Component<ChatsListProps> {
 
   protected getStateFromProps(props: ChatsListProps) {
     this.state = {
-      chats: props.chats,
       selectChat: (e: Event) => {
         const chatsListItem = e.currentTarget
         const chatRefName = Object.keys(this.refs).find(k => this.refs[k] === chatsListItem)
@@ -32,23 +31,54 @@ export class ChatsList extends Component<ChatsListProps> {
   }
 
   protected render(): string {
-    // language=hbs
-    return /*html*/`
-      <div class="messenger-nav__chats-list">
-          {{#each chats}}
-          {{#if this.lastMessage}}
-          {{{ ChatsListItem 
-                  ref=this.ref
-                  isSelected=this.isSelected
-                  lastMessageHeaderPrefix=this.lastMessageHeaderPrefix
-                  lastMessageHeader=this.lastMessageHeader
-                  lastMessageSender=this.lastMessageSender
-                  lastMessageText=this.lastMessageText
-                  onClick=@root.selectChat
-          }}}
-          {{/if}}
-          {{/each}}
-      </div>
-    `
+    const { chats, foundChats, foundUsers } = this.props
+
+    if (foundChats || foundUsers) {
+      // language=hbs
+      return /*html*/`
+        <div class="messenger-nav__chats-list">
+            {{#each foundChats}}
+            {{{ ChatsListItem 
+                    ref=this.ref
+                    isSelected=this.isSelected
+                    lastMessageHeaderPrefix=this.lastMessageHeaderPrefix
+                    lastMessageHeader=this.lastMessageHeader
+                    lastMessageSender=this.lastMessageSender
+                    lastMessageText=this.lastMessageText
+                    onClick=@root.selectChat
+            }}}
+            {{/each}}
+
+            {{#each foundUsers}}
+            {{{ ChatsListItem 
+                    ref=this.ref
+                    isSelected=this.isSelected
+                    lastMessageHeaderPrefix=this.lastMessageHeaderPrefix
+                    lastMessageHeader=this.lastMessageHeader
+                    lastMessageSender=this.lastMessageSender
+                    lastMessageText=this.lastMessageText
+                    onClick=@root.selectChat
+            }}}
+            {{/each}}
+        </div>
+      `
+    } else {
+      // language=hbs
+      return /*html*/`
+        <div class="messenger-nav__chats-list">
+            {{#each chats}}
+            {{{ ChatsListItem 
+                    ref=this.ref
+                    isSelected=this.isSelected
+                    lastMessageHeaderPrefix=this.lastMessageHeaderPrefix
+                    lastMessageHeader=this.lastMessageHeader
+                    lastMessageSender=this.lastMessageSender
+                    lastMessageText=this.lastMessageText
+                    onClick=@root.selectChat
+            }}}
+            {{/each}}
+        </div>
+      `
+    }
   }
 }
