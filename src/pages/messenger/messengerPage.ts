@@ -22,11 +22,17 @@ export class MessengerPage extends Component {
                 foundUsers: [],
                 messages: undefined,
             },
-            selectUser: (chatRefName: string) => {
-                const user = this.state.values.foundUsers.find((u: UserDto) => `${u.id}` === chatRefName)
+            onUserSelected: (refName: string) => {
+                const user = this.state.values.foundUsers.find((u: UserDto) => `${u.id}` === refName)
                 const newTitle = `${user.firstName} ${user.secondName}`
                 chatsAPI.createChat(newTitle)
-                    .then(newChatId => chatsAPI.getToken(newChatId))
+                    .then(newChatId => {
+                        chatsAPI.addUserToChat(user.id, newChatId)
+                        return newChatId
+                    })
+                    .then(newChatId => {
+                        return chatsAPI.getToken(newChatId)
+                    })
                     .then(token => console.log(token))
             },
             selectChat: () => {
@@ -109,7 +115,7 @@ export class MessengerPage extends Component {
                             {{{ ChatsList
                                     ref="chatsList"
                                     chats=values.chats
-                                    onUserSelected=selectUser
+                                    onUserSelected=onUserSelected
                                     onChatSelected=selectChat
                             }}}
                         </div>
