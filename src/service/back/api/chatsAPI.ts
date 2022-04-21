@@ -37,6 +37,25 @@ export const chatsAPI = {
         return JSON.parse(res.responseText).id
     },
 
+    addUserToChat: async (userId: number, chatId: number) => {
+        const res = await HTTPTransport.getInstance().put(
+            '/chats/users',
+            {
+                includeCredentials: true,
+                headers: {
+                    'accept': 'application/json',
+                },
+                data: {
+                    users: [userId],
+                    chatId: chatId
+                }
+            }
+        );
+        if (res.status !== 200) {
+            throw Error(JSON.parse(res.responseText).reason);
+        }
+    },
+
     getToken: async (chatId: number): Promise<string> => {
         const res = await HTTPTransport.getInstance().post(
             `/chats/token/${chatId}`,
