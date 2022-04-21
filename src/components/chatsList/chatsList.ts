@@ -3,6 +3,9 @@ import { ChatsListItemDto } from '../../dto'
 
 import './chatsList.scss'
 
+type ChatsListState = {
+  values: {}
+}
 export class ChatsList extends Component<ChatsListProps> {
   constructor(props: ChatsListProps) {
     super(props)
@@ -10,6 +13,39 @@ export class ChatsList extends Component<ChatsListProps> {
 
   protected getStateFromProps(props: ChatsListProps) {
     this.state = {
+      values: {
+        chats: props.chats,
+        foundChats: props.foundChats,
+        foundUsers: props.foundUsers,
+        scrollTop: 0,
+      },
+      selectUser: (e: Event) => {
+        const chatsListItem = e.currentTarget
+        const chatRefName = Object.keys(this.refs).find(k => this.refs[k] === chatsListItem)
+        if (!chatRefName) {
+          return
+        }
+
+        const foundUsersWithSelected = this.state.values.foundUsers
+          .map((c: ChatsListItemDto) => {
+            if (c.ref === chatRefName) {
+              c.isSelected = true
+            } else {
+              c.isSelected = false
+            }
+            return c
+          });
+
+        const nextState = {
+          values: {
+            ...this.state.values,
+            foundUsers: foundUsersWithSelected,
+            scrollTop: this.element?.scrollTop
+          }
+        }
+        this.setState(nextState)
+        this.props.onChatSelected()
+      },
       selectChat: (e: Event) => {
         const chatsListItem = e.currentTarget
         const chatRefName = Object.keys(this.refs).find(k => this.refs[k] === chatsListItem)
@@ -27,6 +63,24 @@ export class ChatsList extends Component<ChatsListProps> {
 
         this.props.onChatSelected()
       },
+    }
+  }
+
+  componentDidUpdate(oldProps: ChatsListProps, newProps: ChatsListProps | ChatsListState): boolean {
+    if ((newProps as ChatsListState).values) {
+      // The state has been chaged
+      return true
+    }
+    // TODO: probably need to compare old with new
+    this.state.values.chats = (newProps as ChatsListProps).chats
+    this.state.values.foundChats = (newProps as ChatsListProps).foundChats
+    this.state.values.foundUsers = (newProps as ChatsListProps).foundUsers
+    return true
+  }
+
+  componentRendered() {
+    if (this.element) {
+      this.element.scrollTop = this.state.scrollTop
     }
   }
 
@@ -53,11 +107,9 @@ export class ChatsList extends Component<ChatsListProps> {
             {{{ ChatsListItem 
                     ref=this.ref
                     isSelected=this.isSelected
-                    lastMessageHeaderPrefix=this.lastMessageHeaderPrefix
-                    lastMessageHeader=this.lastMessageHeader
-                    lastMessageSender=this.lastMessageSender
-                    lastMessageText=this.lastMessageText
-                    onClick=@root.selectChat
+                    lastMessageHeader=this.name
+                    lastMessageText=this.login
+                    onClick=@root.selectUser
             }}}
             {{/each}}
         </div>

@@ -15,8 +15,10 @@ export default function registerComponent(componentName: string, Component: Comp
     const component = new Component(hash);
 
     children[component.id] = component;
+    component.parentComponent = data.root
 
     if (ref) {
+      component.ref = ref
       refs[ref] = component.getContent();
     }
 

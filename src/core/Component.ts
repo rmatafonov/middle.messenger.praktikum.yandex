@@ -23,11 +23,14 @@ export default abstract class Component<P extends {} = {}> {
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
   protected events?: Record<string, (...arg: any[]) => void>;
+
+  protected parentComponent?: Component<P>
   protected children: { [id: string]: Component<P> } = {};
 
   eventBus: () => EventBus<Events>;
 
   protected state: any = {};
+  protected ref?: string
   protected refs: { [key: string]: HTMLElement } = {};
 
   public constructor(props?: P) {
@@ -86,6 +89,9 @@ export default abstract class Component<P extends {} = {}> {
       return;
     }
     this._render();
+    if (this.parentComponent && this.ref) {
+      this.parentComponent.refs[this.ref] = this.element!
+    }
   }
 
   componentDidUpdate(oldProps: P, newProps: P) {

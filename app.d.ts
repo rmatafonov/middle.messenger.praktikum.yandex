@@ -32,7 +32,18 @@ declare global {
 
     export type MessagesList = Array<MessageBoxProps>
 
+    export type ChatsListItemProps = {
+        ref?: string
+        isSelected: boolean
+        lastMessageHeaderPrefix: string
+        lastMessageHeader: string
+        lastMessageSender: string
+        lastMessageText: string
+        onClick: (e: Event) => void
+    }
+
     export type ChatsListProps = {
+        scrollTop: number,
         chats: [],
         foundChats: [],
         foundUsers: [],

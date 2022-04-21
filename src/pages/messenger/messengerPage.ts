@@ -12,12 +12,10 @@ function searchUsers(login: string): Promise<{}> {
         .then(foundUsersDto => {
             return {
                 foundUsers: foundUsersDto.users.map(u => ({
-                    ref: u.id,
+                    ref: `${u.id}`,
                     isSelected: false,
-                    lastMessageHeaderPrefix: '',
-                    lastMessageHeader: `${u.firstName} ${u.secondName}`,
-                    lastMessageSender: '',
-                    lastMessageText: '',
+                    name: `${u.firstName} ${u.secondName}`,
+                    login: u.login
                 }))
             }
         })
@@ -37,15 +35,7 @@ export class MessengerPage extends Component {
                 messages: undefined,
             },
             selectChat: () => {
-                let chatsList = this.refs["chatsList"]
-
-                const nextState = {
-                    values: {
-                        ...this.state.values,
-                        chatsListScrollTop: chatsList.scrollTop
-                    }
-                }
-                this.setState(nextState)
+                console.log('selected chat');
             },
             search: (e: InputEvent) => {
                 const login = (e.target as HTMLInputElement).value
@@ -73,13 +63,6 @@ export class MessengerPage extends Component {
                 }
                 this.setState(nextState)
             })
-    }
-
-    componentRendered() {
-        let chatsList = this.refs["chatsList"]
-        if (chatsList) {
-            chatsList.scrollTop = this.state.values.chatsListScrollTop
-        }
     }
 
     protected render(): string {
