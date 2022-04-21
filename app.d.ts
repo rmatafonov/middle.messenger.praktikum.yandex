@@ -47,6 +47,7 @@ declare global {
         chats: [],
         foundChats: [],
         foundUsers: [],
+        onUserSelected: (chatRefName: string) => void
         onChatSelected: () => void
     }
 

@@ -44,7 +44,7 @@ export class ChatsList extends Component<ChatsListProps> {
           }
         }
         this.setState(nextState)
-        this.props.onChatSelected()
+        this.props.onUserSelected(chatRefName)
       },
       selectChat: (e: Event) => {
         const chatsListItem = e.currentTarget

@@ -6,20 +6,7 @@ import GlobalStorage from '../../service/front/GlobalStorage';
 import { Router } from '../../service/front';
 import { chatsAPI } from '../../service/back/api/chatsAPI';
 import { userAPI } from '../../service/back';
-
-function searchUsers(login: string): Promise<{}> {
-    return userAPI.userSearch(login)
-        .then(foundUsersDto => {
-            return {
-                foundUsers: foundUsersDto.users.map(u => ({
-                    ref: `${u.id}`,
-                    isSelected: false,
-                    name: `${u.firstName} ${u.secondName}`,
-                    login: u.login
-                }))
-            }
-        })
-}
+import { UserDto } from '../../dto';
 
 export class MessengerPage extends Component {
     protected getStateFromProps() {
@@ -32,7 +19,15 @@ export class MessengerPage extends Component {
                 search: '',
                 chatsListScrollTop: 0,
                 chats: [],
+                foundUsers: [],
                 messages: undefined,
+            },
+            selectUser: (chatRefName: string) => {
+                const user = this.state.values.foundUsers.find((u: UserDto) => `${u.id}` === chatRefName)
+                const newTitle = `${user.firstName} ${user.secondName}`
+                chatsAPI.createChat(newTitle)
+                    .then(newChatId => chatsAPI.getToken(newChatId))
+                    .then(token => console.log(token))
             },
             selectChat: () => {
                 console.log('selected chat');
@@ -44,7 +39,17 @@ export class MessengerPage extends Component {
                     this.setChildProps('chatsList', { foundUsers: [] })
                     return
                 }
-                searchUsers(login).then(chatsListNextProps => this.setChildProps('chatsList', chatsListNextProps))
+                userAPI.userSearch(login)
+                    .then(foundUsersDto => {
+                        this.state.values.foundUsers = foundUsersDto.users
+                        return foundUsersDto.users.map(u => ({
+                            ref: `${u.id}`,
+                            isSelected: false,
+                            name: `${u.firstName} ${u.secondName}`,
+                            login: u.login
+                        }))
+                    })
+                    .then(foundUsers => this.setChildProps('chatsList', { foundUsers }))
             }
         }
     }
@@ -104,6 +109,7 @@ export class MessengerPage extends Component {
                             {{{ ChatsList
                                     ref="chatsList"
                                     chats=values.chats
+                                    onUserSelected=selectUser
                                     onChatSelected=selectChat
                             }}}
                         </div>
