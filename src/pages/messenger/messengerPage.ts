@@ -17,10 +17,11 @@ export class MessengerPage extends Component {
                 foundUsers: undefined,
                 chatData: undefined,
             },
-            onUserSelected: (refName: string) => {
+            onFoundUserSelected: (refName: string) => {
                 const searchValue = this.retrieveChildByRef("search").getStringValue()
+                const currentUser = GlobalStorage.getInstance().storage.user
                 const user = this.state.values.foundUsers.find((u: UserDto) => `${u.id}` === refName)
-                const newTitle = `${user.firstName} ${user.secondName}`
+                const newTitle = `${currentUser?.login}-${user.login}`
                 chatsAPI.createChat(newTitle)
                     .then(newChatId => {
                         chatsAPI.addUserToChat(user.id, newChatId)
@@ -50,7 +51,7 @@ export class MessengerPage extends Component {
                     })
             },
             onFirstMessageSent: () => {
-                this.retrieveChats(this.state.chatData.userId)
+                this.retrieveChats(this.state.values.chatData.chatId)
             },
             selectChat: () => {
                 console.log('selected chat');
@@ -76,21 +77,24 @@ export class MessengerPage extends Component {
         this.retrieveChats()
     }
 
-    private retrieveChats(selectedUserId?: number) {
+    private retrieveChats(selectedChatId?: number) {
         chatsAPI.getChats()
             .then(chatsDto => {
                 chatsDto.chats.forEach(c => {
-                    if (c.lastMessage?.user.id === selectedUserId) {
+                    if (c.id === selectedChatId) {
                         c.isSelected = true
                     } else {
                         c.isSelected = false
                     }
                 })
+                return chatsDto.chats
+            })
+            .then(chats => {
                 const nextState = {
                     values: {
                         ...this.state.values,
                         search: '',
-                        chats: chatsDto.chats,
+                        chats: chats,
                         foundUsers: undefined,
                     }
                 }
@@ -138,7 +142,7 @@ export class MessengerPage extends Component {
                                     ref="chatsList"
                                     chats=values.chats
                                     foundUsers=values.foundUsers
-                                    onUserSelected=onUserSelected
+                                    onFoundUserSelected=onFoundUserSelected
                                     onChatSelected=selectChat
                             }}}
                         </div>

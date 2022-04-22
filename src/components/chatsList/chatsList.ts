@@ -44,7 +44,7 @@ export class ChatsList extends Component<ChatsListProps> {
           }
         }
         this.setState(nextState)
-        this.props.onUserSelected(chatRefName)
+        this.props.onFoundUserSelected(chatRefName)
       },
       selectChat: (e: Event) => {
         const chatsListItem = e.currentTarget
@@ -53,7 +53,7 @@ export class ChatsList extends Component<ChatsListProps> {
           return
         }
 
-        this.state.chats.forEach((c: ChatsListItemDto) => {
+        this.state.values.chats.forEach((c: ChatsListItemDto) => {
           if (c.ref === chatRefName) {
             c.isSelected = true
           } else {
@@ -95,10 +95,7 @@ export class ChatsList extends Component<ChatsListProps> {
             {{{ ChatsListItem 
                     ref=this.ref
                     isSelected=this.isSelected
-                    headerPrefix=this.headerPrefix
-                    header=this.header
-                    descriptionPrefix=this.descriptionPrefix
-                    description=this.description
+                    chat=this
                     onClick=@root.selectChat
             }}}
             {{/each}}
@@ -107,8 +104,7 @@ export class ChatsList extends Component<ChatsListProps> {
             {{{ ChatsListItem 
                     ref=this.ref
                     isSelected=this.isSelected
-                    header=this.fullName
-                    description=this.login
+                    user=this
                     onClick=@root.selectUser
             }}}
             {{/each}}
@@ -122,10 +118,7 @@ export class ChatsList extends Component<ChatsListProps> {
             {{{ ChatsListItem 
                     ref=this.ref
                     isSelected=this.isSelected
-                    headerPrefix=this.headerPrefix
-                    header=this.header
-                    descriptionPrefix=this.descriptionPrefix
-                    description=this.description
+                    chat=this
                     onClick=@root.selectChat
             }}}
             {{/each}}

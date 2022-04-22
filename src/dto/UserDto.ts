@@ -11,7 +11,6 @@ export default class UserDto {
     email: string
     phone: string
     ref?: string
-    fullName: string
 
     constructor(
         firstName: string,
@@ -31,15 +30,18 @@ export default class UserDto {
         this.password = password
         this.email = email
         this.phone = phone
-        this.displayName = displayName
+        if (displayName) {
+            this.displayName = displayName
+        } else {
+            this.displayName = `${firstName} ${secondName}`
+        }
         this.avatar = avatar
 
-        this.fullName = `${firstName} ${secondName}`
         if (id) {
             this.ref = `${id}`
         }
     }
-    
+
 
     static fromSignUpUserData(user: SignUpUserData) {
         return new UserDto(user.firstName, user.secondName, user.login, user.email, user.phone, undefined, user.password)

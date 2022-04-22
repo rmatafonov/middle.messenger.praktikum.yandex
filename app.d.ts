@@ -1,4 +1,4 @@
-import { UserDto } from './src/dto';
+import { ChatsListItemDto, LastMessageDto, UserDto } from './src/dto';
 
 declare global {
     export type Nullable<T> = T | null
@@ -34,11 +34,9 @@ declare global {
 
     export type ChatsListItemProps = {
         ref?: string
-        isSelected: boolean
-        headerPrefix: string
-        header: string
-        descriptionPrefix: string
-        description: string
+        id: number
+        chat?: ChatsListItemDto
+        user?: UserDto
         onClick: (e: Event) => void
     }
 
@@ -47,7 +45,7 @@ declare global {
         chats: [],
         foundChats: [],
         foundUsers: [],
-        onUserSelected: (chatRefName: string) => void
+        onFoundUserSelected: (chatRefName: string) => void
         onChatSelected: () => void
     }
 
