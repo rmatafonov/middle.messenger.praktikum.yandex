@@ -12,17 +12,13 @@ export class MessengerPage extends Component {
     protected getStateFromProps() {
         this.state = {
             values: {
-                account: {
-                    firstName: '',
-                    secondName: '',
-                },
                 search: '',
-                chatsListScrollTop: 0,
                 chats: [],
-                foundUsers: [],
-                messages: undefined,
+                foundUsers: undefined,
+                chatData: undefined,
             },
             onUserSelected: (refName: string) => {
+                const searchValue = this.retrieveChildByRef("search").getStringValue()
                 const user = this.state.values.foundUsers.find((u: UserDto) => `${u.id}` === refName)
                 const newTitle = `${user.firstName} ${user.secondName}`
                 chatsAPI.createChat(newTitle)
@@ -31,9 +27,30 @@ export class MessengerPage extends Component {
                         return newChatId
                     })
                     .then(newChatId => {
-                        return chatsAPI.getToken(newChatId)
+                        return {
+                            chatId: newChatId,
+                            tokenPromise: chatsAPI.getToken(newChatId)
+                        }
                     })
-                    .then(token => console.log(token))
+                    .then(tokenPromiseWithChatId => {
+                        tokenPromiseWithChatId.tokenPromise.then(token => {
+                            const nextState = {
+                                values: {
+                                    ...this.state.values,
+                                    search: searchValue,
+                                    chatData: {
+                                        userId: user.id,
+                                        chatId: tokenPromiseWithChatId.chatId,
+                                        token
+                                    }
+                                }
+                            }
+                            this.setState(nextState)
+                        })
+                    })
+            },
+            onFirstMessageSent: () => {
+                this.retrieveChats(this.state.chatData.userId)
             },
             selectChat: () => {
                 console.log('selected chat');
@@ -42,18 +59,13 @@ export class MessengerPage extends Component {
                 const login = (e.target as HTMLInputElement).value
                 if (login.length < 4) {
                     // TODO: search by existing chats only
-                    this.setChildProps('chatsList', { foundUsers: [] })
+                    this.setChildProps('chatsList', { foundUsers: undefined })
                     return
                 }
                 userAPI.userSearch(login)
                     .then(foundUsersDto => {
                         this.state.values.foundUsers = foundUsersDto.users
-                        return foundUsersDto.users.map(u => ({
-                            ref: `${u.id}`,
-                            isSelected: false,
-                            name: `${u.firstName} ${u.secondName}`,
-                            login: u.login
-                        }))
+                        return foundUsersDto.users
                     })
                     .then(foundUsers => this.setChildProps('chatsList', { foundUsers }))
             }
@@ -61,15 +73,25 @@ export class MessengerPage extends Component {
     }
 
     componentDidMount() {
+        this.retrieveChats()
+    }
+
+    private retrieveChats(selectedUserId?: number) {
         chatsAPI.getChats()
             .then(chatsDto => {
-                chatsDto.chats.forEach(chatDto => {
-                    chatDto.ref = `ref-${chatDto.id}`
+                chatsDto.chats.forEach(c => {
+                    if (c.lastMessage?.user.id === selectedUserId) {
+                        c.isSelected = true
+                    } else {
+                        c.isSelected = false
+                    }
                 })
                 const nextState = {
                     values: {
                         ...this.state.values,
-                        chats: chatsDto.chats
+                        search: '',
+                        chats: chatsDto.chats,
+                        foundUsers: undefined,
                     }
                 }
                 this.setState(nextState)
@@ -115,14 +137,21 @@ export class MessengerPage extends Component {
                             {{{ ChatsList
                                     ref="chatsList"
                                     chats=values.chats
+                                    foundUsers=values.foundUsers
                                     onUserSelected=onUserSelected
                                     onChatSelected=selectChat
                             }}}
                         </div>
                     </nav>
 
-                    {{#if values.messages}}
-                    {{{ Chat messages=values.messages }}}
+                    {{#if values.chatData}}
+                    {{{ Chat 
+                            ref='chat' 
+                            userId=values.chatData.userId
+                            chatId=values.chatData.chatId
+                            token=values.chatData.token
+                            onFirstMessageSent=onFirstMessageSent
+                    }}}
                     {{else}}
                     <div class="messenger-container__chat-container">
                         <p>Select a Chat</p>

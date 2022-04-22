@@ -35,10 +35,10 @@ declare global {
     export type ChatsListItemProps = {
         ref?: string
         isSelected: boolean
-        lastMessageHeaderPrefix: string
-        lastMessageHeader: string
-        lastMessageSender: string
-        lastMessageText: string
+        headerPrefix: string
+        header: string
+        descriptionPrefix: string
+        description: string
         onClick: (e: Event) => void
     }
 
@@ -51,8 +51,10 @@ declare global {
         onChatSelected: () => void
     }
 
-    export type MessengerProps = {
-        messages: MessagesList
+    export type ChatProps = {
+        chatId: number,
+        token: string,
+        onFirstMessageSent: () => void
     }
 
     export type AuthUserData = {

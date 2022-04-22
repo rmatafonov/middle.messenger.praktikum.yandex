@@ -2,17 +2,22 @@ import Component from '../../core/Component'
 
 import arrowUpCircle from '../../img/arrowUpCircle.svg'
 import attachmentIcon from '../../img/attachmentIcon.svg'
+import GlobalStorage from '../../service/front/GlobalStorage'
 import './chat.scss'
 
-export class Chat extends Component<MessengerProps> {
-  constructor(props: MessengerProps) {
+export class Chat extends Component<ChatProps> {
+  private socket?: WebSocket
+
+  constructor(props: ChatProps) {
     super(props)
   }
 
-  protected getStateFromProps(props: MessengerProps) {
+  protected getStateFromProps(props: ChatProps) {
     this.state = {
       message: '',
-      messages: props.messages,
+      chatId: props.chatId,
+      token: props.token,
+      messages: [],
       sendIcon: arrowUpCircle,
       attachmentIcon: attachmentIcon,
       onSubmit: () => {
@@ -26,12 +31,49 @@ export class Chat extends Component<MessengerProps> {
 
         if (inputMessage) {
           console.log('action/sendMessage', inputMessage);
+          this.socket!.send(JSON.stringify({
+            content: inputMessage,
+            type: 'message',
+          }));
+          this.state.messages.push(inputMessage)
+          this.setState({message: ''})
+          if (this.state.messages.length === 1) {
+            this.props.onFirstMessageSent()
+          }
         }
       },
       onAttach: () => {
         console.log('action/attach');
       }
     }
+  }
+
+  componentDidMount(props: ChatProps): void {
+    const { chatId, token } = this.state
+    const user = GlobalStorage.getInstance().storage.user
+    this.socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${user?.id}/${chatId}/${token}`);
+
+    this.socket.addEventListener('open', () => {
+      console.log('Connected to web socket');
+    });
+
+    this.socket.addEventListener('close', event => {
+      if (event.wasClean) {
+        console.log('Closed connection');
+      } else {
+        console.log('Connection interrupted');
+      }
+
+      console.log(`Code: ${event.code} | Reason: ${event.reason}`);
+    });
+
+    this.socket.addEventListener('message', event => {
+      console.log('Receved data', event.data);
+    });
+
+    this.socket.addEventListener('error', event => {
+      console.log('Error', event.message);
+    });
   }
 
   protected render(): string {

@@ -95,10 +95,10 @@ export class ChatsList extends Component<ChatsListProps> {
             {{{ ChatsListItem 
                     ref=this.ref
                     isSelected=this.isSelected
-                    lastMessageHeaderPrefix=this.lastMessageHeaderPrefix
-                    lastMessageHeader=this.lastMessageHeader
-                    lastMessageSender=this.lastMessageSender
-                    lastMessageText=this.lastMessageText
+                    headerPrefix=this.headerPrefix
+                    header=this.header
+                    descriptionPrefix=this.descriptionPrefix
+                    description=this.description
                     onClick=@root.selectChat
             }}}
             {{/each}}
@@ -107,8 +107,8 @@ export class ChatsList extends Component<ChatsListProps> {
             {{{ ChatsListItem 
                     ref=this.ref
                     isSelected=this.isSelected
-                    lastMessageHeader=this.name
-                    lastMessageText=this.login
+                    header=this.fullName
+                    description=this.login
                     onClick=@root.selectUser
             }}}
             {{/each}}
@@ -122,10 +122,10 @@ export class ChatsList extends Component<ChatsListProps> {
             {{{ ChatsListItem 
                     ref=this.ref
                     isSelected=this.isSelected
-                    lastMessageHeaderPrefix=this.lastMessageHeaderPrefix
-                    lastMessageHeader=this.lastMessageHeader
-                    lastMessageSender=this.lastMessageSender
-                    lastMessageText=this.lastMessageText
+                    headerPrefix=this.headerPrefix
+                    header=this.header
+                    descriptionPrefix=this.descriptionPrefix
+                    description=this.description
                     onClick=@root.selectChat
             }}}
             {{/each}}

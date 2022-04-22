@@ -12,6 +12,7 @@ export default class ChatsListItemDto {
 
     constructor(id: number, title: string, avatar: string, unreadCount: number, lastMessage?: LastMessageDto) {
         this.id = id
+        this.ref = `chat-${id}`
         this.title = title
         this.avatar = avatar
         this.unreadCount = unreadCount

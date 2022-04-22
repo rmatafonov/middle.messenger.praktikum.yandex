@@ -24,14 +24,14 @@ export class ChatsListItem extends Component<ChatsListItemProps> {
             </div>
             <div class="chats-list-container__last-message-container">
                 <span>
-                    {{#if lastMessageHeaderPrefix}}
-                    <span class="bold-text">{{lastMessageHeaderPrefix}}:</span>
-                    {{/if}} {{lastMessageHeader}}
+                    {{#if headerPrefix}}
+                    <span class="bold-text">{{headerPrefix}}:</span>
+                    {{/if}} {{header}}
                 </span>
                 <span class="mini-text">
-                    {{#if lastMessageSender}}
-                    <span class="bold-text">{{lastMessageSender}}:</span>
-                    {{/if}} {{lastMessageText}}
+                    {{#if descriptionPrefix}}
+                    <span class="bold-text">{{descriptionPrefix}}:</span>
+                    {{/if}} {{description}}
                     {{!-- TODO: add Handlebars helper for truncating a text to X symbols (here is 140) --}}
                 </span>
             </div>

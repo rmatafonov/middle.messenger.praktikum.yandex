@@ -227,7 +227,7 @@ export default abstract class Component<P extends {} = {}> {
         return;
       }
 
-      stub.replaceWith(component.getContent());
+      stub.replaceWith(component.element!);
     });
 
 
