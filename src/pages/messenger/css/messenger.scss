@@ -38,18 +38,3 @@ hr {
   min-width: 400px;
 }
 
-.messenger-container__chat-container {
-  > p {
-    width: fit-content;
-    margin: auto;
-  }
-
-  flex-grow: 1;
-  display: inline-flex;
-  flex-direction: column;
-  min-width: 600px;
-  width: 100%;
-  height: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-}

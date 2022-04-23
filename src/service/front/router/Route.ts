@@ -23,7 +23,7 @@ export default class Route<P extends {}> {
 
     leave() {
         if (this.component) {
-            this.component.hide();
+            this.component.eventBus().emit(Component.EVENTS.FLOW_WILL_UNMOUNT)
         }
     }
 
@@ -34,10 +34,8 @@ export default class Route<P extends {}> {
     render() {
         if (!this.component) {
             this.component = new this.componentClass(this.props);
-            renderDOM(this.component!);
-            return;
         }
 
-        this.component.show();
+        renderDOM(this.component!);
     }
 }

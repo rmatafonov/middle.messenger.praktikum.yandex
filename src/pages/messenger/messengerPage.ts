@@ -6,13 +6,16 @@ import GlobalStorage from '../../service/front/GlobalStorage';
 import { Router } from '../../service/front';
 import { chatsAPI } from '../../service/back/api/chatsAPI';
 import { userAPI } from '../../service/back';
-import { UserDto } from '../../dto';
+import { ChatsListItemDto, UserDto } from '../../dto';
+import { ChatsPoller } from '../../service/back/ChatsPoller';
 
 export class MessengerPage extends Component {
     protected getStateFromProps() {
         this.state = {
             values: {
+                userName: '',
                 search: '',
+                isSearching: false,
                 chats: [],
                 foundUsers: undefined,
                 chatData: undefined,
@@ -39,8 +42,8 @@ export class MessengerPage extends Component {
                                 values: {
                                     ...this.state.values,
                                     search: searchValue,
+                                    isSearching: true,
                                     chatData: {
-                                        userId: user.id,
                                         chatId: tokenPromiseWithChatId.chatId,
                                         token
                                     }
@@ -51,16 +54,35 @@ export class MessengerPage extends Component {
                     })
             },
             onFirstMessageSent: () => {
-                this.retrieveChats(this.state.values.chatData.chatId)
+                this.state.values.isSearching = false
+                ChatsPoller.getInstance().forceUpdate()
             },
-            selectChat: () => {
-                console.log('selected chat');
+            selectChat: (chat: ChatsListItemDto) => {
+                chatsAPI.getToken(chat.id)
+                    .then(token => {
+                        const nextState = {
+                            values: {
+                                ...this.state.values,
+                                chatData: {
+                                    chatId: chat.id,
+                                    token: token
+                                }
+                            }
+                        }
+                        this.setState(nextState)
+                    })
+
             },
             search: (e: InputEvent) => {
                 const login = (e.target as HTMLInputElement).value
                 if (login.length < 4) {
-                    // TODO: search by existing chats only
-                    this.setChildProps('chatsList', { foundUsers: undefined })
+                    this.setChildProps(
+                        'chatsList',
+                        {
+                            search: this.state.values.search,
+                            foundUsers: undefined
+                        }
+                    )
                     return
                 }
                 userAPI.userSearch(login)
@@ -68,47 +90,72 @@ export class MessengerPage extends Component {
                         this.state.values.foundUsers = foundUsersDto.users
                         return foundUsersDto.users
                     })
-                    .then(foundUsers => this.setChildProps('chatsList', { foundUsers }))
+                    .then(foundUsers => {
+                        this.setChildProps(
+                            'chatsList',
+                            {
+                                search: this.state.values.search,
+                                foundUsers: foundUsers
+                            }
+                        )
+                    })
             }
         }
     }
 
     componentDidMount() {
-        this.retrieveChats()
+        const user = GlobalStorage.getInstance().storage.user
+        if (!user) {
+            ChatsPoller.getInstance().stop()
+            Router.getInstance().go('/')
+            return
+        }
+
+        const nextState = {
+            values: {
+                ...this.state.values,
+                userName: user.displayName,
+            }
+        }
+        this.setState(nextState)
+
+        ChatsPoller.getInstance().start()
+        ChatsPoller.getInstance().eventBus.on(
+            ChatsPoller.EVENTS.CHATS_UPDATED,
+            chats => {
+                const selectedChat = this.getSelectedChat()
+                if (selectedChat) {
+                    this.selectSameChat(chats, selectedChat)
+                }
+                const isSearching = this.state.values.isSearching
+                if (!isSearching) {
+                    const nextState = {
+                        values: {
+                            ...this.state.values,
+                            search: isSearching ? this.state.values.search : '',
+                            chats: chats,
+                            foundUsers: isSearching ? this.state.values.foundUsers : undefined,
+                        }
+                    }
+                    this.setState(nextState)
+                }
+            }
+        )
     }
 
-    private retrieveChats(selectedChatId?: number) {
-        chatsAPI.getChats()
-            .then(chatsDto => {
-                chatsDto.chats.forEach(c => {
-                    if (c.id === selectedChatId) {
-                        c.isSelected = true
-                    } else {
-                        c.isSelected = false
-                    }
-                })
-                return chatsDto.chats
-            })
-            .then(chats => {
-                const nextState = {
-                    values: {
-                        ...this.state.values,
-                        search: '',
-                        chats: chats,
-                        foundUsers: undefined,
-                    }
-                }
-                this.setState(nextState)
-            })
+    private getSelectedChat(): ChatsListItemDto {
+        return this.state.values.chats.find((c: ChatsListItemDto) => c.isSelected)
+    }
+
+    private selectSameChat(chats: Array<ChatsListItemDto>, selectedChat: ChatsListItemDto) {
+        const chatToSelect = chats.find(c => c.id = selectedChat.id)
+        if (chatToSelect) {
+            chatToSelect.isSelected = true
+        }
     }
 
     protected render(): string {
         const { values } = this.state;
-        const user = GlobalStorage.getInstance().storage.user
-        if (!user) {
-            Router.getInstance().go('/')
-            return '<div></div>'
-        }
 
         return /*html*/`
             <div class="messenger-page">
@@ -119,7 +166,7 @@ export class MessengerPage extends Component {
                                 <div class="chats-container__profie-photo">
                                     <img src="${defaultAvatar}" alt="Ph">
                                 </div>
-                                <div class="chats-container__profie-name">${user!.firstName} ${user!.secondName} (me)</div>
+                                <div class="chats-container__profie-name">${values.userName} (me)</div>
                             </div>
                             <hr>
                             <div class="chats-container__search-box">
@@ -151,7 +198,6 @@ export class MessengerPage extends Component {
                     {{#if values.chatData}}
                     {{{ Chat 
                             ref='chat' 
-                            userId=values.chatData.userId
                             chatId=values.chatData.chatId
                             token=values.chatData.token
                             onFirstMessageSent=onFirstMessageSent

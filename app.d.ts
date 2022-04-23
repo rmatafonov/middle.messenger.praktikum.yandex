@@ -1,4 +1,4 @@
-import { ChatsListItemDto, LastMessageDto, UserDto } from './src/dto';
+import { ChatsListItemDto, LastMessageDto, UserDto, WSMessageDto } from './src/dto';
 
 declare global {
     export type Nullable<T> = T | null
@@ -41,22 +41,27 @@ declare global {
     }
 
     export type ChatsListProps = {
-        scrollTop: number,
-        chats: [],
-        foundChats: [],
-        foundUsers: [],
+        scrollTop: number
+        search: string
+        chats: []
+        foundChats: []
+        foundUsers: []
         onFoundUserSelected: (chatRefName: string) => void
-        onChatSelected: () => void
+        onChatSelected: (chat?: ChatsListItemDto) => void
     }
 
     export type ChatProps = {
-        chatId: number,
-        token: string,
+        chatId: number
+        token: string
         onFirstMessageSent: () => void
     }
 
+    export type MessagesContainerProps = {
+        messages: Array<WSMessageDto>
+    }
+
     export type AuthUserData = {
-        login: string,
+        login: string
         password: string
     }
 

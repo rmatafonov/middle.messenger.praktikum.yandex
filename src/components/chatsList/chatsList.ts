@@ -53,15 +53,17 @@ export class ChatsList extends Component<ChatsListProps> {
           return
         }
 
+        let selectedChat = undefined
         this.state.values.chats.forEach((c: ChatsListItemDto) => {
           if (c.ref === chatRefName) {
+            selectedChat = c
             c.isSelected = true
           } else {
             c.isSelected = false
           }
         });
 
-        this.props.onChatSelected()
+        this.props.onChatSelected(selectedChat)
       },
     }
   }

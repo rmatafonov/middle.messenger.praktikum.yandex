@@ -15,6 +15,7 @@ export default abstract class Component<P extends {} = {}> {
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
     FLOW_RENDERED: 'flow:rendered',
+    FLOW_WILL_UNMOUNT: 'flow:component-will-unmount',
   } as const;
 
   public id = nanoid(6);
@@ -58,6 +59,7 @@ export default abstract class Component<P extends {} = {}> {
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDERED, this.componentRendered.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_WILL_UNMOUNT, this.componentWillUnmount.bind(this));
   }
 
   private _createResources() {
@@ -83,6 +85,8 @@ export default abstract class Component<P extends {} = {}> {
   componentDidMount(props: P) {
   }
 
+  protected componentWillUnmount() { }
+
   private _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
@@ -106,7 +110,7 @@ export default abstract class Component<P extends {} = {}> {
     Object.assign(this.props, nextProps);
   };
 
-  setChildProps = (childRefName: string, nextProps: P) => {
+  setChildProps = (childRefName: string, nextProps: any) => {
     if (!nextProps || !childRefName) {
       return;
     }
@@ -159,14 +163,11 @@ export default abstract class Component<P extends {} = {}> {
   protected componentRendered(): void { }
 
   getContent(): HTMLElement {
-    // Хак, чтобы вызвать CDM только после добавления в DOM
-    if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-      setTimeout(() => {
-        if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
-          this.eventBus().emit(Component.EVENTS.FLOW_CDM);
-        }
-      }, 100)
-    }
+    setTimeout(() => {
+      if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
+        this.eventBus().emit(Component.EVENTS.FLOW_CDM);
+      }
+    }, 100)
 
     return this.element!;
   }
@@ -232,14 +233,5 @@ export default abstract class Component<P extends {} = {}> {
 
 
     return fragment.content;
-  }
-
-
-  show() {
-    this.getContent().style.display = 'block';
-  }
-
-  hide() {
-    this.getContent().style.display = 'none';
   }
 }
