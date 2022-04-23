@@ -5,6 +5,8 @@ import * as components from './components/*/index.ts'
 import './app.scss';
 import SignInPage from './pages/signIn';
 import SignUpPage from './pages/signUp';
+import ProfilePage from './pages/profile';
+import ChangePassword from './pages/changePassword';
 import MessengerPage from './pages/messenger';
 import ForgotPage from './pages/forgot';
 import { Router } from './service/front';
@@ -18,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     router.use('/', SignInPage)
         .use("/forgot", ForgotPage)
         .use('/sign-up', SignUpPage)
+        .use('/profile', ProfilePage)
+        .use('/changePassword', ChangePassword)
         .use('/messenger', MessengerPage)
         .start()
 });

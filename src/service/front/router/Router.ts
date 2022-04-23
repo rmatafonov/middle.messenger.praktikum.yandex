@@ -1,3 +1,4 @@
+import GlobalStorage from '../GlobalStorage';
 import Route from './Route';
 
 export default class Router {
@@ -42,6 +43,11 @@ export default class Router {
     }
 
     _onRoute(pathname: string) {
+        const currentUser = GlobalStorage.getInstance().storage.user
+        if (!currentUser) {
+            pathname = '/'
+        }
+        
         const route = this.getRoute(pathname);
         if (!route) {
             return

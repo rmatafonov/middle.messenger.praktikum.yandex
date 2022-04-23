@@ -42,9 +42,12 @@ export default class UserDto {
         }
     }
 
-
     static fromSignUpUserData(user: SignUpUserData) {
         return new UserDto(user.firstName, user.secondName, user.login, user.email, user.phone, undefined, user.password)
+    }
+
+    static fromProfileData(user: ProfileUserData) {
+        return new UserDto(user.firstName, user.secondName, user.login, user.email, user.phone)
     }
 
     static fromJson(json: UserDtoJsonFields): UserDto {
@@ -59,6 +62,17 @@ export default class UserDto {
             email: this.email,
             phone: this.phone,
             password: this.password
+        }
+    }
+
+    toJsonForProfileUpdate(): UserDtoJsonFields {
+        return {
+            first_name: this.firstName,
+            second_name: this.secondName,
+            display_name: this.displayName,
+            login: this.login,
+            email: this.email,
+            phone: this.phone,
         }
     }
 }

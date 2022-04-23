@@ -60,6 +60,11 @@ declare global {
         messages: Array<WSMessageDto>
     }
 
+    export type MessengerHeaderProps = {
+        userName: string
+        onClick?: () => void
+    }
+
     export type AuthUserData = {
         login: string
         password: string
@@ -72,7 +77,15 @@ declare global {
         secondName: string,
         email: string,
         phone: string,
-    };
+    }
+
+    export type ProfileUserData = {
+        login: string,
+        firstName: string,
+        secondName: string,
+        email: string,
+        phone: string,
+    }
 
     export type GlobalStorageData = {
         user?: UserDto

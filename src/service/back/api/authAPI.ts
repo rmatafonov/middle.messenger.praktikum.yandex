@@ -50,5 +50,20 @@ export const authAPI = {
             throw Error(JSON.parse(res.responseText).reason);
         }
         return UserDto.fromJson(JSON.parse(res.responseText))
-    }
+    },
+
+    logout: async () => {
+        const res = await HTTPTransport.getInstance().post(
+            '/auth/logout',
+            {
+                includeCredentials: true,
+                headers: {
+                    'accept': 'application/json',
+                }
+            }
+        );
+        if (res.status !== 200) {
+            throw Error(JSON.parse(res.responseText).reason);
+        }
+    },
 }

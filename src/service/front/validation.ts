@@ -13,6 +13,7 @@ const CHECKS: { [key: string]: (v: string) => boolean } = {
     isDigitsOnly: (v) => v.search(/^\d+$/) !== -1,
     isProhibitedLoginSymbols: (v) => v.search(/^[a-z0-9\-\_]+$/ig) !== 0,
     isProhibitedNameSymbols: (v) => v.search(/^[A-Z\u0410-\u042f][\u0430-\u044fa-z0-9\-]+$/ig) !== 0,
+    isProhibitedDisplayNameSymbols: (v) => v.search(/^[A-Z\u0410-\u042f][ \u0430-\u044fa-z0-9\-]+$/ig) !== 0,
     isInvalidEmail: (v) => v.search(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) !== 0,
     isInvalidPhone: (v) => v.search(/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g) !== 0,
     isFirstCapital: (v) => v.search(/^[A-Z\u0410-\u042f]/) !== 0,
@@ -56,6 +57,14 @@ const validationRules: ValidationRules = {
     },
     second_name: (secondName: string) => {
         return nameValidationChain("Second Name").find(link => link.check(secondName))?.message || ''
+    },
+    display_name: (secondName: string) => {
+        const validationChain: ValidationChain = [
+            { check: CHECKS.isNull, message: `Display Name is required` },
+            { check: CHECKS.isProhibitedDisplayNameSymbols, message: `Allowed Display Name symbols: Latin/Cyrillic letters and dash (-)` },
+            { check: CHECKS.isFirstCapital, message: `First letter should be Capital` },
+        ]
+        return validationChain.find(link => link.check(secondName))?.message || ''
     },
     email: (email: string) => {
         const validationChain: ValidationChain = [

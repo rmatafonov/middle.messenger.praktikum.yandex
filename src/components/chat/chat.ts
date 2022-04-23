@@ -25,13 +25,6 @@ export class Chat extends Component<ChatProps> {
       attachmentIcon: attachmentIcon,
       onSubmit: () => {
         const inputMessage = this.retrieveChildByRef("message").getStringValue()
-
-        const nextState = {
-          message: ''
-        };
-
-        this.setState(nextState);
-
         if (inputMessage) {
           console.log('action/sendMessage', inputMessage);
           this.socket!.send(JSON.stringify({
@@ -41,6 +34,8 @@ export class Chat extends Component<ChatProps> {
           if (this.state.messages.length === 1) {
             this.props.onFirstMessageSent()
           }
+
+          this.setState({ message: '' });
         }
       },
       onAttach: () => {

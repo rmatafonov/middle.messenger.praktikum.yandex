@@ -1,7 +1,6 @@
 import { Component } from '../../core';
 
 import './css/messenger.scss'
-import defaultAvatar from '../../img/camera_200.png'
 import GlobalStorage from '../../service/front/GlobalStorage';
 import { Router } from '../../service/front';
 import { chatsAPI } from '../../service/back/api/chatsAPI';
@@ -19,6 +18,9 @@ export class MessengerPage extends Component {
                 chats: [],
                 foundUsers: undefined,
                 chatData: undefined,
+            },
+            onProfileClick: () => {
+                Router.getInstance().go('/profile')
             },
             onFoundUserSelected: (refName: string) => {
                 const searchValue = this.retrieveChildByRef("search").getStringValue()
@@ -58,6 +60,11 @@ export class MessengerPage extends Component {
                 ChatsPoller.getInstance().forceUpdate()
             },
             selectChat: (chat: ChatsListItemDto) => {
+                const chatComponent = this.retrieveChildByRef('chat')
+                if (chatComponent) {
+                    chatComponent.eventBus().emit(Component.EVENTS.FLOW_WILL_UNMOUNT)
+                }
+
                 chatsAPI.getToken(chat.id)
                     .then(token => {
                         const nextState = {
@@ -162,12 +169,10 @@ export class MessengerPage extends Component {
                 <div class="messenger-container">
                     <nav class="messenger-container__nav">
                         <div class="nav__header">
-                            <div class="chats-container__profie-container">
-                                <div class="chats-container__profie-photo">
-                                    <img src="${defaultAvatar}" alt="Ph">
-                                </div>
-                                <div class="chats-container__profie-name">${values.userName} (me)</div>
-                            </div>
+                            {{{ MessengerHeader
+                                    userName=values.userName
+                                    onClick=onProfileClick
+                            }}}
                             <hr>
                             <div class="chats-container__search-box">
                                 {{{ Input
