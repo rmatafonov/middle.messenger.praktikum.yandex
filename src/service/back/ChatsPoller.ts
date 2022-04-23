@@ -55,7 +55,7 @@ export class ChatsPoller {
 
     private retrieveChats(forceUpdate: boolean = false) {
         chatsAPI.getChats()
-            .then(chatsDto =>  chatsDto.chats)
+            .then(chatsDto => chatsDto.chats)
             .then(chats => {
                 if (!forceUpdate && isEqual(chats, this.currentChats)) {
                     return
@@ -64,5 +64,6 @@ export class ChatsPoller {
                 this.currentChats = chats
                 this.eventBus.emit(ChatsPoller.EVENTS.CHATS_UPDATED, cloneDeep(chats))
             })
+            .catch(_err => this.stop())
     }
 }
