@@ -1,0 +1,5 @@
+@use '../../variables';
+
+.link__attention {
+    color: variables.$attention-text-color;
+}

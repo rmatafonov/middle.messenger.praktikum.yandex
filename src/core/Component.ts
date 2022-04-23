@@ -10,10 +10,12 @@ type Events = Values<typeof Component.EVENTS>;
 
 export default abstract class Component<P extends {} = {}> {
   static EVENTS = {
-    INIT: 'init',
+    FLOW_INIT: 'flow:init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
+    FLOW_RENDERED: 'flow:rendered',
+    FLOW_WILL_UNMOUNT: 'flow:component-will-unmount',
   } as const;
 
   public id = nanoid(6);
@@ -22,11 +24,14 @@ export default abstract class Component<P extends {} = {}> {
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
   protected events?: Record<string, (...arg: any[]) => void>;
+
+  protected parentComponent?: Component<P>
   protected children: { [id: string]: Component<P> } = {};
 
   eventBus: () => EventBus<Events>;
 
   protected state: any = {};
+  protected ref?: string
   protected refs: { [key: string]: HTMLElement } = {};
 
   public constructor(props?: P) {
@@ -45,14 +50,16 @@ export default abstract class Component<P extends {} = {}> {
 
     this._registerEvents(eventBus);
 
-    eventBus.emit(Component.EVENTS.INIT, this.props);
+    eventBus.emit(Component.EVENTS.FLOW_INIT, this.props);
   }
 
   private _registerEvents(eventBus: EventBus<Events>) {
-    eventBus.on(Component.EVENTS.INIT, this._init.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_INIT, this._init.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_RENDERED, this.componentRendered.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_WILL_UNMOUNT, this.componentWillUnmount.bind(this));
   }
 
   private _createResources() {
@@ -78,12 +85,21 @@ export default abstract class Component<P extends {} = {}> {
   componentDidMount(props: P) {
   }
 
+  protected componentWillUnmount() { 
+    Object.values(this.children).forEach(child => {
+      child.eventBus().emit(Component.EVENTS.FLOW_WILL_UNMOUNT)
+    });
+  }
+
   private _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
     }
     this._render();
+    if (this.parentComponent && this.ref) {
+      this.parentComponent.refs[this.ref] = this.element!
+    }
   }
 
   componentDidUpdate(oldProps: P, newProps: P) {
@@ -98,7 +114,7 @@ export default abstract class Component<P extends {} = {}> {
     Object.assign(this.props, nextProps);
   };
 
-  setChildProps = (childRefName: string, nextProps: P) => {
+  setChildProps = (childRefName: string, nextProps: any) => {
     if (!nextProps || !childRefName) {
       return;
     }
@@ -142,19 +158,20 @@ export default abstract class Component<P extends {} = {}> {
 
     this._element = newElement as HTMLElement;
     this._addEvents();
+
+    this.eventBus().emit(Component.EVENTS.FLOW_RENDERED);
   }
 
   protected abstract render(): string
 
+  protected componentRendered(): void { }
+
   getContent(): HTMLElement {
-    // Хак, чтобы вызвать CDM только после добавления в DOM
-    if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-      setTimeout(() => {
-        if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
-          this.eventBus().emit(Component.EVENTS.FLOW_CDM);
-        }
-      }, 100)
-    }
+    setTimeout(() => {
+      if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
+        this.eventBus().emit(Component.EVENTS.FLOW_CDM);
+      }
+    }, 100)
 
     return this.element!;
   }
@@ -215,19 +232,10 @@ export default abstract class Component<P extends {} = {}> {
         return;
       }
 
-      stub.replaceWith(component.getContent());
+      stub.replaceWith(component.element!);
     });
 
 
     return fragment.content;
-  }
-
-
-  show() {
-    this.getContent().style.display = 'block';
-  }
-
-  hide() {
-    this.getContent().style.display = 'none';
   }
 }
