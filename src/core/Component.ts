@@ -85,7 +85,11 @@ export default abstract class Component<P extends {} = {}> {
   componentDidMount(props: P) {
   }
 
-  protected componentWillUnmount() { }
+  protected componentWillUnmount() { 
+    Object.values(this.children).forEach(child => {
+      child.eventBus().emit(Component.EVENTS.FLOW_WILL_UNMOUNT)
+    });
+  }
 
   private _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);

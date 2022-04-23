@@ -60,7 +60,6 @@ export class SignInPage extends Component {
                 this.setState(nextState);
 
                 if (Object.values(nextState.errors).every(e => !e)) {
-                    console.log('action/signIn', signInData);
                     authAPI.signIn(signInData)
                         .then(res => {
                             if (!res) {
