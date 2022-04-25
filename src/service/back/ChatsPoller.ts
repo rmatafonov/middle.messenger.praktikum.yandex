@@ -53,7 +53,7 @@ export class ChatsPoller {
         this.retrieveChats(true)
     }
 
-    private retrieveChats(forceUpdate: boolean = false) {
+    private retrieveChats = (forceUpdate: boolean = false) => {
         chatsAPI.getChats()
             .then(chatsDto => chatsDto.chats)
             .then(chats => {

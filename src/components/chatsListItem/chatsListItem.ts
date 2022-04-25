@@ -6,6 +6,8 @@ import { chatsAPI } from '../../service/back'
 import GlobalStorage from '../../service/front/GlobalStorage'
 
 export class ChatsListItem extends Component<ChatsListItemProps> {
+  static MAX_DESCRIPTION_LEN = 140
+
   constructor(props: ChatsListItemProps) {
     super(props)
   }
@@ -51,8 +53,8 @@ export class ChatsListItem extends Component<ChatsListItemProps> {
           descriptionPrefix = 'You'
         }
         let description = lastMessage.content
-        if (description.length > 140) {
-          description = description.slice(0, 140) + '...'
+        if (description.length > ChatsListItem.MAX_DESCRIPTION_LEN) {
+          description = description.slice(0, ChatsListItem.MAX_DESCRIPTION_LEN) + '...'
         }
 
         const nextState = {
