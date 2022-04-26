@@ -85,7 +85,7 @@ export default abstract class Component<P extends {} = {}> {
   componentDidMount(props: P) {
   }
 
-  protected componentWillUnmount() { 
+  protected componentWillUnmount() {
     Object.values(this.children).forEach(child => {
       child.eventBus().emit(Component.EVENTS.FLOW_WILL_UNMOUNT)
     });
@@ -120,8 +120,10 @@ export default abstract class Component<P extends {} = {}> {
     }
 
     const childComponent = this.retrieveChildByRef(childRefName)
-    childComponent.setProps(nextProps)
-    this.refs[childRefName] = childComponent.getContent()
+    if (childComponent) {
+      childComponent.setProps(nextProps)
+      this.refs[childRefName] = childComponent.element!
+    }
   }
 
   retrieveChildByRef = (ref: string) => {

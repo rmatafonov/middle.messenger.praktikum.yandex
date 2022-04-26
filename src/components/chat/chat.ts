@@ -1,14 +1,14 @@
 import Component from '../../core/Component'
-import WSMessageDto from '../../dto/WSMessageDto'
 import WSMessagesListDto from '../../dto/WSMessagesListDto'
 
 import arrowUpCircle from '../../img/arrowUpCircle.svg'
 import attachmentIcon from '../../img/attachmentIcon.svg'
+import WebSocketTransport from '../../service/back/WebSocketTransport'
 import GlobalStorage from '../../service/front/GlobalStorage'
 import './chat.scss'
 
 export class Chat extends Component<ChatProps> {
-  private socket?: WebSocket
+  private wsTransport?: WebSocketTransport
 
   constructor(props: ChatProps) {
     super(props)
@@ -27,10 +27,7 @@ export class Chat extends Component<ChatProps> {
         const inputMessage = this.retrieveChildByRef("message").getStringValue()
         if (inputMessage) {
           console.log('action/sendMessage', inputMessage);
-          this.socket!.send(JSON.stringify({
-            content: inputMessage,
-            type: 'message',
-          }));
+          this.wsTransport?.send(inputMessage)
           if (this.state.messages.length === 1) {
             this.props.onFirstMessageSent()
           }
@@ -44,54 +41,11 @@ export class Chat extends Component<ChatProps> {
     }
   }
 
-  private serviceMessageTypes = [
-    'user connected',
-    'pong'
-  ]
-
   componentDidMount(props: ChatProps): void {
     const { chatId, token } = this.state
-    const user = GlobalStorage.getInstance().storage.user
-    this.socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${user?.id}/${chatId}/${token}`);
-    this.keepWSConnection = true
-
-    this.socket.addEventListener('open', () => {
-      console.log('Connected to web socket');
-      this.socket!.send(JSON.stringify({
-        content: '0',
-        type: 'get old',
-      }))
-      this.startPingingSocket()
-    })
-
-    this.socket.addEventListener('close', event => {
-      if (event.wasClean) {
-        console.log('Closed connection');
-      } else {
-        console.log('Connection interrupted');
-      }
-
-      console.log(`Code: ${event.code} | Reason: ${event.reason}`);
-    });
-
-    this.socket.addEventListener('message', event => {
-      console.log('Receved data', event.data);
-      const json = JSON.parse(event.data)
-      if (this.serviceMessageTypes.includes(json.type)) {
-        return
-      }
-
-      if (Array.isArray(json)) {
-        this.serveWSIncomingMessages(WSMessagesListDto.fromJson(json))
-      } else (
-        this.serveWSIncomingMessages(new WSMessagesListDto([WSMessageDto.fromJson(json)]))
-      )
-
-    });
-
-    this.socket.addEventListener('error', event => {
-      console.log('Error', event.message);
-    });
+    this.wsTransport = new WebSocketTransport(chatId, token)
+    this.wsTransport.eventBus.on(WebSocketTransport.EVENTS.WS_MESSAGES_ARRIVED, this.serveWSIncomingMessages.bind(this))
+    this.wsTransport.start()
   }
 
   private serveWSIncomingMessages(messagesList: WSMessagesListDto) {
@@ -111,20 +65,7 @@ export class Chat extends Component<ChatProps> {
   }
 
   protected componentWillUnmount(): void {
-    this.keepWSConnection = false
-  }
-
-  private keepWSConnection: boolean = false
-
-  private startPingingSocket(timeout: number = 1000) {
-    setTimeout(() => {
-      this.socket?.send(JSON.stringify({
-        type: 'ping',
-      }))
-      if (this.keepWSConnection) {
-        this.startPingingSocket()
-      }
-    }, timeout);
+    this.wsTransport?.stop()
   }
 
   protected render(): string {
