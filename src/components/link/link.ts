@@ -9,16 +9,18 @@ export class Link extends Component<LinkProps> {
   }
 
   init() {
-    this.events = {}
-    if (this.props.onClick) {
-      this.events.click = this.props.onClick
-    } else {
-      this.events.click = (e: PointerEvent) => {
-        e.preventDefault()
-        const pathname = (e.target! as HTMLAnchorElement).pathname
-        Router.getInstance().go(pathname)
-      }
+    this.events = {
+      click: this.getOnClick()
     }
+  }
+
+  private getOnClick() {
+    const defaultOnClick = (e: PointerEvent) => {
+      e.preventDefault()
+      const pathname = (e.target! as HTMLAnchorElement).pathname
+      Router.getInstance().go(pathname)
+    }
+    return this.props.onClick || defaultOnClick
   }
 
   protected render(): string {

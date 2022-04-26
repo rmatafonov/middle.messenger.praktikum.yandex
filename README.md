@@ -19,3 +19,11 @@ https://www.figma.com/file/CUA4AnaXxTb8ChLdUvyaDw/Yandex.Practicum.-Module-1.-Me
 
 ## CI: Netlify
 https://yandex-practicum-messenger-rmatafonov.netlify.app/
+
+## Sprint 3 remarks:
+* As agreed, tests are not written - only Mocha and Chai have been installed
+* Personal chats are only supported:
+    * Adding/removal of users from/to chats are unsupported
+* Change of avatar is not supported
+* Everything else is working on MVP basis
+* TODO: improve visual performance a message sending
