@@ -95,12 +95,12 @@ export default class WebSocketTransport {
 
     private initMessageListener() {
         this.socket.onmessage = event => {
-            console.log('Receved data', event.data)
             const json = JSON.parse(event.data)
             if (WebSocketTransport.SERVICE_MESSAGE_TYPES.includes(json.type)) {
                 return
             }
 
+            console.log('Receved data', event)
             let messages: WSMessagesListDto
             if (Array.isArray(json)) {
                 messages = WSMessagesListDto.fromJson(json)

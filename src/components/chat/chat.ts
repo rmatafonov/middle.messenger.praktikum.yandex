@@ -49,7 +49,7 @@ export class Chat extends Component<ChatProps> {
   }
 
   private serveWSIncomingMessages(messagesList: WSMessagesListDto) {
-    this.state.messages = messagesList.messages.map(msg => {
+    const arrivedMessages = messagesList.messages.map(msg => {
       const date = new Date(msg.time)
       return {
         id: msg.id,
@@ -59,6 +59,8 @@ export class Chat extends Component<ChatProps> {
         time: `${date.getHours()}:${date.getMinutes()}`
       }
     })
+
+    this.state.messages = this.state.messages.concat(arrivedMessages)
     this.setChildProps('messagesContainer', {
       messages: this.state.messages
     })
