@@ -1,44 +1,44 @@
 [
     {
-        "lastMessageHeader": "Лев Толстой",
-        "lastMessageText": "Прикинь... Пост запилил на 4 тома :)"
+        "header": "Лев Толстой",
+        "description": "Прикинь... Пост запилил на 4 тома :)"
     },
     {
-        "lastMessageHeaderPrefix": "Room",
-        "lastMessageHeader": "friday beer!",
-        "lastMessageSender": "Петр",
-        "lastMessageText": "Вась, ты где!?"
+        "headerPrefix": "Room",
+        "header": "friday beer!",
+        "descriptionPrefix": "Петр",
+        "description": "Вась, ты где!?"
     },
     {
-        "lastMessageHeader": "Казимир Малевич",
-        "lastMessageText": "Image"
+        "header": "Казимир Малевич",
+        "description": "Image"
     },
     {
-        "lastMessageHeader": "Федор Достоевский",
-        "lastMessageSender": "Вы",
-        "lastMessageText": "пора бы уже его наказать js, наконец js..."
+        "header": "Федор Достоевский",
+        "descriptionPrefix": "Вы",
+        "description": "пора бы уже его наказать js, наконец js..."
     },
     {
-        "lastMessageHeader": "Эдвард Радзинский",
-        "lastMessageText": "Typing..."
+        "header": "Эдвард Радзинский",
+        "description": "Typing..."
     },
     {
-        "lastMessageHeader": "Сергей Шнуров",
-        "lastMessageText": "Voice message"
+        "header": "Сергей Шнуров",
+        "description": "Voice message"
     },
     {
-        "lastMessageHeader": "Robert Martin",
-        "lastMessageText": "Just drop your fu**** PR! And make it clean..."
+        "header": "Robert Martin",
+        "description": "Just drop your fu**** PR! And make it clean..."
     },
     {
-        "lastMessageHeaderPrefix": "Room",
-        "lastMessageHeader": "family",
-        "lastMessageSender": "Dad",
-        "lastMessageText": "Image"
+        "headerPrefix": "Room",
+        "header": "family",
+        "descriptionPrefix": "Dad",
+        "description": "Image"
     },
     {
-        "lastMessageHeaderPrefix": "Channel",
-        "lastMessageHeader": "JS news",
-        "lastMessageText": "It is a long established fact that a reader will..."
+        "headerPrefix": "Channel",
+        "header": "JS news",
+        "description": "It is a long established fact that a reader will..."
     }
 ]

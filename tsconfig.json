@@ -1,4 +1,7 @@
 {
+    "ts-node": {
+        "files": true
+    },
     "compilerOptions": {
         "target": "es2017",
         "module": "commonjs",
@@ -15,6 +18,7 @@
         "strictNullChecks": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
     }
 }

@@ -1,0 +1,40 @@
+@use "../../../variables";
+@use "./messengerNavHeader";
+@use "./messengerChatsList";
+
+$horisontal-line-color: #b4c5f0;
+$nav-color: #e9eefb;
+
+hr {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid $horisontal-line-color;
+}
+
+.messenger-page {
+  height: 90vh;
+  margin: 20px;
+  min-height: 500px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 5px variables.$shadow-color;
+  overflow: hidden;
+}
+
+.messenger-container {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.messenger-container__nav {
+  display: inline-flex;
+  flex-direction: column;
+  background-color: $nav-color;
+  height: 100%;
+  width: 20%;
+  min-width: 400px;
+}
+

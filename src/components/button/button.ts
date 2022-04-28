@@ -2,12 +2,6 @@ import Component from '../../core/Component';
 
 import './button.scss';
 
-type ButtonProps = {
-  text?: string;
-  className?: string;
-  onClick?: () => void;
-}
-
 export class Button extends Component<ButtonProps> {
   constructor(props: ButtonProps) {
     super(props);
@@ -21,10 +15,16 @@ export class Button extends Component<ButtonProps> {
   }
 
   protected render(): string {
+    let {image} = this.props
+ 
     // language=hbs
     return /*html*/`
       <div class="{{className}}">
+        {{#if text}}
         <button class="control">{{text}}</button>
+        {{else}}
+        <img src=${image}/>
+        {{/if}}
       </div>
     `;
   }

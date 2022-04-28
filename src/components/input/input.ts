@@ -23,7 +23,7 @@ export class Input extends Component<InputProps> {
   init() {
     this.events = {}
     if (this.props.onChange) {
-      this.events.click = this.props.onChange
+      this.events.input = this.props.onChange
     }
     if (this.props.onFocus) {
       this.events.focusin = this.props.onFocus

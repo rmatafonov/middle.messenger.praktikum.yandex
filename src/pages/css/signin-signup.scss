@@ -20,12 +20,6 @@
   border-radius: 50%;
 }
 
-.signin-container__error-default {
-  color: variables.$attention-text-color;
-  margin: 0 auto;
-  display: none;
-}
-
 .signin-container__error-shown {
   display: table;
 }

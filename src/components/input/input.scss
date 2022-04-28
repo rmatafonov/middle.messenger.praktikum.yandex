@@ -67,6 +67,10 @@
     input:valid + .label-for-control {
       @include input-active-disappearing-label-css;
     }
+
+    input:-webkit-autofill + .label-for-control {
+      @include input-active-disappearing-label-css;
+    }
   }
 }
 
@@ -79,6 +83,10 @@
     }
 
     input:valid + .label-for-control {
+      @include input-active-moving-label;
+    }
+
+    input:-webkit-autofill + .label-for-control {
       @include input-active-moving-label;
     }
   }

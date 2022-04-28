@@ -14,7 +14,7 @@ export class Label extends Component {
   }
 
   protected render(): string {
-    // language=hbs
-    return /*html*/`<div id="{{id}}" class="{{className}}">{{text}}</div>`
+      // language=hbs
+      return /*html*/`<div id="{{id}}" class="{{className}}">{{text}}</div>`
   }
 }
