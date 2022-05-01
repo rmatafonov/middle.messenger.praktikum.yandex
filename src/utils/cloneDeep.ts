@@ -1,5 +1,5 @@
 export function cloneDeep<T extends object = object>(obj: T) {
-    return (function _cloneDeep(item: T): T | Date | Set<unknown> | Map<unknown, unknown> | object | T[] {
+    return (function _cloneDeep(item: any): T | Date | Set<unknown> | Map<unknown, unknown> | object | T[] {
         // Handle:
         // * null
         // * undefined
@@ -21,7 +21,7 @@ export function cloneDeep<T extends object = object>(obj: T) {
         // Handle:
         // * Array
         if (item instanceof Array) {
-            let copy = [];
+            let copy = new Array(item.length);
 
             item.forEach((_, i) => (copy[i] = _cloneDeep(item[i])));
 
@@ -51,7 +51,7 @@ export function cloneDeep<T extends object = object>(obj: T) {
         // Handle:
         // * Object
         if (item instanceof Object) {
-            let copy: object = {};
+            let copy: Indexed = {};
 
             // Handle:
             // * Object.symbol

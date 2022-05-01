@@ -6,6 +6,7 @@ import { chatsAPI } from '../../service/back'
 import GlobalStorage from '../../service/front/GlobalStorage'
 
 export class ChatsListItem extends Component<ChatsListItemProps> {
+  static componentName: string = 'ChatsListItem'
   static MAX_DESCRIPTION_LEN = 140
 
   constructor(props: ChatsListItemProps) {
@@ -23,7 +24,7 @@ export class ChatsListItem extends Component<ChatsListItemProps> {
     }
   }
 
-  componentDidMount(props: ChatsListItemProps): void {
+  componentDidMount(_props: ChatsListItemProps): void {
     if (!this.props.chat) {
       // This is found user item
       return
@@ -68,8 +69,9 @@ export class ChatsListItem extends Component<ChatsListItemProps> {
   }
 
   init(): void {
-    this.events = { 
-      click: this.props.onClick 
+    this.events = { }
+    if (this.props.onClick) {
+      this.events.click = this.props.onClick
     }
   }
 

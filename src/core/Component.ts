@@ -2,13 +2,11 @@ import EventBus from './EventBus'
 import { nanoid } from 'nanoid'
 import Handlebars from 'handlebars'
 
-interface BlockMeta<P = any> {
-  props: P;
-}
-
 type Events = Values<typeof Component.EVENTS>;
 
 export default abstract class Component<P extends {} = {}> {
+  static componentName: string = 'Component'
+  
   static EVENTS = {
     FLOW_INIT: 'flow:init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -19,7 +17,6 @@ export default abstract class Component<P extends {} = {}> {
   } as const;
 
   public id = nanoid(6);
-  private readonly _meta: BlockMeta;
 
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
@@ -36,10 +33,6 @@ export default abstract class Component<P extends {} = {}> {
 
   public constructor(props?: P) {
     const eventBus = new EventBus<Events>();
-
-    this._meta = {
-      props,
-    };
 
     this.getStateFromProps(props)
 
@@ -66,7 +59,7 @@ export default abstract class Component<P extends {} = {}> {
     this._element = this._createDocumentElement('div');
   }
 
-  protected getStateFromProps(props: any): void {
+  protected getStateFromProps(_props: any): void {
     this.state = {};
   }
 
@@ -82,7 +75,7 @@ export default abstract class Component<P extends {} = {}> {
     this.componentDidMount(props);
   }
 
-  componentDidMount(props: P) {
+  componentDidMount(_props: P) {
   }
 
   protected componentWillUnmount() {
@@ -102,7 +95,7 @@ export default abstract class Component<P extends {} = {}> {
     }
   }
 
-  componentDidUpdate(oldProps: P, newProps: P) {
+  componentDidUpdate(_oldProps: P, _newProps: P) {
     return true;
   }
 

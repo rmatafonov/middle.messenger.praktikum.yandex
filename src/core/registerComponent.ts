@@ -1,7 +1,8 @@
 import Handlebars, { HelperOptions } from 'handlebars';
 
-export default function registerComponent(componentName: string, Component: ComponentConstructable) {
-  Handlebars.registerHelper(componentName, function ({ hash: { ref, ...hash }, data }: HelperOptions) {
+export default function registerComponent(Component: ComponentConstructable) {
+  console.log(`Registering compoentnt with name ${Component.componentName}`)
+  Handlebars.registerHelper(Component.componentName, function ({ hash: { ref, ...hash }, data }: HelperOptions) {
     if (!data.root.children) {
       data.root.children = {};
     }

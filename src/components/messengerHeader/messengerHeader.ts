@@ -3,6 +3,8 @@ import defaultAvatar from '../../img/camera_200.png'
 import './messengerHeader.scss'
 
 export class MessengerHeader extends Component<MessengerHeaderProps> {
+  static componentName: string = 'MessengerHeader'
+
   constructor(props: MessengerHeaderProps) {
     super(props)
   }

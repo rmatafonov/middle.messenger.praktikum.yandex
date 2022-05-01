@@ -4,6 +4,8 @@ import { Router } from '../../service/front';
 import './link.scss';
 
 export class Link extends Component<LinkProps> {
+  static componentName: string = 'Link'
+
   constructor(props: LinkProps) {
     super(props);
   }

@@ -8,7 +8,7 @@ import GlobalStorage from '../../service/front/GlobalStorage'
 import './chat.scss'
 
 export class Chat extends Component<ChatProps> {
-  public name: string = 'Chat';
+  static componentName: string = 'Chat';
   private wsTransport?: WebSocketTransport
 
   constructor(props: ChatProps) {
@@ -22,14 +22,12 @@ export class Chat extends Component<ChatProps> {
       chatId: props.chatId,
       token: props.token,
       messages: [],
-      sendIcon: arrowUpCircle,
-      attachmentIcon: attachmentIcon,
       onSubmit: () => {
         const inputMessage = this.retrieveChildByRef("message").getStringValue()
         if (inputMessage) {
           console.log('action/sendMessage', inputMessage);
           this.wsTransport?.send(inputMessage)
-          if (this.state.messages.length === 1) {
+          if (this.state.messages.length === 1 && this.props.onFirstMessageSent) {
             this.props.onFirstMessageSent()
           }
 
@@ -42,7 +40,7 @@ export class Chat extends Component<ChatProps> {
     }
   }
 
-  componentDidMount(props: ChatProps): void {
+  componentDidMount(_props: ChatProps): void {
     const { chatId, token } = this.state
     this.wsTransport = new WebSocketTransport(chatId, token)
     this.wsTransport.eventBus.on(WebSocketTransport.EVENTS.WS_MESSAGES_ARRIVED, this.serveWSIncomingMessages.bind(this))
@@ -92,7 +90,7 @@ export class Chat extends Component<ChatProps> {
         <div class="chat-container__controls-container">
             {{{ Button
                   className="controls-container__icon-container" 
-                  image=attachmentIcon
+                  image="${attachmentIcon}"
                   onClick=onAttach
             }}}
             <div class="controls-container__input-box">
@@ -109,7 +107,7 @@ export class Chat extends Component<ChatProps> {
             </div>
             {{{ Button
                   className="controls-container__icon-container" 
-                  image=sendIcon
+                  image="${arrowUpCircle}"
                   onClick=onSubmit
             }}}
         </div>
