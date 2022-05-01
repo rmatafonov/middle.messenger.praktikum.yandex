@@ -8,6 +8,7 @@ import GlobalStorage from '../../service/front/GlobalStorage'
 import './chat.scss'
 
 export class Chat extends Component<ChatProps> {
+  public name: string = 'Chat';
   private wsTransport?: WebSocketTransport
 
   constructor(props: ChatProps) {
