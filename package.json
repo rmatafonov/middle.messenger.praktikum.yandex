@@ -22,7 +22,7 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "dev": "webpack serve",
-    "start": "webpack && node ./src/server/server.js"
+    "start": "webpack && node server.js"
   },
   "repository": {
     "type": "git",
