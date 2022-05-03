@@ -1,7 +1,10 @@
 # Messenger Web App for Module 1 of trainig Middle Frontend Developer from Yandex.Practicum
 
 ## PRs:
-* https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/1
+* [Sprint 4](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/15)
+* ~~[Sprint 3](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/12)~~ (MERGED)
+* ~~[Sprint 2](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/6)~~ (MERGED)
+* ~~[Sprint 1](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/1)~~ (MERGED)
 
 ## Commands:
 * Build static and run development Parcel server:
@@ -17,13 +20,15 @@ Yet another one Messenger
 ## Design
 https://www.figma.com/file/CUA4AnaXxTb8ChLdUvyaDw/Yandex.Practicum.-Module-1.-Messenger?node-id=10%3A1019
 
-## CI: Netlify
-https://yandex-practicum-messenger-rmatafonov.netlify.app/
+## Heroku
+https://chat-yapraktikum-rmatfonov.herokuapp.com/
 
-## Sprint 3 remarks:
-* As agreed, tests are not written - only Mocha and Chai have been installed
+## TODOs:
+* As agreed, tests are not fully written:
+  * Mocha and Chai have been installed
+  * Tests for Router have been written
 * Personal chats are only supported:
     * Adding/removal of users from/to chats are unsupported
 * Change of avatar is not supported
-* Everything else is working on MVP basis
-* TODO: improve visual performance a message sending
+* Improve visual performance a message sending
+* Fix comments from [Sprint 3](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/12)
