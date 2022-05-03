@@ -24,7 +24,9 @@ https://www.figma.com/file/CUA4AnaXxTb8ChLdUvyaDw/Yandex.Practicum.-Module-1.-Me
 https://chat-yapraktikum-rmatfonov.herokuapp.com/
 
 ## TODOs:
-* As agreed, tests are not written - only Mocha and Chai have been installed
+* As agreed, tests are not fully written:
+  * Mocha and Chai have been installed
+  * Tests for Router have been written
 * Personal chats are only supported:
     * Adding/removal of users from/to chats are unsupported
 * Change of avatar is not supported
