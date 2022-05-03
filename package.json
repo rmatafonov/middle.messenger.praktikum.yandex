@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "---",
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=15.0.0"
   },
   "targets": {
     "default": {
@@ -13,16 +13,16 @@
     }
   },
   "scripts": {
-    "clean": "rimraf dist/",
-    "fullClean": "rimraf dist/ node_modules/",
     "check:lint": "eslint .",
     "check:stylelint": "stylelint **/*.scss",
     "check:test": "mocha test/",
     "check": "npm-run-all check:*",
-    "build": "webpack",
-    "watch": "webpack --watch",
+    "clean": "rimraf dist/",
+    "fullClean": "rimraf dist/ node_modules/",
     "dev": "webpack serve",
-    "start": "webpack && node server.js"
+    "build": "webpack",
+    "server": "node server.js",
+    "start": "npm-run-all clean build server"
   },
   "repository": {
     "type": "git",
