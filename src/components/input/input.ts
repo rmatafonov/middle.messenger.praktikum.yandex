@@ -6,8 +6,8 @@ type InputProps = {
   id?: string;
   type?: 'text' | 'password' | 'email';
   className?: string;
-  autocomplete: boolean;
-  required: boolean;
+  autocomplete?: boolean;
+  required?: boolean;
   label?: string;
   value?: string;
   onChange?: () => void;
@@ -16,6 +16,8 @@ type InputProps = {
 }
 
 export class Input extends Component<InputProps> {
+  static componentName: string = 'Input'
+
   constructor(props: InputProps) {
     super(props);
   }

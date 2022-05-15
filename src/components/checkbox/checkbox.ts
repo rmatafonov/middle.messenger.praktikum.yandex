@@ -10,6 +10,8 @@ type CheckboxProps = {
 }
 
 export class Checkbox extends Component<CheckboxProps> {
+  static componentName: string = 'Checkbox'
+  
   constructor({ id, label, className, checked }: CheckboxProps) {
     super({ id, label, className, checked });
   }

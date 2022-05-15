@@ -7,15 +7,6 @@
   width: 100%;
 }
 
-.messenger-nav__chats-list {
-  position: absolute;
-  overflow-y: auto;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-}
-
 .messenger-nav__chats-list::-webkit-scrollbar {
   width: 0;
 }
-

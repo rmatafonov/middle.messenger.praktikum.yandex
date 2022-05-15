@@ -1,8 +1,4 @@
-type Indexed<T = unknown> = {
-    [key in string]: T;
-};
-
-export function isEqual(a: Indexed, b: Indexed): boolean {
+export function isEqual(a: any, b: any): boolean {
     const ta = typeof a, tb = typeof b;
     return a && b && ta === 'object' && ta === tb ? (
         Object.keys(a).length === Object.keys(b).length &&

@@ -7,7 +7,8 @@
         "module": "commonjs",
         "typeRoots": [
             "node_modules/@types",
-            "typings/app.d.ts"
+            "typings/app.d.ts",
+            "src/types"
         ],
         "sourceMap": true,
         "outDir": "./dist",

@@ -2,7 +2,9 @@ import Component from '../../core/Component'
 
 import './messageBox.scss'
 
-export class MessageBox extends Component {
+export class MessageBox extends Component<MessageBoxProps> {
+    static componentName: string = 'MessageBox'
+
     constructor(props: MessageBoxProps) {
         super(props)
     }

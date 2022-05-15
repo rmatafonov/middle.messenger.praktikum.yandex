@@ -3,6 +3,8 @@ import Component from '../../core/Component';
 import './button.scss';
 
 export class Button extends Component<ButtonProps> {
+  static componentName: string = 'Button'
+
   constructor(props: ButtonProps) {
     super(props);
   }
@@ -23,7 +25,7 @@ export class Button extends Component<ButtonProps> {
         {{#if text}}
         <button class="control">{{text}}</button>
         {{else}}
-        <img src=${image}/>
+        <img src="${image}"/>
         {{/if}}
       </div>
     `;

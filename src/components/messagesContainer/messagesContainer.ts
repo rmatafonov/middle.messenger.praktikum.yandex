@@ -2,6 +2,8 @@ import Component from '../../core/Component'
 import './messagesContainer.scss'
 
 export class MessagesContainer extends Component<MessagesContainerProps> {
+  static componentName: string = 'MessagesContainer'
+
   constructor(props: MessagesContainerProps) {
     super(props)
   }

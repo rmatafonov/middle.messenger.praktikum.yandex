@@ -1,3 +1,4 @@
+import { WSMessageDtoJsonFields } from './json/WSMessageDtoJsonFields'
 import WSMessageDto from './WSMessageDto'
 
 export default class WSMessagesListDto {
@@ -7,7 +8,7 @@ export default class WSMessagesListDto {
         this.messages = chats
     }
 
-    static fromJson(json: Array<WSMessageDto>): WSMessagesListDto {
+    static fromJson(json: Array<WSMessageDtoJsonFields>): WSMessagesListDto {
         return new WSMessagesListDto(json.map(c => WSMessageDto.fromJson(c)))
     }
 }

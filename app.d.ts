@@ -5,9 +5,11 @@ declare global {
 
     export type Keys<T extends Record<string, unknown>> = keyof T
     export type Values<T extends Record<string, unknown>> = T[Keys<T>]
+    export type Indexed<T = unknown> = { [key in any]: T }
 
     export interface ComponentConstructable<Props extends {} = {}> {
         new(props: Props): Component;
+        componentName: string
     }
 
     export type ButtonProps = {
@@ -25,43 +27,43 @@ declare global {
 
     export type MessageBoxProps = {
         ref?: string
-        isMy: boolean
-        text: string
-        time: string
+        isMy?: boolean
+        text?: string
+        time?: string
     }
 
     export type MessagesList = Array<MessageBoxProps>
 
     export type ChatsListItemProps = {
         ref?: string
-        id: number
+        id?: number
         chat?: ChatsListItemDto
         user?: UserDto
-        onClick: (e: Event) => void
+        onClick?: (e: Event) => void
     }
 
     export type ChatsListProps = {
-        scrollTop: number
-        search: string
-        chats: []
-        foundChats: []
-        foundUsers: []
-        onFoundUserSelected: (chatRefName: string) => void
-        onChatSelected: (chat?: ChatsListItemDto) => void
+        scrollTop?: number
+        search?: string
+        chats?: []
+        foundChats?: []
+        foundUsers?: []
+        onFoundUserSelected?: (chatRefName: string) => void
+        onChatSelected?: (chat?: ChatsListItemDto) => void
     }
 
     export type ChatProps = {
-        chatId: number
-        token: string
-        onFirstMessageSent: () => void
+        chatId?: number
+        token?: string
+        onFirstMessageSent?: () => void
     }
 
     export type MessagesContainerProps = {
-        messages: Array<WSMessageDto>
+        messages?: Array<WSMessageDto>
     }
 
     export type MessengerHeaderProps = {
-        userName: string
+        userName?: string
         onClick?: () => void
     }
 

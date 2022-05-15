@@ -1,6 +1,5 @@
 import { UserDto } from '../../../dto';
 import UsersListDto from '../../../dto/UsersListDto';
-import changePassword from '../../../pages/changePassword';
 import HTTPTransport from '../HTTPTransport';
 
 export const userAPI = {

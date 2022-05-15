@@ -7,6 +7,8 @@ type ChatsListState = {
   values: {}
 }
 export class ChatsList extends Component<ChatsListProps> {
+  static componentName: string = 'ChatsList'
+
   constructor(props: ChatsListProps) {
     super(props)
   }
@@ -44,7 +46,9 @@ export class ChatsList extends Component<ChatsListProps> {
           }
         }
         this.setState(nextState)
-        this.props.onFoundUserSelected(chatRefName)
+        if (this.props.onFoundUserSelected) {
+          this.props.onFoundUserSelected(chatRefName)
+        }
       },
       selectChat: (e: Event) => {
         const chatsListItem = e.currentTarget
@@ -63,12 +67,14 @@ export class ChatsList extends Component<ChatsListProps> {
           }
         });
 
-        this.props.onChatSelected(selectedChat)
+        if (this.props.onChatSelected) {
+          this.props.onChatSelected(selectedChat)
+        }
       },
     }
   }
 
-  componentDidUpdate(oldProps: ChatsListProps, newProps: ChatsListProps | ChatsListState): boolean {
+  componentDidUpdate(_oldProps: ChatsListProps, newProps: ChatsListProps | ChatsListState): boolean {
     if ((newProps as ChatsListState).values) {
       // The state has been chaged
       return true
@@ -87,7 +93,7 @@ export class ChatsList extends Component<ChatsListProps> {
   }
 
   protected render(): string {
-    const { chats, foundChats, foundUsers } = this.props
+    const { foundChats, foundUsers } = this.props
 
     if (foundChats || foundUsers) {
       // language=hbs

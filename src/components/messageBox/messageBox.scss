@@ -1,0 +1,19 @@
+@use "../../variables";
+
+.messages-container__message {
+  height: fit-content;
+  margin: 5px;
+  width: 40%;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.messages-container__message-other {
+  background-color: variables.$other-message-color;
+  margin-right: auto;
+}
+
+.messages-container__message-my {
+  background-color: variables.$my-message-color;
+  margin-left: auto;
+}
