@@ -1,7 +1,7 @@
 # Messenger Web App for Module 1 of trainig Middle Frontend Developer from Yandex.Practicum
 
 ## PRs:
-* [Sprint 4](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/15)
+* ~~[Sprint 4](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/15)~~ (MERGED)
 * ~~[Sprint 3](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/12)~~ (MERGED)
 * ~~[Sprint 2](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/6)~~ (MERGED)
 * ~~[Sprint 1](https://github.com/rmatafonov/middle.messenger.praktikum.yandex/pull/1)~~ (MERGED)
